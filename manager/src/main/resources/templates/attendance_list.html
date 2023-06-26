@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<script th:inline="javascript">
+	function submitForm(checkbox) {
+		checkbox.closest('form').submit();
+	}
+</script> 
+<title>勤怠表</title>
+</head>
+<body>
+	<nav th:replace="~{navbar :: navbarFragment}"></nav>
+	<div class="container my-3">
+		<span class="input-group-text" id="addon-wrapping">勤怠表</span><br>
+		<div class="alert alert-warning alert-dismissible fade show">
+			名前: <strong><span th:text="${attendanceList[0].NameofEmployee}"></span></strong>
+		</div>
+		<div class="alert alert-info">
+			総勤務日数: <strong><span th:text="${#lists.size(attendanceList)}"></span></strong>日
+		</div>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>年月</th>
+					<th>日</th>
+					<th>出勤時刻</th>
+					<th>退社時刻</th>
+					<th>区分</th>
+					<th>作業時間</th>
+				<!--<th>休憩有無</th> -->
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="attendance, rowStat : ${attendanceList}">
+					<td><span th:text="${#temporals.format(attendance.AttCheckIn, 'yy/MM')}"></span></td>
+					<td><span th:text="${#temporals.format(attendance.AttCheckIn, 'dd')}"></span></td>
+					<td><span th:text="${#temporals.format(attendance.AttCheckIn, 'HH:mm')}"></span></td>
+					<td><span th:text="${#temporals.format(attendance.AttCheckOut, 'HH:mm')}"></span></td>
+					<td th:text="${attendance.status}"></td>
+					<td><span th:text="${attendance.getFormattedWorkDuration()}"></span></td>
+					<!--<td>
+						<form th:action="@{'/attendance/list/' + ${attendance.nameofEmployee}}"
+							method="post" style="text-align: center; transform: scale(2); margin: 0 50px 0 0;">
+							<input class="form-check-input" type="hidden" name="attendanceId" th:value="${attendance.attendanceId}">
+							<input class="form-check-input" type="checkbox" name="isRest" th:checked="${attendance.isRest}" th:disabled="${attendance.isRest != null}" onchange="submitForm(this)">
+						</form>
+					</td> -->
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

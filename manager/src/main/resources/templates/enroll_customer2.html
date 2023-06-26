@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+
+<title>取引先登録</title>
+</head>
+<body>
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+
+	<h1>取引先登録</h1>
+
+
+	<form th:action="@{/customer2/enroll}" method="post">
+		<label for="id2">企業 ID:</label> 
+		<input type="text" id="id2" name="id2" required><br> 
+		<label for="name2">企業名:</label> 
+		<input type="text" id="name2" name="name2" required><br>
+		<label for="name2">アドレス:</label> <input type="text" id="address2" name="address2" required><br>
+		<label for="name2">電話番号:</label> <input type="text" id="phone2" name="phone2" required><br>
+		
+		<br>
+		<button type="submit">保存</button>
+	</form>
+
+
+
+</body>
+</html>

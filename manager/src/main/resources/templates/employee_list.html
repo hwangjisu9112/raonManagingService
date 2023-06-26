@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+</head>
+<body>
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<div class="container my-3">
+
+<span class="input-group-text" id="addon-wrapping"><strong>社員管理</strong></span><br>
+
+<table class="table">
+	<thead class="table-dark">
+		<tr>
+			<th>ID</th>
+			<th>名前</th>
+			<th>フリガナ</th>
+			<th>社内メル</th>	
+			<th>連絡先</th>
+			<th>入社日</th>
+			<th>所属</th>
+			<th>削除</th>
+			<th>修正</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="employee, loop : ${paging}">
+			<td th:text="${employee.employeeId}"></td>
+			<td th:text="${employee.employeeName}"></td>
+			<td th:text="${employee.NameJp}"></td>
+			<td th:text="${employee.EmployeeEmail}"></td>
+			<td th:text="${employee.EmployeePhone}"></td>
+			<td th:text="${employee.JoinDate}"></td>
+			<td>　作業中　</td>
+			<!-- 
+				<form
+					th:action="@{/employee/checkin/{id}(id=${employee.employeeId})}"
+					method="post">
+					<button type="submit">出勤</button>
+				</form>
+			</td>
+			<td><span th:if="${employee.checkIn != null}"
+				th:text="${#temporals.format(employee.checkIn, 'yyyy/MM/dd hh:mm a')}"></span> 
+				<span th:unless="${employee.checkIn != null}">出勤前</span></td>
+
+			<td>
+				<form th:action="@{/employee/checkout/{id}(id=${employee.employeeId})}" method="post">
+					<button type="submit">退勤</button>
+				</form>
+			</td>
+			<td>
+			<span th:if="${employee.checkOut != null}" th:text="${#temporals.format(employee.checkOut, 'yyyy/MM/dd HH:mm a')}"></span>
+			<span th:unless="${employee.checkOut != null}">退勤前</span></td>
+			<td>  -->
+			<td>
+			<a th:href="@{/employee/delete/{id}(id=${employee.employeeId})}"   class="delete btn btn-sm btn-outline-secondary">❌</a>
+			</td>
+			<td>
+			<a th:href="@{/employee/update/{id}(id=${employee.employeeId})}"   class="delete btn btn-sm btn-outline-secondary">🔧</a>
+			</td>
+	</tbody>
+</table>
+</div>
+<!--paging --><div th:if="${!paging.isEmpty()}" >
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                <a class="page-link"
+                    th:href="@{|?page=${paging.number-1}|}">
+                    <span>前に</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                th:classappend="${page == paging.number} ? 'active'" 
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                    <span>次に</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+</body>
+

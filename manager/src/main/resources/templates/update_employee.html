@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+
+<title>社員更新</title>
+</head>
+<body>
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<div class="container my-3">
+<div class="alert alert-warning alert-dismissible fade show"><strong>社員情報更新</strong></div>
+
+   	<form th:action="@{/employee/update/{id}(id=${id})}" method="post">
+   	
+
+    <div class="input-group mb-3">
+        <label for="id" class="input-group-text">請求書番号</label>
+        		<input type="text" id="id" name="id" th:value="${id}" readonly disabled class="form-control danger"><br> 
+    </div>
+    <div class="input-group mb-3">
+        <label for="name" class="input-group-text">会社</label>
+        <input type="text" id="name" name="name" required class="form-control">
+
+        <label for="Ename" class="input-group-text">仕事</label>
+        <input type="text" id="Ename" name="Ename" class="form-control">
+
+        <label for="Jname" class="input-group-text">名前<</label>
+        <input type="text" id="Jname" name="Jname" required class="form-control"><br>
+    </div>
+    <div class="input-group mb-3">
+        <label for="Eemail" class="input-group-text">>金額</label>
+        <input type="text" id="Eemail" name="Eemail" required class="form-control">
+		<label for="pay" class="input-group-text">基準単価（数量）</label>
+        <input type="number" id="pay" name="pay" class="form-control"><br>
+    </div>
+    <div class="input-group mb-3">
+        <label for="tel" class="input-group-text">超過分（数量）</label>
+        <input type="text" id="tel" name="tel" class="form-control"><br>
+    </div>
+    <div class="input-group mb-3">
+        <label for="address" class="input-group-text">控除分（数量）</label>
+        <input type="text" id="address" name="address" class="form-control"><br>
+    </div>
+    <div class="input-group mb-3">
+        <label for="bank" class="input-group-text">銀行名</label>
+        <select id="bank" name="bank" required class="btn btn-outline btn-lg dropdown-toggle">
+            <option th:each="bank : ${T(com.example.raon.employee.EmployeeBank).values()}"
+                    th:value="${bank}"
+                    th:text="${bank}"></option>
+        </select>
+
+        <label for="acc" class="input-group-text">口座番号</label>
+        <input type="text" id="acc" name="acc" class="form-control"><br>
+    </div>
+    <div class="input-group mb-3">
+        <label for="join" class="input-group-text">今日</label>
+        <input type="date" id="join" name="join" required pattern="\d{4}-\d{2}-\d{2}">
+		
+        <label for="birth" class="input-group-text">月末</label>
+        <input type="date" id="birth" name="birth" class="form-control">
+
+        <label for="Pemail" class="input-group-text">単価</label>
+        <input type="text" id="Pemail" name="Pemail" class="form-control"><br>
+   </div>
+		<button type="submit" class="btn btn-lg btn-primary">更新</button>
+	</form>
+	</div>
+	
+</body>
+</html>
