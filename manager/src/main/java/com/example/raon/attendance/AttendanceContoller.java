@@ -19,12 +19,15 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/attendance")
+
+//勤怠管理ページのコントローラー
 public class AttendanceContoller {
 
 	private final AttendanceService attendanceService ;
-	private final AttendanceRepository attendanceRepository ;
 	private final EmployeeRepository employeeRepository ;
 
+	
+	//勤怠記録する画面に移動
 	@GetMapping("/attend")
 	public String Attend(Model model) {
 		List<Employee> employees = employeeRepository.findAll();
@@ -32,6 +35,8 @@ public class AttendanceContoller {
 		return "attendance_attend";
 	}
 
+
+	//勤怠開始時間を記録
 	@PostMapping("/attend/checkin")
 	public String checkIn(@RequestParam String name) {
 		Employee employee = employeeRepository.findByEmployeeName(name);
@@ -43,6 +48,7 @@ public class AttendanceContoller {
 		}
 	}
 
+	//勤怠終了時間を記録
 	@PostMapping("/attend/checkout")
 	public String checkOut(@RequestParam String name) {
 		Employee employee = employeeRepository.findByEmployeeName(name);
@@ -54,17 +60,6 @@ public class AttendanceContoller {
 		return "redirect:/attendance/list/" + name;
 	}
 
-//	@PostMapping("/attend/checkin")
-//	public String checkIn(@RequestParam String name) {
-//		attendanceService.checkIn(name);
-//		return "redirect:/attendance/list/" + name;
-//	}
-
-//	@PostMapping("/attend/checkout")
-//	public String checkOut(@RequestParam String name) {
-//		attendanceService.checkOut(name);
-//		return "redirect:/attendance/list/" + name;
-//	}
 
 	@PostMapping("/list/{name}")
 	public String updateRest(@RequestParam Long attendanceId, 
@@ -74,6 +69,7 @@ public class AttendanceContoller {
 		return "redirect:/attendance/list/" + name;
 	}
 
+	//勤怠表に移動
 	@GetMapping("/list/{name}")
 	public String getAttendanceList(@PathVariable String name, Model model) {
 		List<Attendance> attendanceList = attendanceService.getAttendanceByEmployeeName(name);

@@ -8,6 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+
+//請求書DBに保存するfieldを定義
 public class Customer2 {
 
 	@Id

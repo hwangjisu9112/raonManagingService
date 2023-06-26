@@ -13,6 +13,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+
+//社員DBに保存するfieldを定義
 public class Employee {
 
 	@Id
@@ -32,6 +34,7 @@ public class Employee {
 
 	private String Address;
 
+	//給料を納金する口座は列挙Classで入力
 	@Enumerated(EnumType.STRING)
 	private EmployeeBank bank;
 	

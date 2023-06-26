@@ -20,10 +20,13 @@ import org.springframework.data.domain.Page;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/employee")
+
+//社員ページのコントローラー
 public class EmployeeContoller {
 
 	private final EmployeeService employeeService;
 
+	// 社員ページに移動
 	@GetMapping("/list")
 	public String EmployeeList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
 
@@ -36,32 +39,27 @@ public class EmployeeContoller {
 		return "employee_list";
 	}
 
+	// 社員登録ページに移動
 	@GetMapping("/enroll")
 	public String EnrollEmployee() {
 
 		return "enroll_employee";
 	}
 
+	// 社員登録
 	@PostMapping("/enroll")
-	public String EnrollEmployee(@RequestParam Long id, 
-            @RequestParam String name, 
-            @RequestParam String Ename, 
-            @RequestParam String Jname, 
-            @RequestParam String Eemail, 
-            @RequestParam String Pemail, 
-            @RequestParam String tel, 
-            @RequestParam String address, 
-            @RequestParam String acc, 
-            @RequestParam EmployeeBank bank, // New parameter for bank
-            @RequestParam LocalDate join,
-            @RequestParam LocalDate birth,
-            @RequestParam Integer pay) {
+	public String EnrollEmployee(@RequestParam Long id, @RequestParam String name, @RequestParam String Ename,
+			@RequestParam String Jname, @RequestParam String Eemail, @RequestParam String Pemail,
+			@RequestParam String tel, @RequestParam String address, @RequestParam String acc,
+			@RequestParam EmployeeBank bank, // New parameter for bank
+			@RequestParam LocalDate join, @RequestParam LocalDate birth, @RequestParam Integer pay) {
 
-employeeService.enrollEmp(id, name, Ename, Jname, Eemail, Pemail, tel, address, acc, bank, join, birth, pay);
+		employeeService.enrollEmp(id, name, Ename, Jname, Eemail, Pemail, tel, address, acc, bank, join, birth, pay);
 
+		return "redirect:/";
+	}
 
-return "redirect:/";
-}
+	// 社員情報更新ページに移動
 	@GetMapping("/update/{id}")
 	public String UpdateEmployee(Model model, @PathVariable("id") Long id) {
 		Employee employee = employeeService.getEmployeeID(id);
@@ -69,32 +67,23 @@ return "redirect:/";
 
 		return "update_employee";
 	}
-	
-	
 
+	// 社員情報更新
 	@PostMapping("/update/{id}")
-	public String UpdateEmployee(@PathVariable("id") Long id, 
-            @RequestParam String name, 
-            @RequestParam String Ename, 
-            @RequestParam String Jname, 
-            @RequestParam String Eemail, 
-            @RequestParam String Pemail, 
-            @RequestParam String tel, 
-            @RequestParam String address, 
-            @RequestParam String acc, 
-            @RequestParam EmployeeBank bank,
-            @RequestParam LocalDate join,
-            @RequestParam LocalDate birth,
-            @RequestParam Integer pay,
-			
+	public String UpdateEmployee(@PathVariable("id") Long id, @RequestParam String name, @RequestParam String Ename,
+			@RequestParam String Jname, @RequestParam String Eemail, @RequestParam String Pemail,
+			@RequestParam String tel, @RequestParam String address, @RequestParam String acc,
+			@RequestParam EmployeeBank bank, @RequestParam LocalDate join, @RequestParam LocalDate birth,
+			@RequestParam Integer pay,
+
 			@ModelAttribute("employee") Employee employee) {
 
 		employeeService.updateEmp(id, name, Ename, Jname, Eemail, Pemail, tel, address, acc, bank, join, birth, pay);
 
-		
 		return "redirect:/employee/list";
 	}
 
+	//社員削除
 	@GetMapping("/delete/{id}")
 	public String DeleteEmployee(Principal principal, @PathVariable("id") Long id) {
 		Employee employee = this.employeeService.getEmployeeID(id);
@@ -102,17 +91,5 @@ return "redirect:/";
 		this.employeeService.delete(employee);
 		return "redirect:/employee/list";
 	}
-
-//    @PostMapping("/checkin/{id}")
-//    public String checkIn(@PathVariable Long id) {
-//        employeeService.checkIn(id);
-//        return "redirect:/employee/list"; 
-//    }
-//
-//    @PostMapping("/checkout/{id}")
-//    public String checkOut(@PathVariable Long id) {
-//        employeeService.checkOut(id);
-//        return "redirect:/employee/list";
-//    }
 
 }

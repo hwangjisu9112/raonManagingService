@@ -11,10 +11,14 @@ import org.springframework.data.domain.Pageable;
 
 @RequiredArgsConstructor
 @Service
+
+//社員のビジネスロジク
 public class EmployeeService {
 
+	//生成子
 	private final EmployeeRepository employeeRepository;
 
+	//社員リスト
 	public Page<Employee> getList(Integer page) {
 
 		Pageable pageable = PageRequest.of(page, 20);
@@ -22,6 +26,7 @@ public class EmployeeService {
 
 	}
 
+	//IDで社員を検索
 	public Employee getEmployeeID(Long id) {
 		Optional<Employee> employee = this.employeeRepository.findById(id);
 
@@ -29,6 +34,7 @@ public class EmployeeService {
 
 	}
 
+	//社員を登録
 	public void enrollEmp(Long id, 
 	                      String name, 
 	                      String Ename, 
@@ -62,12 +68,14 @@ public class EmployeeService {
 	    this.employeeRepository.save(e);
 	}
 
+	//社員を削除
 	public void delete(Employee employee) {
 
 		this.employeeRepository.delete(employee);
 
 	}
 
+	//社員情報を更新
 	public void updateEmp(Long id, 
 						String name, 
 						String Ename, 
@@ -99,6 +107,7 @@ public class EmployeeService {
 		this.employeeRepository.save(e);
 	}
 
+	//Paging処理
 	public Page<Employee> getListPage(Integer page) {
 		Pageable pageable = PageRequest.of(page, 20);
 		return employeeRepository.findAll(pageable);

@@ -19,10 +19,15 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/customer")
+
+//取引先ページのコントローラー
 public class CustomerController {
 	
+	//生成子
 	private final CustomerService customerService; 
 	
+	
+	//取引先のリストの移動
 	@GetMapping("/list")
 	public String CustomerList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
 
@@ -33,13 +38,14 @@ public class CustomerController {
 		return "customer_list";
 	}
 
-	
+	//取引先登録ページに移動
 	@GetMapping("/enroll")
 	public String EnrollCustomer() {
 
 		return "enroll_customer";
 	}
 	
+	//取引先登録ページに新しい取引先登録
 	@PostMapping("/enroll")
 	public String EnrollEmployee(@RequestParam Long id, 
 								@RequestParam String name,
@@ -50,6 +56,7 @@ public class CustomerController {
 		return "redirect:/";
 	}
 	
+	//取引先を削除
 	@GetMapping("/delete/{id}")
 	public String DeleteCustomer(Principal principal, @PathVariable("id") Long id) {
 		Customer customer = this.customerService.getCustomer(id);
@@ -58,6 +65,8 @@ public class CustomerController {
 		return "redirect:/customer/list";
 	}
 	
+	
+	//取引先を更新ページに移動
 	@GetMapping("/update/{id}")
 	public String UpdateCustomer(Model model, @PathVariable("id") Long id) {
 		Customer customer = customerService.getCustomer(id);
@@ -67,6 +76,7 @@ public class CustomerController {
 		return "update_customer";
 	}
 	
+	//取引先を更新
 	@PostMapping("/update/{id}") 
 	public String UpdateCustomer(@PathVariable("id") Long id, String name, String address,
 								String phone, 
@@ -82,17 +92,4 @@ public class CustomerController {
 		return "redirect:/customer/list";
 	}
 	
-	@GetMapping("/subtest")
-	public String subtest() {
-		
-		return "subtest";
-	}
-	
-	@GetMapping("/subtest2")
-	public String subtest2() {
-		
-		return "subtest2";
-	}
-
-
 }
