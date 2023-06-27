@@ -62,7 +62,9 @@ public class Attendance {
 
 	// 社員が午前10時前に出勤 ＝ OnTime, それより後なら LATE
 	private AttendanceStatus AttendanceStatus(LocalDateTime checkInTime) {
-		LocalTime lateTime = LocalTime.of(10, 0); // Define the late threshold here
+		
+		LocalTime lateTime = LocalTime.of(10, 0); 
+		
 		if (checkInTime.toLocalTime().isAfter(lateTime)) {
 			return AttendanceStatus.LATE;
 

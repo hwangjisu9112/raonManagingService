@@ -1,4 +1,4 @@
-package com.example.raon.customer2;
+package com.example.raon.bill;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

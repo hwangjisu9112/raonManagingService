@@ -1,10 +1,10 @@
-package com.example.raon.customer2;
+package com.example.raon.bill;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.raon.customer2.Customer2;
+import com.example.raon.bill.Customer2;
 
 
 //請求書のレポジトリ

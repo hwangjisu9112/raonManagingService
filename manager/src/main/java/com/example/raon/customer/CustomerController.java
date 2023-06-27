@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 //取引先ページのコントローラー
 public class CustomerController {
 	
-	//生成子
+	//サービスの生成子
 	private final CustomerService customerService; 
 	
 	

@@ -1,4 +1,4 @@
-package com.example.raon.customer2;
+package com.example.raon.bill;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.example.raon.customer2.Customer2;
+import com.example.raon.bill.Customer2;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 //請求書のビジネスロージク
 public class CustomerService2 {
 
-	// 生成子
+	// レポジトリの生成子　
 	private final CustomerRepository2 customerRepository2;
 
 	// 請求書を全て検索

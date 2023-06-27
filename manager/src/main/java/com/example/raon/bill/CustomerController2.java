@@ -1,4 +1,4 @@
-package com.example.raon.customer2;
+package com.example.raon.bill;
 
 import java.security.Principal;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.raon.customer2.Customer2;
+import com.example.raon.bill.Customer2;
 
 import lombok.RequiredArgsConstructor;
 
