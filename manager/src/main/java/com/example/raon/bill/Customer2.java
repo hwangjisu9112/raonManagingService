@@ -13,6 +13,7 @@ import lombok.Setter;
 public class Customer2 {
 
 	@Id
+	
 	private Long CustomerId2;
 	private String companyName2;
 	private String Adress2; 

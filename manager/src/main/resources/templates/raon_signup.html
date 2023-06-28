@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+
+<div layout:fragment="content" class="container my-3">
+    <div class="my-3 border-bottom">
+        <div>
+            <h4>SIGN UP</h4>
+        </div>
+    </div>
+    <form th:action="@{/raonuser/signup}" th:object="${raonuserCreateForm}" method="post">
+        <div class="mb-3">
+            <label for="username" class="form-label">ユーザー名</label>
+            <input type="text" th:field="*{username}" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">PASSWORD</label>
+            <input type="password" th:field="*{password}" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="passwordRe" class="form-label">PASSWORD確認</label>
+            <input type="password" th:field="*{passwordRe}" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">EMAIL</label>
+            <input type="email" th:field="*{userEmail}" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-info">SIGN IN</button>
+    </form>
+</div>
+</html>
