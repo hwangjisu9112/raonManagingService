@@ -27,32 +27,32 @@ public class RaonUserController {
 	}
 
 	@PostMapping("/signup")
-	public String SignUp(@Valid RaonUserCreateForm raonUserCreateForm, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return "raon_signup";
-		}
+	public String signUp(@Valid RaonUserCreateForm raonUserCreateForm, BindingResult bindingResult) {
+	    if (bindingResult.hasErrors()) {
+	        return "raon_signup";
+	    }
 
-		if (!raonUserCreateForm.getPassword().equals(raonUserCreateForm.getPasswordRe())) {
-			bindingResult.rejectValue("passwordRe", "passwordInCorrect", "パスワードが違います");
-			return "raon_signup";
-		}
-	try {
-		raonuserService.create(raonUserCreateForm.getUsername(), raonUserCreateForm.getUserEmail(),
-				raonUserCreateForm.getPassword());
-		
-    }catch(DataIntegrityViolationException e) {
-        e.printStackTrace();
-        bindingResult.reject("signupFailed", "もう登録されているユーザーです。");
-        return "raon_signup";
-    }catch(Exception e) {
-        e.printStackTrace();
-        bindingResult.reject("signupFailed", e.getMessage());
-        return "raon_signup";
-    }
+	    if (!raonUserCreateForm.getPassword().equals(raonUserCreateForm.getPasswordRe())) {
+	        bindingResult.rejectValue("passwordRe", "passwordIncorrect", "パスワードが違います");
+	        return "raon_signup";
+	    }
 
-		return "redirect:/";
+	    try {
+	    	raonuserService.create(raonUserCreateForm.getUsername(),
+                    raonUserCreateForm.getPassword(),
+                    raonUserCreateForm.getEmployeeId());
+	    } catch (DataIntegrityViolationException e) {
+	        e.printStackTrace();
+	        bindingResult.reject("signupFailed", "もう登録されているユーザーです。");
+	        return "raon_signup";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        bindingResult.reject("signupFailed", e.getMessage());
+	        return "raon_signup";
+	    }
+
+	    return "redirect:/";
 	}
-	
 	
 	@GetMapping("/login")
 	public String login() {

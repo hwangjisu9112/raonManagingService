@@ -4,11 +4,15 @@ import java.time.LocalDate;
 
 import org.springframework.validation.annotation.Validated;
 
+import com.example.raon.user.RaonUser;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
@@ -31,18 +35,17 @@ public class Employee {
 	private Long EmployeeId;
 
 	private String employeeName;
-    @Pattern(regexp = "[a-zA-Z]*", message = "英語で作成してください。")
+	@Pattern(regexp = "[a-zA-Z]*", message = "英語で作成してください。")
 	private String NameEng;
-	
-    @Pattern(regexp = "[\\p{IsHiragana}\\p{IsKatakana}\\p{IsHan}ー]*", message = "日本語で作成してください.")
+
+	@Pattern(regexp = "[\\p{IsHiragana}\\p{IsKatakana}\\p{IsHan}ー]*", message = "日本語で作成してください.")
 	private String NameJp;
 
 	@Email
-	@Column(unique = true)
 	private String EmployeeEmail;
 	@Email
 	private String PersonalEmail;
-	
+
 	private String EmployeePhone;
 
 	private String Address;
@@ -58,9 +61,11 @@ public class Employee {
 	private LocalDate JoinDate;
 
 	private LocalDate BirthDate;
-	@Size(min=1, max=3)
+
 	private Integer PayDate;
 
-	private Long CustomerId;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private RaonUser user;
 
 }
