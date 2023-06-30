@@ -9,32 +9,32 @@
 <body>
 <nav th:replace="~{navbar :: navbarFragment}"></nav><br>
 
-<span class="nav-link" sec:authorize="isAuthenticated()">WELCOME 「　<span th:text="${#authentication.principal.username}"></span>　」様</span>
-            
-<h2>社員管理</h2>
-<div>
+
+  <div class="container">          
+<h2>🗣社員管理</h2>
+
 		<a class="btn btn-outline-primary btn-lg" th:href="@{employee/enroll}">社員登録</a>
 		<a class="btn btn-outline-primary btn-lg" th:href="@{employee/list}">社員一覧</a><br>
 </div><br><br>
-<h2>取引先</h2>
-<div role="group">
+ <div class="container">    
+<h2>🤝取引先管理</h2>
+
 		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()"  th:href="@{customer/enroll}">取引先登録</a>
 		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()"  th:href="@{customer/list}">取引先一覧</a><br>
 </div><br><br>
-<h2>勤怠</h2>
+ <div class="container">  
+<h2>🕰勤怠管理</h2>
 		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{attendance/attend}">勤怠管理</a>
 		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{'attendance/list/' + ${#strings.substringBefore(#authentication.principal.username, '@')}}">
     勤怠記録
 </a>
-<br><br><br>
-
-
-		<h2>請求書</h2>
+</div><br><br>
+ <div class="container"> 
+<h2>📠請求書</h2>
+		
+		<a class="btn btn-outline-primary btn-lg" th:href="@{bill/enroll}">請求書作成</a>
+		<a class="btn btn-outline-primary btn-lg" th:href="@{bill/list}">請求書一覧</a>
 		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()"  th:href="@{bill/choose}"> 請求書管理</a>
-	
-<a class="btn btn-outline-primary btn-lg" th:href="@{customer2/enroll}">test</a>
-<a class="btn btn-outline-primary btn-lg" th:href="@{customer2/list}">test2</a><br>
-
-
+</div>
 </body>
 </html>

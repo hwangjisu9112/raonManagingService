@@ -36,9 +36,12 @@
                 <li>
                      	<a class="nav-link"  sec:authorize="isAuthenticated()" href="#">UPDATE（未実装）</a>
                 </li>
-         
+         		<li>
+         		    <span class="nav-link" sec:authorize="isAuthenticated()">WELCOME 「　<span th:text="${#authentication.principal.username}"></span>　」様</span>
+                </li>
             </ul>
         </div>
     </div>
+    
 </nav>
 </html>
