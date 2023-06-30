@@ -32,9 +32,10 @@
                 <li>
                     <a class="nav-link"  sec:authorize="isAnonymous()" th:href="@{/raonuser/login}">LOGIN</a>
                 	<a class="nav-link"  sec:authorize="isAuthenticated()" th:href="@{/raonuser/logout}">LOGOUT</a>
-                	
                 </li>
-                
+                <li>
+                     	<a class="nav-link"  sec:authorize="isAuthenticated()" href="#">UPDATE（未実装）</a>
+                </li>
          
             </ul>
         </div>

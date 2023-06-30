@@ -16,6 +16,8 @@ public class RaonUserCreateForm {
     @Email
     @NotEmpty
     private String username;
+    
+    private String nameEmployee;
 
     @NotEmpty
     @Length(min = 4)
@@ -26,4 +28,6 @@ public class RaonUserCreateForm {
     private String passwordRe;
 
     private Employee employeeId;
+    
+   
 }

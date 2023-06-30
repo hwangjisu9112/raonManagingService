@@ -39,6 +39,7 @@ public class RaonUserController {
 
 	    try {
 	    	raonuserService.create(raonUserCreateForm.getUsername(),
+	    			raonUserCreateForm.getNameEmployee(),
 	                raonUserCreateForm.getPassword(),
 	                raonUserCreateForm.getEmployeeId());
 	    } catch (DataIntegrityViolationException e) {

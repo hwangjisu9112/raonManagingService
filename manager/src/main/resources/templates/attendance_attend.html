@@ -9,7 +9,7 @@
 <body>
 	<nav th:replace="~{navbar :: navbarFragment}"></nav>
 	<div class="container my-3">
-		<span class="input-group-text" id="addon-wrapping">出社及び退社</span><br>
+		<span class="input-group-text" id="addon-wrapping">出社　/　退社　/　勤怠一覧</span><br>
 
 		<form th:action="@{/attendance/attend/checkin}" method="post">
 
@@ -34,7 +34,8 @@
 			<button type="submit" value="checkOut" class="btn btn-lg btn-warning">退社</button>
 		</form>
 		<br> <br>
-		
+	
+			
 	</div>
 </body>
 </html>

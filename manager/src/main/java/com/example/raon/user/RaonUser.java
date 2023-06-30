@@ -29,6 +29,8 @@ public class RaonUser {
     @Column(unique = true)
     private String username;
  
+    private String nameEmployee;
+    
     @Length(min=4)
     private String password;
     
