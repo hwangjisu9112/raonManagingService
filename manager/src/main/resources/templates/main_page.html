@@ -10,7 +10,7 @@
 <nav th:replace="~{navbar :: navbarFragment}"></nav><br>
 <h2>社員管理</h2>
 <div>
-		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAnonymous()" th:href="@{employee/enroll}">社員登録</a>
+		<a class="btn btn-outline-primary btn-lg" . th:href="@{employee/enroll}">社員登録</a>
 		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()"  th:href="@{employee/list}">社員一覧</a><br>
 </div><br><br>
 <h2>取引先</h2>
@@ -27,9 +27,7 @@
 
 <a class="btn btn-outline-primary btn-lg" th:href="@{customer2/enroll}">test</a>
 <a class="btn btn-outline-primary btn-lg" th:href="@{customer2/list}">test2</a><br>
-<!--<h2>請求書</h2>
-		<a class="btn btn-outline-primary btn-lg" th:href="insertStudent"> test</a>
-</div>-->
+
 
 </body>
 </html>

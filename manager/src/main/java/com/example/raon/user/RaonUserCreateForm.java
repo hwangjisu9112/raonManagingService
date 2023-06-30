@@ -3,6 +3,7 @@ package com.example.raon.user;
 import org.hibernate.validator.constraints.Length;
 
 import com.example.raon.employee.Employee;
+import org.hibernate.validator.constraints.Length;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -24,5 +25,5 @@ public class RaonUserCreateForm {
     @Length(min = 4)
     private String passwordRe;
 
-    private Long employeeId;
+    private Employee employeeId;
 }

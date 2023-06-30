@@ -39,8 +39,8 @@ public class RaonUserController {
 
 	    try {
 	    	raonuserService.create(raonUserCreateForm.getUsername(),
-                    raonUserCreateForm.getPassword(),
-                    raonUserCreateForm.getEmployeeId());
+	                raonUserCreateForm.getPassword(),
+	                raonUserCreateForm.getEmployeeId());
 	    } catch (DataIntegrityViolationException e) {
 	        e.printStackTrace();
 	        bindingResult.reject("signupFailed", "もう登録されているユーザーです。");

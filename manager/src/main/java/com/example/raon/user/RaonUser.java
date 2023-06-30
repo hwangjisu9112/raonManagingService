@@ -24,7 +24,7 @@ public class RaonUser {
     private Long raonId;
 
     
-    //hmm...
+    //「springsecurityでloginするためには、変数名をusernameに定義する必要。。。」
     @Email
     @Column(unique = true)
     private String username;
@@ -32,8 +32,7 @@ public class RaonUser {
     @Length(min=4)
     private String password;
     
-    
     @OneToOne(mappedBy = "user")
-    private Employee employee; 
+    private Employee employee;
 
 }

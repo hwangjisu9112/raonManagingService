@@ -10,28 +10,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
 
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class RaonUserService {
-	
-	private final RaonUserReository raonUserReository ;
-    private final EmployeeRepository employeeRepository;
 
-	private final PasswordEncoder passwordEncoder ; 
-	
-	
-    public RaonUser create(String username, String password, Long employeeId) {
+    private final RaonUserReository raonUserRepository;
+    private final EmployeeRepository employeeRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public RaonUser create(String username, String password, Employee employee) {
         RaonUser user = new RaonUser();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
 
-        Employee employee = employeeRepository.findById(employeeId)
-                .orElseThrow(() -> new IllegalArgumentException("社員番号（EmployeeID）を確認してください　： " + employeeId));
+        Employee employeeEntity = employeeRepository.findById(employee.getEmployeeId())
+                .orElseThrow(() -> new IllegalArgumentException("社員番号（EmployeeID）を確認してください　： " + employee.getEmployeeId()));
 
-        user.setEmployee(employee);
+        user.setEmployee(employeeEntity);
 
-        raonUserReository.save(user);
+        raonUserRepository.save(user);
         return user;
     }
-
 }
