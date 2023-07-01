@@ -9,33 +9,26 @@
 <body>
 	<nav th:replace="~{navbar :: navbarFragment}"></nav>
 	<div class="container my-3">
-		<span class="input-group-text" id="addon-wrapping">出社　/　退社　/　勤怠一覧</span><br>
+		<span class="input-group-text" id="addon-wrapping">出社 / 退社 /
+			勤怠一覧</span><br>
+		<div>
+			<form th:action="@{/attendance/attend/checkin}" method="post">
+				<input type="hidden" name="name"
+					th:value="${#strings.substringBefore(#authentication.principal.username, '@')}">
+				<button type="submit" class="btn btn-outline-primary btn-lg">
+					🕘出社🕘</button>
+			</form>
+		</div>
+		<br><br>
+		<div>
+			<form th:action="@{/attendance/attend/checkout}" method="post">
+				<input type="hidden" name="name"
+					th:value="${#strings.substringBefore(#authentication.principal.username, '@')}">
+				<button type="submit" class="btn btn-outline-primary btn-lg">
+					👋退社👋</button>
+			</form>
+		</div>
 
-		<form th:action="@{/attendance/attend/checkin}" method="post">
-
-			<br> <select id="name" name="name" required
-				class="btn btn-secondary btn-lg dropdown-toggle">
-				<option value="" disabled selected>-------------名前-------------</option>
-				<option th:each="employee : ${employees}"
-					th:value="${employee.employeeName}"
-					th:text="${employee.employeeName}"></option>
-			</select>
-			<button type="submit" value="checkIn" class="btn btn-lg btn-info">出社</button>
-		</form>
-		<br> <br>
-		<form th:action="@{/attendance/attend/checkout}" method="post">
-			<select id="name" name="name" required
-				class="btn btn-secondary btn-lg dropdown-toggle">
-				<option value="" disabled selected>-------------名前-------------</option>
-				<option th:each="employee : ${employees}"
-					th:value="${employee.employeeName}"
-					th:text="${employee.employeeName}"></option>
-			</select>
-			<button type="submit" value="checkOut" class="btn btn-lg btn-warning">退社</button>
-		</form>
-		<br> <br>
-	
-			
 	</div>
 </body>
 </html>
