@@ -18,18 +18,15 @@ public class RaonUserService {
     private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public RaonUser create(String username, String ename, String password, Employee employeeId) {
-        RaonUser u = new RaonUser();
-        u.setUsername(username);
-        u.setNameEmployee(ename);
-        u.setPassword(passwordEncoder.encode(password));
+    public RaonUser create(RaonUser raonUser) {
+        raonUser.setPassword(passwordEncoder.encode(raonUser.getPassword()));
 
-        Employee e = employeeRepository.findById(employeeId.getEmployeeId())
-                .orElseThrow(() -> new IllegalArgumentException("社員番号（EmployeeID）を確認してください　： " + employeeId.getEmployeeId()));
+        Employee e = employeeRepository.findById(raonUser.getEmployee().getEmployeeId())
+                .orElseThrow(() -> new IllegalArgumentException("社員番号（EmployeeID）を確認してください　： " + raonUser.getEmployee().getEmployeeId()));
 
-        u.setEmployee(e);
+        raonUser.setEmployee(e);
 
-        raonUserRepository.save(u);
-        return u;
+        raonUserRepository.save(raonUser);
+        return raonUser;
     }
 }
