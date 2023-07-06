@@ -1,5 +1,7 @@
 package com.example.raon.invoice;
 
-public interface InvoiceRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface InvoiceRepository extends JpaRepository<Invoice, Long>{
 
 }

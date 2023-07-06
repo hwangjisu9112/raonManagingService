@@ -43,7 +43,7 @@ public class EmployeeContoller {
 	@GetMapping("/enroll")
 	public String EnrollEmployee() {
 
-		return "enroll_employee";
+		return "employee_enroll";
 	}
 
 	// 社員登録
@@ -65,7 +65,7 @@ public class EmployeeContoller {
 		Employee employee = employeeService.getEmployeeID(id);
 		model.addAttribute("employee", employee);
 
-		return "update_employee";
+		return "employee_update";
 	}
 
 	// 社員情報更新

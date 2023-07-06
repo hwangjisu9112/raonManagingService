@@ -15,7 +15,7 @@
 			<form th:action="@{/attendance/attend/checkin}" method="post">
 				<input type="hidden" name="name"
 					th:value="${#strings.substringBefore(#authentication.principal.username, '@')}">
-				<button type="submit" class="btn btn-outline-primary btn-lg">
+				<button type="submit" class="btn btn-success btn-lg">
 					🕘出社🕘</button>
 			</form>
 		</div>
@@ -24,7 +24,7 @@
 			<form th:action="@{/attendance/attend/checkout}" method="post">
 				<input type="hidden" name="name"
 					th:value="${#strings.substringBefore(#authentication.principal.username, '@')}">
-				<button type="submit" class="btn btn-outline-primary btn-lg">
+				<button type="submit" class="btn btn-dark btn-lg">
 					👋退社👋</button>
 			</form>
 		</div>

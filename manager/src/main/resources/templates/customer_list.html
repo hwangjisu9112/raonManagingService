@@ -1,58 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
-
 	<title>Raon</title>
-	<script>
 
-		function popup() {
-			document.getElementById("text1").value = "1";
-			window.open('./subtest', 'win2', 'width=500, height=500');
-
-		}
-
-		function popup2() {
-			window.open('', "contFlow", 'width=500, height=500');
-			window.document.myform.action = 'subtest2';
-			window.document.myform.target = 'contFlow';
-			document.getElementById("text1").value = "1";
-			window.document.myform.submit();
-		}
-
-		function setload() {
-
-			document.getElementById("text1").value = "1";
-			window.document.myform.submit();
-
-		}
-
-		function setload2() {
-			//alert("eee");
-
-			document.getElementById("text1").value = "1";
-			window.location.reload();
-
-		}
-
-		function loadf() {
-			if (document.getElementById("text1").value == "1") {
-				alert("a10");
-				location.hash = "a10";
-				return false;
-			}
-
-
-		}
-
-	</script>
 </head>
-
-<body onload="loadf()">
 	<nav th:replace="~{navbar :: navbarFragment}"></nav>
-
 	<form name="myform">
 
 		<table class="table">
@@ -73,53 +27,14 @@
 					<td th:text="${customer.adress}"></td>
 					<td th:text="${customer.phoneNo}"></td>
 					<td>
-						<a th:href="@{/customer/delete/{id}(id=${customer.customerId})}">❌</a>
+						<a th:href="@{/customer/delete/{id}(id=${customer.customerId})}" class="delete btn btn-sm btn-outline-secondary">❌</a>
 					</td>
 					<td>
-						<a th:href="@{/customer/update/{id}(id=${customer.customerId})}">🪛</a>
+						<a th:href="@{/customer/update/{id}(id=${customer.customerId})}" class="delete btn btn-sm btn-outline-secondary">🪛</a>
 					</td>
 
 			</tbody>
-		</table>
-
-		<!--paging -->
-		<!--<div aria-label="Page navigation example">
-	<ul class="pagination justify-content-center">
-		<li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-			<a class="page-link" th:href="@{|?page=${paging.number-1}|}"> 
-			<span>前に</span>
-		</a></li>
-		<li class="page-link" th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
-			th:if="${page >= paging.number-5 and page <= paging.number+5}"
-			th:classappend="${page == paging.number} ? 'active'">
-			<a class="page-item"
-			th:text="${page}" th:href="@{|?page=${page}|}"></a></li>
-		<li class="page-link" th:classappend="${!paging.hasNext} ? 'disabled'">
-			<a class="page-item" th:href="@{|?page=${paging.number+1}|}"> <span>次に</span>
-		</a></li>
-	</ul>
-</div>-->
-		<!--
-<div th:if="${!paging.isEmpty()}" > 
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-                <a class="page-link"
-                    th:href="@{|?page=${paging.number-1}|}">
-                    <span>前に</span>
-                </a>
-            </li>
-            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
-                th:classappend="${page == paging.number} ? 'active'" 
-                class="page-item">
-                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
-            </li>
-            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
-                    <span>次に</span>
-                </a>
-            </li>
-        </ul>-->
-		
+		</table>	
 		
 		
 	</form>

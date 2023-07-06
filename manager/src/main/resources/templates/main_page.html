@@ -7,34 +7,55 @@
 <title>Raon</title>
 </head>
 <body>
-<nav th:replace="~{navbar :: navbarFragment}"></nav><br>
+	<nav th:replace="~{navbar :: navbarFragment}"></nav>
+	<br>
 
 
-  <div class="container">          
-<h2>🗣社員管理</h2>
+	<div class="container">
+		<h2>📜使用説明</h2>
 
-		<a class="btn btn-outline-primary btn-lg" th:href="@{employee/enroll}">社員登録</a>
-		<a class="btn btn-outline-primary btn-lg" th:href="@{employee/list}">社員一覧</a><br>
-</div><br><br>
- <div class="container">    
-<h2>🤝取引先管理</h2>
+		<a class="btn btn-outline-dark btn-lg">使用説明（未実装）</a>
+	</div>
+	<br>
+	<br>
+	<div class="container">
+	<h2>🗣社員管理</h2>
 
-		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()"  th:href="@{customer/enroll}">取引先登録</a>
-		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()"  th:href="@{customer/list}">取引先一覧</a><br>
-</div><br><br>
- <div class="container">  
-<h2>🕰勤怠管理</h2>
-		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{attendance/attend}">勤怠管理</a>
-		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{'attendance/list/' + ${#strings.substringBefore(#authentication.principal.username, '@')}}">
-    勤怠記録
-</a>
-</div><br><br>
- <div class="container"> 
-<h2>📠請求書</h2>
-		
-		<a class="btn btn-outline-primary btn-lg" th:href="@{bill/enroll}">請求書作成</a>
-		<a class="btn btn-outline-primary btn-lg" th:href="@{bill/list}">請求書一覧</a>
-		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()"  th:href="@{bill/choose}"> 請求書管理</a>
-</div>
+	<a class="btn btn-outline-primary btn-lg" th:href="@{employee/enroll}">社員登録</a>
+	<a class="btn btn-outline-primary btn-lg"
+		 th:href="@{employee/list}">社員一覧</a>
+	<br>
+	</div>
+	<br>
+	<br>
+	<div class="container">
+		<h2>🤝取引先管理</h2>
+
+		<a class="btn btn-outline-primary btn-lg"
+			 th:href="@{customer/enroll}">取引先登録</a>
+		<a class="btn btn-outline-primary btn-lg"
+			 th:href="@{customer/list}">取引先一覧</a><br>
+	</div>
+	<br>
+	<br>
+	<div class="container">
+		<h2>🕰勤怠管理</h2>
+		<a class="btn btn-outline-primary btn-lg"
+			sec:authorize="isAuthenticated()"
+			 th:href="@{attendance/attend}">勤怠管理</a>
+		<a class="btn btn-outline-primary btn-lg"
+			sec:authorize="isAuthenticated()"
+			th:href="@{'attendance/list/' + ${#strings.substringBefore(#authentication.principal.username, '@')}}">
+			勤怠記録 </a>
+	</div>
+	<br>
+	<br>
+	<div class="container">
+		<h2>📠請求書</h2>
+
+		<a class="btn btn-outline-primary btn-lg" th:href="@{invoice/write}">請求書作成</a>
+		<a class="btn btn-outline-primary btn-lg" th:href="@{invoice/board}">請求書一覧</a>
+		<a class="btn btn-outline-primary btn-lg" th:href="@{bill/choose}"> 請求書管理</a>
+	</div>
 </body>
 </html>

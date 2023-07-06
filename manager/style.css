@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+#topnum {
+	text-align: center;
+	border: 1px solid rgb(0, 0, 0);
+	float: right;
+	border-collapse: collapse;
+	margin-right: 5%;
+	border-width: 3q;
+}
+
+#청구서 {
+	font-size: 40px;
+	font-weight: 700;
+	text-align: center;
+}
+
+#회사명 {
+	font-weight: 700;
+	text-decoration-line: underline;
+}
+
+#두줄밑줄 {
+	text-decoration-line: underline;
+	text-decoration-style: double;
+	font-size: 30px;
+	font-weight: 500;
+}
+
+#maintable {
+	border: 1px solid black;
+	width: 90%;
+	border-collapse: collapse;
+	border-width: 3q;
+}
+
+#centernum {
+	text-align: center;
+}
+
+#rightnum {
+	text-align: right;
+}
+
+#bank {
+	border: 3px solid black;
+	float: left;
+	margin-left: 10%;
+	border-width: 30%;
+}

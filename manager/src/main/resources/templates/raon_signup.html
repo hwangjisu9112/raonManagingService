@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
 <meta charset="UTF-8">
 
 <div layout:fragment="content" class="container my-3">
@@ -32,7 +33,9 @@
 			<label for="employeeId" class="form-label">Employee ID</label> <input
 				type="text" th:field="*{employee.employeeId}" class="form-control">
 		</div>
-		<button type="submit" class="btn btn-info">社員メールを生成</button>
+		<button type="submit" class="btn btn-primary">社員メールを生成</button>
+		<a href="/" class="btn btn-dark">メインへ</a>
+		
 	</form>
 </div>
 </html>

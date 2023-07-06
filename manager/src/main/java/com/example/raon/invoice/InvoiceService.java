@@ -1,5 +1,11 @@
 package com.example.raon.invoice;
 
-public class InvoiceService {
+import java.util.List;
+
+import com.example.raon.customer.Customer;
+
+public interface InvoiceService {
+
+	List<Customer> getAllCustomers();
 
 }

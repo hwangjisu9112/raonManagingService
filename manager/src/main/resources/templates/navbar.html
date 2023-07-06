@@ -7,23 +7,6 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
-<script src="//code.jquery.com/jquery.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
-
-<div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    一覧 <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu">
-    <li><a th:href="@{employee/enroll}">１</a></li>
-    <li><a th:href="@{employee/list}">2</a></li>
-    <li><a th:href="@{customer/enroll}">3</a></li>
-    <li><a th:href="@{customer/list}">4</a></li>
- 
-  </ul>
-</div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
                 <li class="nav-item">
@@ -37,7 +20,7 @@
                      	<a class="nav-link"  sec:authorize="isAuthenticated()" href="#">UPDATE（未実装）</a>
                 </li>
          		<li>
-         		    <span class="nav-link" sec:authorize="isAuthenticated()">WELCOME 「　<span th:text="${#authentication.principal.username}"></span>　」様</span>
+         		    <span class="nav-link" sec:authorize="isAuthenticated()">「<strong><span th:text="${#authentication.principal.username}"></span></strong>」 様</span>
                 </li>
             </ul>
         </div>

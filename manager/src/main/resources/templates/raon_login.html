@@ -1,7 +1,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
 <meta charset="UTF-8">
 
 <div layout:fragment="content" class="container my-3">
+	<div class="my-3 border-bottom">
+		<div>
+			<h4>L O G I N</h4>
+		</div>
+	</div>
     <form th:action="@{/raonuser/login}" method="post">
         <div th:if="${param.error}">
             <div class="alert alert-danger">
@@ -16,7 +22,8 @@
             <label for="password" class="form-label">パスワード</label>
             <input type="password" name="password" id="password" class="form-control">
         </div>
-        <button type="submit" class="btn btn-primary">LOGIN</button>
+        <button type="submit" class="btn btn-primary">ログイン</button>
+        <a href="/" class="btn btn-dark">メインへ</a>
     </form>
 </div>
 </html>
