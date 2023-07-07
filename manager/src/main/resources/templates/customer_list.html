@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
-	<title>Raon</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<title>Raon</title>
 
 </head>
-	<nav th:replace="~{navbar :: navbarFragment}"></nav>
-	<form name="myform">
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<div class="container my-3">
+	<span class="input-group-text" id="addon-wrapping">取引先登録</span>
+<br><br>
 
-		<table class="table">
-			<thead class="table-dark">
-				<tr>
-					<th>企業 ID</th>
-					<th>企業名</th>
-					<th>アドレス</th>
-					<th>電話番号</th>
-					<th>削除</th>
-					<th>修正</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="customer, loop : ${paging}">
-					<td th:text="${customer.customerId}"></td>
-					<td th:text="${customer.companyName}"></td>
-					<td th:text="${customer.adress}"></td>
-					<td th:text="${customer.phoneNo}"></td>
-					<td>
-						<a th:href="@{/customer/delete/{id}(id=${customer.customerId})}" class="delete btn btn-sm btn-outline-secondary">❌</a>
-					</td>
-					<td>
-						<a th:href="@{/customer/update/{id}(id=${customer.customerId})}" class="delete btn btn-sm btn-outline-secondary">🪛</a>
-					</td>
 
-			</tbody>
-		</table>	
-		
-		
-	</form>
+<table class="table">
+	<thead class="table-dark">
+		<tr>
+			<th>企業 ID</th>
+			<th>企業名</th>
+			<th>アドレス</th>
+			<th>電話番号</th>
+			<th>削除</th>
+			<th>修正</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="customer, loop : ${paging}">
+			<td th:text="${customer.customerId}"></td>
+			<td th:text="${customer.companyName}"></td>
+			<td th:text="${customer.adress}"></td>
+			<td th:text="${customer.phoneNo}"></td>
+			<td><a
+				th:href="@{/customer/delete/{id}(id=${customer.customerId})}"
+				class="delete btn btn-sm btn-outline-secondary">❌</a></td>
+			<td><a
+				th:href="@{/customer/update/{id}(id=${customer.customerId})}"
+				class="delete btn btn-sm btn-outline-secondary">🪛</a></td>
+	</tbody>
+</table>
+</div>
 </body>
 
 </html>

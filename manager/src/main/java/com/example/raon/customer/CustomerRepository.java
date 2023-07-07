@@ -19,6 +19,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	//社名で取引先を検索
 	Customer findByCompanyName(String companyName);
 	
+	//取引先を全て検索　請求書ページ用
     @Query("SELECT c FROM Customer c")
     List<Customer> getAllCustomers();
 

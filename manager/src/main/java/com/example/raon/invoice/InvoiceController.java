@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.raon.customer.Customer;
+import com.example.raon.employee.Employee;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,9 +28,11 @@ public class InvoiceController {
 
     @GetMapping("/write")
     public String writeInvoice(Model model) {
-        List<Customer> customers = invoiceService.getAllCustomers();
-        model.addAttribute("customers", customers);
+        List<Customer> customer = invoiceService.getAllCustomers();
+        List<Employee> employee = invoiceService.getAllEmployees();
 
+        model.addAttribute("customers", customer);
+        model.addAttribute("employees", employee);
         return "invoice_write";
     }
 	

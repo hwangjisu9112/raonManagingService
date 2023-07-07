@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 //取引先のビジネスロジク
 public class CustomerService {
 	
-
 	private final CustomerRepository customerRepository;
 
 	//取引先のリストを全て検索
