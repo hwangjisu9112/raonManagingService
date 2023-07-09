@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
@@ -9,61 +10,65 @@
 	<nav th:replace="~{navbar :: navbarFragment}"></nav>
 	<div class="container my-3">
 		<span class="input-group-text" id="addon-wrapping"><strong>業務社向け請求書作成</strong></span>
-		<br> <br> <select required
-			class="btn btn-secondary btn-lg dropdown-toggle"
-			name="selectedCustomer">
-			<option value="" disabled selected>--------取引先名--------</option>
-			<option th:each="customer : ${customers}"
-				th:value="${customer.companyName}" th:text="${customer.companyName}"></option>
-		</select> <select required class="btn btn-secondary btn-lg dropdown-toggle"
-			name="selectedCustomer">
-			<option value="" disabled selected>--------アドレス--------</option>
-			<option th:each="customer : ${customers}"
-				th:value="${customer.Adress}" th:text="${customer.Adress}"></option>
-		</select> <select required class="btn btn-secondary btn-lg dropdown-toggle"
-			name="selectedCustomer">
-			<option value="" disabled selected>--------Tel--------</option>
-			<option th:each="customer : ${customers}"
-				th:value="${customer.PhoneNo}" th:text="${customer.PhoneNo}"></option>
-		</select> <select required class="btn btn-secondary btn-lg dropdown-toggle"
-			name="selectedEmployee">
-			<option value="" disabled selected>--------勤務社員--------</option>
-			<option th:each="employee : ${employee}"
-				th:value="${employee.employeeName}"
-				th:text="${employee.employeeName}"></option>
-		</select> </div>
-		<br>
-		<br>
-		<div class="input-group mb-3">
-			<label for=id class="input-group-text">請求書名</label> <input
-				type="text" id="id" name="id" class="form-control" required><br>
-		</div>
-		<div class="input-group mb-3">
-			<label for=totaltime class="input-group-text">総勤務時間 </label> <input
-				type="text" id="totaltime" name="totaltime" class="form-control">
-			<label for=plustime class="input-group-text">残業時間</label> <input
-				type="text" id="plustime" name="plustime" class="form-control">
-			<label for=losetime class="input-group-text">控除時間</label> <input
-				type="text" id="losetime" name="losetime" class="form-control"><br>
-		</div>
-		<div class="input-group mb-3">
-			<label for="today" class="input-group-text">作成日</label> <input
-				type="date" id="today" name="today" class="form-control"
-				min="2017-09-15" />
-		</div>
-		<div class="input-group mb-3">
-			<label for=price class="input-group-text">単価</label> <input
-				type="text" id="price" name="price" class="form-control"><br>
-		</div>
-		<br>
-		<br>
-		<br>
-		<div class="container">
-			<button type="submit" class="btn btn-lg btn-primary col-md-2">作成</button>
+		<form th:action="@{/invoice/write}" method="post">
 
-			<a href="/invoice/board" class="btn btn-lg btn-warning col-md-2">閲覧</a>
+			<br> <br> <select required
+				class="btn btn-secondary btn-lg dropdown-toggle" name="cpn">
+				<option value="" disabled selected>--------取引先名--------</option>
+				<option th:each="customer : ${customers}"
+					th:value="${customer.companyName}"
+					th:text="${customer.companyName}"></option>
+			</select> <select required class="btn btn-secondary btn-lg dropdown-toggle"
+				name="add">
+				<option value="" disabled selected>--------アドレス--------</option>
+				<option th:each="customer : ${customers}"
+					th:value="${customer.adress}" th:text="${customer.adress}"></option>
+			</select> <select required class="btn btn-secondary btn-lg dropdown-toggle"
+				name="tel">
+				<option value="" disabled selected>--------Tel--------</option>
+				<option th:each="customer : ${customers}"
+					th:value="${customer.phoneNo}" th:text="${customer.phoneNo}"></option>
+			</select> <select required class="btn btn-secondary btn-lg dropdown-toggle"
+				name="emp">
+				<option value="" disabled selected>--------勤務社員--------</option>
+				<option th:each="employee : ${employees}"
+					th:value="${employee.employeeName}" th:text="${employee.employeeName}"></option>
+			</select>
+	</div>
+	<br>
+	<br>
+	<div class="input-group mb-3">
+		<label for=title class="input-group-text">請求書名</label> <input
+			type="text" id="title" name="title" class="form-control" required><br>
+	</div>
+	<div class="input-group mb-3">
+		<label for=tw class="input-group-text">総勤務時間 </label> <input
+			type="text" id="tw" name="tw" class="form-control"> <label
+			for=ew class="input-group-text">残業時間</label> <input type="text"
+			id="ew" name="ew" class="form-control"> <label for=dw
+			class="input-group-text">控除時間</label> <input type="text" id="dw"
+			name="dw" class="form-control"><br>
+	</div>
+	<div class="input-group mb-3">
+		<label for="date" class="input-group-text">作成日</label> <input
+			type="date" id="date" name="date" class="form-control"
+			value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+			min="2017-09-15" />
+	</div>
+	<div class="input-group mb-3">
+		<label for=price class="input-group-text">単価 <input
+			type="text" class="input-group-text" id="price" name="price" required><br>
+	</div>
+	<br>
+	<br>
+	<br>
+	<div class="container">
+		<button type="submit" class="btn btn-lg btn-primary col-md-2">作成</button>
 
-			<a href="/" class="btn btn-lg btn-dark col-md-2">メインへ</a>
-		</div>
+		<a href="/invoice/board" class="btn btn-lg btn-warning col-md-2">閲覧</a>
+
+		<a href="/" class="btn btn-lg btn-dark col-md-2">メインへ</a>
+	</div>
+	</form>
 </body>
 </html>

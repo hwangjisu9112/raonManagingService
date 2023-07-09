@@ -15,6 +15,7 @@ public class Customer {
 	@Id
 	private Long CustomerId;
 	private String companyName;
+	//dk wkfahtcucuTek
 	private String Adress; 
 	private String PhoneNo;
 }

@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,24 +14,24 @@ import lombok.Setter;
 @Getter
 @Entity
 public class Invoice {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long invoiceId;
-	
-	private String invoiceTitle; 
-	
+
+	private String invoiceTitle;
+
 	private LocalDateTime issuedDate;
-	
+	@Positive
 	private Integer totalWorkhour;
-	
 	private Integer extraWorkhour;
-	
 	private Integer deductionWorkhour;
-	
+	@Positive
 	private Integer unitPrice;
 
-
-
+	private String companyName;
+	private String address;
+	private String telephoneNumber;
+	private String employeeName;
 
 }
