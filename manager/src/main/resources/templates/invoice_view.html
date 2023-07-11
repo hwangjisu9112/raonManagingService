@@ -34,16 +34,19 @@
 	<br><br>	
 	<p>Invoice ID: <span th:text="${invoice.invoiceId}"></span></p>
 	<p>Title: <span th:text="${invoice.invoiceTitle}"></span></p>
+	<p>Issued Date: <span th:text="${invoice.issuedDate}"></span></p>
 	
 	<p>Customer: <span th:text="${invoice.companyName}"></span></p>
 	<p>Employee: <span th:text="${invoice.employeeName}"></span></p>
-	<p>Total Work Hours: <span th:text="${invoice.totalWorkhour}"></span></p>
+	<p>Work Hours: <span th:text="${invoice.workhour}"></span></p>
 	<p>Extra Work Hours: <span th:text="${invoice.extraWorkhour}"></span></p>
 	<p>Deduction Work Hours: <span th:text="${invoice.deductionWorkhour}"></span></p>
 	
-	<p>Unit Price: <span th:text="${invoice.unitPrice}"></span></p>
-	<p>(Total + Extra - Deduction) <span>??? </span></p>
-	<p>(Total + Extra - Deduction) * Price <span>??? </span></p>
+	<p>Unit Price : <span th:text="${invoice.unitPrice}"></span></p>
+　　　　<p>WorkHour : <span th:text="${invoice.workhour + invoice.extraWorkhour - invoice.deductionWorkhour}"></span></p>
+    <p>(WorkHour + Extra - Deduction) * Price <span th:text="${(invoice.workhour + invoice.extraWorkhour - invoice.deductionWorkhour) * invoice.unitPrice}"></span></p>
+	<p>Tax rate  <span th:text="${invoice.tax}  + '%'"></span></p>
+		
 	
 	<h3>----------------------------------------------------</h3>
 	<table>

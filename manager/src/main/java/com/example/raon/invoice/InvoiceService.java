@@ -1,11 +1,10 @@
 package com.example.raon.invoice;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-
-import com.example.raon.attendance.Attendance;
 import com.example.raon.customer.Customer;
 import com.example.raon.customer.CustomerRepository;
 import com.example.raon.employee.Employee;
@@ -36,18 +35,28 @@ public class InvoiceService {
 	public List<Invoice> getInvoicebyId(Long id) {
 		return invoiceRepository.findByinvoiceId(id);
 	}
+	
+	//IDでinvoiceを検索
+	public Invoice getInvoice(Long id) {
+		Optional<Invoice> invoice = this.invoiceRepository.findById(id);
 
+		return invoice.get();
+
+	}
+
+	//touroku
 	public void write(
 			String cpn,
 			String add,
 			String tel,
 			String emp,
 			String title, 
-			LocalDateTime date, 
-			Integer tw, 
+			LocalDate date, 
+			Integer w, 
 			Integer ew, 
 			Integer dw,
-			Integer price) {
+			Integer price,
+			Integer tax) {
 
 		Invoice i = new Invoice();
 		i.setCompanyName(cpn);
@@ -56,11 +65,19 @@ public class InvoiceService {
 		i.setEmployeeName(emp);
 		i.setInvoiceTitle(title);
 		i.setIssuedDate(date);
-		i.setTotalWorkhour(tw);
+		i.setWorkhour(w);
 		i.setExtraWorkhour(ew);
 		i.setDeductionWorkhour(dw);
 		i.setUnitPrice(price);
+		i.setTax(tax);
 	    this.invoiceRepository.save(i);
+
+	}
+	
+	//削除
+	public void delete(Invoice invoice) {
+
+		this.invoiceRepository.delete(invoice);
 
 	}
 

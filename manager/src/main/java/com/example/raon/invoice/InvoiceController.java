@@ -1,5 +1,6 @@
 package com.example.raon.invoice;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -53,13 +54,14 @@ public class InvoiceController {
 							   @RequestParam String add,
 							   @RequestParam String emp,
 	                           @RequestParam String title,
-	                           @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
-	                           @RequestParam Integer tw,
+	                           @RequestParam LocalDate date,
+	                           @RequestParam Integer w,
 	                           @RequestParam Integer ew,
 	                           @RequestParam Integer dw,
-	                           @RequestParam Integer price) {
+	                           @RequestParam Integer price,
+	                           @RequestParam Integer tax) {
 
-	    invoiceService.write(cpn, tel, add, emp, title, date.atStartOfDay(), tw, ew, dw, price);
+	    invoiceService.write(cpn, tel, add, emp, title, date, w, ew, dw, price, tax);
 
 	    return "redirect:/";
 	}
@@ -71,5 +73,17 @@ public class InvoiceController {
 	    model.addAttribute("invoice", invoice);
 	    return "invoice_view";
 	}
+	
+	//削除
+	@GetMapping("/delete/{id}")
+	public String DeleteInvoice(Principal principal, @PathVariable("id") Long id) {
+		
+		Invoice invoice = this.invoiceService.getInvoice(id);
+
+		this.invoiceService.delete(invoice);
+		return "redirect:/invoice/board";
+	}
+	
+
 	
 }

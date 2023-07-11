@@ -1,5 +1,6 @@
 package com.example.raon.invoice;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -21,9 +22,9 @@ public class Invoice {
 
 	private String invoiceTitle;
 
-	private LocalDateTime issuedDate;
+	private LocalDate issuedDate;
 	@Positive
-	private Integer totalWorkhour;
+	private Integer workhour;
 	private Integer extraWorkhour;
 	private Integer deductionWorkhour;
 	@Positive
@@ -33,5 +34,9 @@ public class Invoice {
 	private String address;
 	private String telephoneNumber;
 	private String employeeName;
+	
+	private Integer totalWorkhour; 
+	private Integer tax ;
+	private Integer charges ; 
 
 }

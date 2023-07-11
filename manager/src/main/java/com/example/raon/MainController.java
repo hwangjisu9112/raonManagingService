@@ -16,5 +16,11 @@ public class MainController {
     public String Main() {
         return "main_page";
     }
+    
+	 // todo page
+    @GetMapping("/todo")
+    public String ToDo() {
+        return "todo";
+    }
 
 }
