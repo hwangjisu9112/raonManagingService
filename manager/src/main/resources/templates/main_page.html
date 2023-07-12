@@ -55,8 +55,8 @@
 	<div class="container">
 		<h2>📠請求書</h2>
 
-		<a class="btn btn-outline-primary btn-lg" th:href="@{invoice/write}">請求書作成</a>
-		<a class="btn btn-outline-primary btn-lg" th:href="@{invoice/board}">請求書一覧</a>
+		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{invoice/write}">請求書作成</a>
+		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{invoice/board}">請求書一覧</a>
 	</div>
 	<br><br><br>
 </body>

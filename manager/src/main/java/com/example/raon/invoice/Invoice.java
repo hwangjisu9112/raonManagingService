@@ -35,7 +35,6 @@ public class Invoice {
 	private String telephoneNumber;
 	private String employeeName;
 	
-	private Integer totalWorkhour; 
 	private Integer tax ;
 	private Integer charges ; 
 

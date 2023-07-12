@@ -70,6 +70,12 @@ public class InvoiceService {
 		i.setDeductionWorkhour(dw);
 		i.setUnitPrice(price);
 		i.setTax(tax);
+		
+		Integer crg = (w + ew - dw) * price * (100 - tax) / 100;
+
+		i.setCharges(crg);
+		    
+		
 	    this.invoiceRepository.save(i);
 
 	}

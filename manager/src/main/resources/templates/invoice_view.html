@@ -43,9 +43,9 @@
 	<p>Deduction Work Hours: <span th:text="${invoice.deductionWorkhour}"></span></p>
 	
 	<p>Unit Price : <span th:text="${invoice.unitPrice}"></span></p>
-　　　　<p>WorkHour : <span th:text="${invoice.workhour + invoice.extraWorkhour - invoice.deductionWorkhour}"></span></p>
-    <p>(WorkHour + Extra - Deduction) * Price <span th:text="${(invoice.workhour + invoice.extraWorkhour - invoice.deductionWorkhour) * invoice.unitPrice}"></span></p>
-	<p>Tax rate  <span th:text="${invoice.tax}  + '%'"></span></p>
+　　　　<p>Total WorkHour : <span th:text="${invoice.workhour + invoice.extraWorkhour - invoice.deductionWorkhour}"></span></p>
+	<p>Tax rate : <span th:text="${invoice.tax}  + '%'"></span></p>
+	<p>Charges(Total WorkHour X Unit Price) * (100 - Tax) / 100 : <span th:text="${invoice.charges}"></span></p>
 		
 	
 	<h3>----------------------------------------------------</h3>

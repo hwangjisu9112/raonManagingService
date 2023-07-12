@@ -50,8 +50,8 @@ public class InvoiceController {
 
 	@PostMapping("/write")
 	public String writeInvoice(@RequestParam String cpn,
-							   @RequestParam String tel,
 							   @RequestParam String add,
+							   @RequestParam String tel,
 							   @RequestParam String emp,
 	                           @RequestParam String title,
 	                           @RequestParam LocalDate date,
@@ -61,7 +61,7 @@ public class InvoiceController {
 	                           @RequestParam Integer price,
 	                           @RequestParam Integer tax) {
 
-	    invoiceService.write(cpn, tel, add, emp, title, date, w, ew, dw, price, tax);
+	    invoiceService.write(cpn, add, tel, emp, title, date, w, ew, dw, price, tax);
 
 	    return "redirect:/";
 	}
