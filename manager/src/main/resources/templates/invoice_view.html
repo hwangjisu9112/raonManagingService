@@ -4,65 +4,105 @@
 <head>
 <meta charset="UTF-8">
 
-<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
-
 </head>
-<h1>請求書</h1>
-	<h3>----------------------------------------------------</h3>
+<h3>----------------------------------------------------</h3>
 
-	<table>
-		<tr style="font-weight: 700;"><td>Raon株式会社</td></tr>
-		<tr style="font-weight: 600;"><td>〒169-0072</td></tr>
-		<tr style="font-weight: 600;"><td>東京都新宿区大久保2-1-8</td></tr>
-		<tr style="font-weight: 600;"><td>プラザ新大樹ビル本棟6階</td></tr>
-		<tr style="font-weight: 600;"><td>Tel：03-6265-9668</td></tr>
-	</table>
-	<h3>----------------------------------------------------</h3>
-	
-	<table id="topnum" style="width: 300px;">
-		<tr>
-			<td>請求書番号</td>
-			<td>番号</td>
-		</tr>
-		<tr>
-			<td>発行日</td>
-			<td><span th:text="${#temporals.format(#temporals.createNow(), 'yyyy/MM/dd')}"></span></td>
-		</tr>
-	</table>
-	<h3>----------------------------------------------------</h3>
-	
-	<br><br>	
-	<p>Invoice ID: <span th:text="${invoice.invoiceId}"></span></p>
-	<p>Title: <span th:text="${invoice.invoiceTitle}"></span></p>
-	<p>Issued Date: <span th:text="${invoice.issuedDate}"></span></p>
-	
-	<p>Customer: <span th:text="${invoice.companyName}"></span></p>
-	<p>Employee: <span th:text="${invoice.employeeName}"></span></p>
-	<p>Work Hours: <span th:text="${invoice.workhour}"></span></p>
-	<p>Extra Work Hours: <span th:text="${invoice.extraWorkhour}"></span></p>
-	<p>Deduction Work Hours: <span th:text="${invoice.deductionWorkhour}"></span></p>
-	
-	<p>Unit Price : <span th:text="${invoice.unitPrice}"></span></p>
-　　　　<p>Total WorkHour : <span th:text="${invoice.workhour + invoice.extraWorkhour - invoice.deductionWorkhour}"></span></p>
-	<p>Tax rate : <span th:text="${invoice.tax}  + '%'"></span></p>
-	<p>Charges(Total WorkHour X Unit Price) * (100 - Tax) / 100 : <span th:text="${invoice.charges}"></span></p>
-		
-	
-	<h3>----------------------------------------------------</h3>
-	<table>
-		<tr>
-			<td>振込先</td>
-			<td>りそな銀行　新宿支店</td>
-		</tr>
-		<tr> 
-			<td>口座番号</td>
-			<td>普通　3864527</td>
-		</tr>
-		<tr>
-			<td>口座名義人</td>
-			<td>Raon株式会社</td>
-		</tr>
-	</table>
+<table>
+	<tr style="font-weight: 700;">
+		<td>Raon株式会社</td>
+	</tr>
+	<tr style="font-weight: 600;">
+		<td>〒169-0072</td>
+	</tr>
+	<tr style="font-weight: 600;">
+		<td>東京都新宿区大久保2-1-8</td>
+	</tr>
+	<tr style="font-weight: 600;">
+		<td>プラザ新大樹ビル本棟6階</td>
+	</tr>
+	<tr style="font-weight: 600;">
+		<td>Tel：03-6265-9668</td>
+	</tr>
+</table>
+<h3>----------------------------------------------------</h3>
+
+<table id="topnum" style="width: 300px;">
+	<tr>
+		<td>請求書番号</td>
+		<td>番号</td>
+	</tr>
+	<tr>
+		<td>発行日</td>
+		<td><span
+			th:text="${#temporals.format(#temporals.createNow(), 'yyyy/MM/dd')}"></span></td>
+	</tr>
+</table>
+<h3>----------------------------------------------------</h3>
+
+<br>
+<br>
+<p>
+	Invoice ID: <span th:text="${invoice.invoiceId}"></span>
+</p>
+<p>
+	Title: <span th:text="${invoice.invoiceTitle}"></span>
+</p>
+<p>
+	Issued Date: <span th:text="${invoice.issuedDate}"></span>
+</p>
+
+<p>
+	Customer: <span th:text="${invoice.companyName}"></span>
+</p>
+<p>
+	Employee: <span th:text="${invoice.employeeName}"></span>
+</p>
+<p>
+	Work Hours: <span th:text="${invoice.workhour}"></span>
+</p>
+<p>
+	Extra Work Hours: <span th:text="${invoice.extraWorkhour}"></span>
+</p>
+<p>
+	Deduction Work Hours: <span th:text="${invoice.deductionWorkhour}"></span>
+</p>
+
+<p>
+	Unit Price : <span th:text="${invoice.unitPrice}"></span>
+</p>
+<p>
+	Total WorkHour : <span
+		th:text="${invoice.workhour + invoice.extraWorkhour - invoice.deductionWorkhour}"></span>
+</p>
+<p>
+	Tax rate : <span th:text="${invoice.tax}  + '%'"></span>
+</p>
+<p>
+	Charges(Total WorkHour X Unit Price) * (100 - Tax) / 100 : <span
+		th:text="${invoice.charges}"></span>
+</p>
+
+
+<h3>----------------------------------------------------</h3>
+<table>
+	<tr>
+		<td>振込先</td>
+		<td>りそな銀行 新宿支店</td>
+	</tr>
+	<tr>
+		<td>口座番号</td>
+		<td>普通 3864527</td>
+	</tr>
+	<tr>
+		<td>口座名義人</td>
+		<td>Raon株式会社</td>
+	</tr>
+</table>
+
+<h3>----------------------------------------------------</h3>
+<form th:if="${invoice != null}" th:action="@{/invoice/pdf/{id}(id=${invoice.invoiceId})}" method="get">
+    <button type="submit">Generate PDF</button>
+</form>
 </body>
 
 </html>

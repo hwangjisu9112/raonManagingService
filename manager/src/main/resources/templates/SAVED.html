@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table id="topnum" style="width: 300px;">
+	<tr>
+		<td
+			style="border: 1px solid black; border-width: 3q; font-weight: 600;">請求書番号</td>
+		<td
+			style="border: 1px solid black; border-width: 3q; font-weight: 600;">番号</td>
+	</tr>
+	<tr>
+		<td
+			style="border: 1px solid black; border-width: 3q; font-weight: 600;">発行日</td>
+		<td
+			style="border: 1px solid black; border-width: 3q; font-weight: 600;"><span
+			th:text="${invoice.issuedDate}"></span>
+		</th>
+	</tr>
+
+</table>
+<br>
+<br>
+<p id="청구서">請 求 書</p>
+<table style="margin-left: 10%; font-size: 30px;">
+	<tr style="font-weight: 700;">
+		<td id="회사명" th:text="${invoice.companyName}"></td>
+		<td>御中</td>
+
+	</tr>
+</table>
+<br>
+
+
+<table style="float: right; margin-right: 10%;">
+	<th>
+	<tr style="font-weight: 700;">
+		<td>Raon株式会社</td>
+	</tr>
+	<tr style="font-weight: 600;">
+		<td>〒169-0072</td>
+	</tr>
+	<tr style="font-weight: 600;">
+		<td>東京都新宿区大久保2-1-8</td>
+	</tr>
+	<tr style="font-weight: 600;">
+		<td>プラザ新大樹ビル本棟6階</td>
+	</tr>
+	<tr style="font-weight: 600;">
+		<td>Tel：03-6265-9668</td>
+	</tr>
+	</th>
+</table>
+
+<table style="margin-top: 70px; margin-left: 5%;">
+	<tr id="두줄밑줄" style="font-weight: 700;">
+		<td>合計金額</td>
+	</tr>
+</table>
+<br>
+<br>
+<table id="maintable" align="center" style="font-weight: 700;">
+	<tr style="background-color: darkgrey; text-align: center;">
+		<td style="border: 3px solid black; border-right: hidden;"></td>
+		<td style="border: 3px solid black; border-right: hidden;">商品名</td>
+		<td style="border: 3px solid black; border-right: hidden;">単価</td>
+		<td style="border: 3px solid black; border-right: hidden;">数量</td>
+		<td style="border: 3px solid black; border-right: hidden;">単位</td>
+		<td style="border: 3px solid black; border-right: hidden;">課税</td>
+		<td style="border: 3px solid black;">金額</td>
+	</tr>
+
+	<tr>
+		<td id="centernum"
+			style="border: 1px solid white; border-right-color: black;">1</td>
+		<td style="border: 1px solid white; border-right-color: black;"><span
+			th:text="${invoice.employeeName}"></span></td>
+		<!--商品名-->
+		<td id="rightnum"
+			style="border: 1px solid white; border-right-color: black;"><span
+			th:text="${invoice.unitPrice}  + 'YEN'"></span></td>
+		<!--単価-->
+		<td id="rightnum"
+			style="border: 1px solid white; border-right-color: black;"><span
+			th:text="${invoice.workhour}"></span></td>
+		<!--数量-->
+		<td id="centernum"
+			style="border: 1px solid white; border-right-color: black;">H</td>
+		<!--単位-->
+		<td style="border: 1px solid white; border-right-color: black;"><span
+			th:text="${invoice.tax}  + '%'"></span></td>
+		<!--課税-->
+		<td id="rightnum"><span
+			th:text="${(invoice.workhour) * invoice.unitPrice}"></span></td>
+		<!--金額-->
+	</tr>
+
+	<tr>
+		<td id="centernum"
+			style="border: 1px solid white; border-right-color: black;"></td>
+		<td style="border: 1px solid white; border-right-color: black;">
+			超過分</td>
+		<!--商品名-->
+		<td id="rightnum"
+			style="border: 1px solid white; border-right-color: black;"><span
+			th:text="${invoice.unitPrice}  + 'YEN'"></span></td>
+		<!--単価-->
+		<td id="rightnum"
+			style="border: 1px solid white; border-right-color: black;"><span
+			th:text="${invoice.extraWorkhour}"></span></td>
+		<!--数量-->
+		<td id="centernum"
+			style="border: 1px solid white; border-right-color: black;">H</td>
+		<!--単位-->
+		<td style="border: 1px solid white; border-right-color: black;"><span
+			th:text="${invoice.tax}  + '%'"></span></td>
+		<!--課税-->
+		<td id="rightnum"
+			style="border: 1px solid white; border-right-color: black;"><span
+			th:text="${(invoice.extraWorkhour) * invoice.unitPrice}"></span></td>
+		<!--金額-->
+	</tr>
+	<tr>
+		<td id="centernum"
+			style="border: 1px solid white; border-right-color: black;"></td>
+		<td style="border: 1px solid white; border-right-color: black;">
+			控除分</td>
+		<!--商品名-->
+		<td id="rightnum"
+			style="border: 1px solid white; border-right-color: black;"><span
+			th:text="${invoice.unitPrice}  + 'YEN'"></span></td>
+		<!--単価-->
+		<td id="rightnum"
+			style="border: 1px solid white; border-right-color: black;"><span
+			th:text="${invoice.deductionWorkhour}"></span></td>
+		<!--数量-->
+		<td id="centernum"
+			style="border: 1px solid white; border-right-color: black;">H</td>
+		<!--単位-->
+		<td style="border: 1px solid white; border-right-color: black;"><span
+			th:text="${invoice.tax}  + '%'"></span></td>
+		<!--課税-->
+		<td id="rightnum"
+			style="border: 1px solid white; border-right-color: black;"><span
+			th:text="${(invoice.deductionWorkhour) * invoice.unitPrice}"></span></td>
+		<!--金額-->
+	</tr>
+	<!--見えない単語-->
+	<tr
+		style="background-color: darkgrey; text-align: center; color: darkgrey;">
+		<td style="border: 1px solid white; border-right-color: black;">1
+		</td>
+		<td style="border: 1px solid white; border-right-color: black;">
+		</td>
+		<td style="border: 1px solid white; border-right-color: black;">
+		</td>
+		<td style="border: 1px solid white; border-right-color: black;">
+		</td>
+		<td style="border: 1px solid white; border-right-color: black;">
+		</td>
+		<td style="border: 1px solid white; border-right-color: black;">
+		</td>
+		<td></td>
+	</tr>
+</table>
+<table id="topnum" style="width: 25%;">
+	<tr>
+		<td style="border: 1px solid black; font-weight: 600;">小計</td>
+		<td style="border: 1px solid black; font-weight: 600;"><span
+			th:text="${(invoice.workhour + invoice.extraWorkhour - invoice.deductionWorkhour) * invoice.unitPrice}"></span></td>
+	</tr>
+	<tr>
+		<td style="border: 1px solid black; font-weight: 600;">消費税等</td>
+		<td style="border: 1px solid black; font-weight: 600;"><span
+			th:text="${invoice.tax}  + '%'"></span>
+	</tr>
+	<tr>
+		<td style="border: 1px solid black; font-weight: 600;">合計</td>
+		<td style="border: 1px solid black; font-weight: 600;"><span
+			th:text="${invoice.charges}"></span>
+	</tr>
+</table>
+<br>
+<table id="bank" style="width: 25%; font-weight: 600;">
+	<tr>
+		<td>振込先</td>
+		<td>りそな銀行 新宿支店</td>
+	</tr>
+	<tr>
+		<td>口座番号</ttd>
+		<td>普通 3864527
+		</th>
+	</tr>
+	<tr>
+		<td>口座名義人</ttd>
+		<td>Raon株式会社
+		</th>
+	</tr>
+</table>
+</body>
+</html>
