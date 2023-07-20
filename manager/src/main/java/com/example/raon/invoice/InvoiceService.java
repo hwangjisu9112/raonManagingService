@@ -3,11 +3,8 @@ package com.example.raon.invoice;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
+
 
 import com.example.raon.customer.Customer;
 import com.example.raon.customer.CustomerRepository;
@@ -16,24 +13,6 @@ import com.example.raon.employee.EmployeeRepository;
 
 import lombok.RequiredArgsConstructor;
 
-import org.w3c.dom.Document;
-import org.xhtmlrenderer.pdf.ITextRenderer;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-
-import org.jsoup.Jsoup;
-import org.jsoup.helper.W3CDom;
-import org.w3c.dom.Document;
-import org.xhtmlrenderer.pdf.ITextRenderer;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 
 @Service
 @RequiredArgsConstructor
@@ -43,8 +22,6 @@ public class InvoiceService {
 	private final EmployeeRepository employeeRepository;
 	private final InvoiceRepository invoiceRepository;
 	
-	private final TemplateEngine templateEngine;
-
 	public List<Customer> getAllCustomers() {
 		return customerRepository.findAll();
 	}
@@ -101,29 +78,5 @@ public class InvoiceService {
 
 	}
 
-	private void generatePdfFromInvoiceData(Invoice invoice) {
-		try {
-			Context context = new Context();
-			context.setVariable("invoice", invoice);
-
-			// Process the Thymeleaf template to HTML
-			String htmlContent = templateEngine.process("your-template", context);
-
-			ITextRenderer renderer = new ITextRenderer();
-			renderer.setDocumentFromString(htmlContent);
-
-			renderer.getSharedContext().setBaseURL("file:" + new ClassPathResource("static").getURL().getPath());
-
-			// Generate the PDF
-			try (OutputStream outputStream = new FileOutputStream("your-file-path/output.pdf")) {
-				renderer.layout();
-				renderer.createPDF(outputStream);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			// Handle the exception as needed
-		}
-
-	}
+	
 }
