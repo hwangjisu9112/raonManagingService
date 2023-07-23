@@ -4,13 +4,22 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.File;
 
 import com.example.raon.customer.Customer;
 import com.example.raon.employee.Employee;
@@ -78,6 +87,36 @@ public class InvoiceController {
 		this.invoiceService.delete(invoice);
 		return "redirect:/invoice/board";
 	}
+	
+	    @GetMapping("/pageScreenshot")
+	    @ResponseBody
+	    public String pageScreenshot() {
+	        // 크롬 드라이버 경로 설정
+	        System.setProperty("webdriver.chrome.driver", "C:\\Users\\crist\\Documents\\workspaceForRaon\\manager\\ChromeDriver.exe");
+
+	        // 크롬 브라우저 옵션 설정 (headless 모드)
+	        ChromeOptions options = new ChromeOptions();
+	        options.setHeadless(true);
+
+	        // WebDriver 객체 생성
+	        WebDriver driver = new ChromeDriver(options);
+
+	        try {
+	            // 웹 페이지 접속
+	            driver.get("http://example.com");
+
+	            // 스크린샷 캡쳐
+	            File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+
+	            return "스크린샷이 성공적으로 캡쳐되었습니다.";
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return "스크린샷 캡쳐 중 오류가 발생했습니다.";
+	        } finally {
+	            // WebDriver 종료
+	            driver.quit();
+	        }
+	    }
 
 
 }

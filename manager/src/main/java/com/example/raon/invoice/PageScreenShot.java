@@ -1,52 +1,42 @@
 package com.example.raon.invoice;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.List;
 
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.aspectj.util.FileUtil;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.io.File;
 
-
-import lombok.RequiredArgsConstructor;
-
-@RestController
-@RequiredArgsConstructor
 public class PageScreenShot {
-	
-	private final InvoiceService invoiceService;
 
-	@PostMapping("/invoice/view/{id}")
-	public String saveInvoiceImage(@RequestBody String image, @PathVariable Long id, Model model) {
-		List<Invoice> invoices = invoiceService.getInvoicebyId(id);
-		Invoice invoice = invoices.isEmpty() ? null : invoices.get(0);
-		model.addAttribute("invoice", invoice);
-		  
-		// Base64로 인코딩된 데이터 URL에서 이미지 데이터 부분을 추출합니다.
-		String imageData = image.split(",")[1];
-		
-		// 바탕화면 경로 가져오기
-		String desktopPath = System.getProperty("user.home") + "/Desktop";
-		String filePath = desktopPath + "/captured_image.png";
-		
-		try {
-			// Base64 데이터를 디코딩하여 이미지 파일로 저장합니다.
-			byte[] decodedImage = Base64.getDecoder().decode(imageData);
-			Path path = Paths.get(filePath);
-			Files.write(path, decodedImage);
+	public static void main(String[] args) {
+        // 크롬 드라이버 경로 설정
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
 
-			return "redirect:/invoice/view/" + id;
+        // 크롬 브라우저 옵션 설정 (headless 모드)
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(true);
 
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "error";
-		}
-	}
+        // WebDriver 객체 생성
+        WebDriver driver = new ChromeDriver(options);
+
+        try {
+            // 웹 페이지 접속
+            driver.get("http://example.com");
+
+            // 스크린샷 캡쳐
+            File sc = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+ 
+            // 이미지 파일로 저장 (예: "screenshot.png")
+            File destinationFile = new File("path/to/screenshot.png");
+            FileUtil.copyFile(sc, destinationFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // WebDriver 종료
+            driver.quit();
+        }
+    }
 }

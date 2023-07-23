@@ -11,6 +11,13 @@
 	</div>
 	<form th:action="@{/raonuser/signup}" th:object="${raonUser}"
 		method="post">
+		   <div class="mb-3">
+        <label for="role" class="form-label">GRADE</label>
+             <select class="form-control" id="role" th:field="*{role}">
+            <option th:each="role : ${T(com.example.raon.user.RaonUserRole).values()}"
+                    th:value="${role}" th:text="${role.value}"></option>
+        </select>
+    </div>
 		<div class="mb-3">
 			<label for="username" class="form-label">EMAIL</label> <input
 				type="email" th:field="*{username}" class="form-control"
