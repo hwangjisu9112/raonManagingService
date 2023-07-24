@@ -24,17 +24,24 @@ import lombok.Setter;
 @Data
 @Validated
 
+//社内イントラネットを利用するためのDBに保存するfieldを定義
+
 public class RaonUser {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long raonId;
 
+    //usernameじゃないとエラーが出る··· スプリングセキュリティ自体の性質
+
     @Email
     @Column(unique = true)
     private String username;
 
     private String nameEmployee;
+
+    
+    //既存に登録した社員IDと一致しないと登録できません
 
     @OneToOne
     @JoinColumn(name = "userId")
@@ -46,6 +53,8 @@ public class RaonUser {
     @Length(min=4)
     private String passwordRe;
     
+    
+    //社員の権限等級を設定
     @Enumerated(EnumType.STRING)
     private RaonUserRole role;
 }

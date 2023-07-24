@@ -23,27 +23,28 @@
 			</div>
 			<div class="input-group mb-3">
 				<label for="name" class="input-group-text">名前</label> <input
-					type="text" id="name" name="name" 　th:value="${name}" 　required
-					class="form-control"> <label for="Ename"
+					type="text" id="name" name="name" required
+					class="form-control" th:value="${employee.employeeName}"> <label for="Ename"
 					class="input-group-text">英文名</label> <input type="text" id="Ename"
-					name="Ename" class="form-control"> <label for="Jname"
+					name="Ename" class="form-control" th:value="${employee.NameEng}"> <label for="Jname"
 					class="input-group-text">フリガナ</label> <input type="text" id="Jname"
-					name="Jname" required class="form-control"><br>
+					name="Jname" required class="form-control" th:value="${employee.NameJp}"><br>
 			</div>
 			<div class="input-group mb-3">
 				<label for="Eemail" class="input-group-text">社内メール</label> <input
-					type="text" id="Eemail" name="Eemail" readonly disabled
-					class="form-control"> <label for="Pemail"
+					type="text" id="Eemail" name="Eemail" 
+					class="form-control" placeholder="登録したメールアドレス(@raon.com)を入力"> 
+					<label for="Pemail"
 					class="input-group-text">個人メール</label> <input type="text"
-					id="Pemail" name="Pemail" class="form-control"><br>
+					id="Pemail" name="Pemail" class="form-control" th:value="${employee.PersonalEmail}"><br>
 			</div>
 			<div class="input-group mb-3">
 				<label for="tel" class="input-group-text">電話番号</label> <input
-					type="text" id="tel" name="tel" class="form-control"><br>
+					type="text" id="tel" name="tel" class="form-control" th:value="${employee.EmployeePhone}"><br>
 			</div>
 			<div class="input-group mb-3">
 				<label for="address" class="input-group-text">住所</label> <input
-					type="text" id="address" name="address" class="form-control"><br>
+					type="text" id="address" name="address" class="form-control" th:value="${employee.address}"><br>
 			</div>
 			<div class="input-group mb-3">
 				<label for="bank" class="input-group-text">銀行名</label> <select
@@ -53,17 +54,19 @@
 						th:each="bank : ${T(com.example.raon.employee.EmployeeBank).values()}"
 						th:value="${bank}" th:text="${bank}"></option>
 				</select> <label for="acc" class="input-group-text">口座番号</label> <input
-					type="text" id="acc" name="acc" class="form-control"><br>
+					type="text" id="acc" name="acc" class="form-control" th:value="${employee.BankAccount}"><br>
 			</div>
 			<div class="input-group mb-3">
 				<label for="join" class="input-group-text">入社日</label> <input
-					type="date" id="join" name="join" class="form-control"> <label
+					type="date" id="join" name="join" class="form-control" th:value="${employee.JoinDate}" > <label
 					for="birth" class="input-group-text">誕生日</label> <input type="date"
-					id="birth" name="birth" class="form-control"> <label
-					for="pay" class="input-group-text">給料日</label> <input type="number"
-					id="pay" name="pay" class="form-control"><br>
+					id="birth" name="birth" class="form-control"  th:value="${employee.BirthDate}"> <label
+					for="pay" class="input-group-text" >給料日</label> <input type="number"
+					id="pay" name="pay" value="25" class="form-control" ><br>
 			</div>
 			<button type="submit" class="btn btn-lg btn-primary">更新</button>
+			<button type="reset" class="btn btn-lg btn-warning">リセット</button>
+			
 		</form>
 	</div>
 </body>
