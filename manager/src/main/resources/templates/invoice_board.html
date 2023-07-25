@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+
+<title>請求書一覧</title>
+</head>
+<body>
+	<nav th:replace="~{navbar :: navbarFragment}"></nav>
+	<div class="container my-3">
+		<span class="input-group-text" id="addon-wrapping">請求書一覧</span> <br>
+		<br>
+		<table class="table">
+			<thead class="table-dark">
+				<tr>
+					<th>ID</th>
+					<th>TITLE 🔎</th>
+					<th>発行日</th>
+					<th>Delete</th>
+					<th>PDFrize</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="invoice : ${invoices}">
+					<td th:text="${invoice.invoiceId}"></td>
+					<td><a th:href="@{|/invoice/view/${invoice.invoiceId}|}"
+						th:text="${invoice.invoiceTitle}"></a></td>
+					<td th:text="${invoice.issuedDate}"></td>
+					<td><a
+						th:href="@{/invoice/delete/{id}(id=${invoice.invoiceId})}"
+						class="delete btn btn-sm btn-outline-secondary">❌</a></td>
+<td>
+</td>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

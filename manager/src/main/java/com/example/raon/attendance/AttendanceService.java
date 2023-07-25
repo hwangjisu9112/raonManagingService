@@ -59,7 +59,7 @@ public class AttendanceService {
 		attendanceRepository.save(attendance);
 	}
 
-	//まだ未実装。。。
+	//まだ未実装。。。社員の休み時間可否
 	public void updateRestStatus(Long attendanceId, Boolean isRest) {
 		Attendance attendance = attendanceRepository.findById(attendanceId).orElse(null);
 		if (attendance != null) {

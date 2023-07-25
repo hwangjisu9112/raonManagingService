@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 //取引先ページのコントローラー
 public class CustomerController {
 	
-	//生成子
+	//サービスの生成子
 	private final CustomerService customerService; 
 	
 	
@@ -42,7 +42,7 @@ public class CustomerController {
 	@GetMapping("/enroll")
 	public String EnrollCustomer() {
 
-		return "enroll_customer";
+		return "customer_enroll";
 	}
 	
 	//取引先登録ページに新しい取引先登録
@@ -73,7 +73,7 @@ public class CustomerController {
 		model.addAttribute("customer", customer);
 		
 		
-		return "update_customer";
+		return "customer_update";
 	}
 	
 	//取引先を更新

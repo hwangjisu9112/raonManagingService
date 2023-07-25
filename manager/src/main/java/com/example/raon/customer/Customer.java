@@ -15,6 +15,9 @@ public class Customer {
 	@Id
 	private Long CustomerId;
 	private String companyName;
+	//address... It is fault
 	private String Adress; 
 	private String PhoneNo;
+	
+	
 }

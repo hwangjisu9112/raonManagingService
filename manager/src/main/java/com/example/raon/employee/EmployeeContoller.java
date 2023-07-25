@@ -43,18 +43,18 @@ public class EmployeeContoller {
 	@GetMapping("/enroll")
 	public String EnrollEmployee() {
 
-		return "enroll_employee";
+		return "employee_enroll";
 	}
 
 	// 社員登録
 	@PostMapping("/enroll")
 	public String EnrollEmployee(@RequestParam Long id, @RequestParam String name, @RequestParam String Ename,
-			@RequestParam String Jname, @RequestParam String Eemail, @RequestParam String Pemail,
+			@RequestParam String Jname, @RequestParam String Pemail,
 			@RequestParam String tel, @RequestParam String address, @RequestParam String acc,
 			@RequestParam EmployeeBank bank, // New parameter for bank
 			@RequestParam LocalDate join, @RequestParam LocalDate birth, @RequestParam Integer pay) {
 
-		employeeService.enrollEmp(id, name, Ename, Jname, Eemail, Pemail, tel, address, acc, bank, join, birth, pay);
+		employeeService.enrollEmp(id, name, Ename, Jname, Pemail, tel, address, acc, bank, join, birth, pay);
 
 		return "redirect:/";
 	}
@@ -65,20 +65,20 @@ public class EmployeeContoller {
 		Employee employee = employeeService.getEmployeeID(id);
 		model.addAttribute("employee", employee);
 
-		return "update_employee";
+		return "employee_update";
 	}
 
 	// 社員情報更新
 	@PostMapping("/update/{id}")
 	public String UpdateEmployee(@PathVariable("id") Long id, @RequestParam String name, @RequestParam String Ename,
-			@RequestParam String Jname, @RequestParam String Eemail, @RequestParam String Pemail,
+			@RequestParam String Jname, @RequestParam String Pemail,
 			@RequestParam String tel, @RequestParam String address, @RequestParam String acc,
 			@RequestParam EmployeeBank bank, @RequestParam LocalDate join, @RequestParam LocalDate birth,
 			@RequestParam Integer pay,
 
 			@ModelAttribute("employee") Employee employee) {
 
-		employeeService.updateEmp(id, name, Ename, Jname, Eemail, Pemail, tel, address, acc, bank, join, birth, pay);
+		employeeService.updateEmp(id, name, Ename, Jname, Pemail, tel, address, acc, bank, join, birth, pay);
 
 		return "redirect:/employee/list";
 	}

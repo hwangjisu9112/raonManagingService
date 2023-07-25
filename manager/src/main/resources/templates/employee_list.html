@@ -33,26 +33,6 @@
 			<td th:text="${employee.EmployeePhone}"></td>
 			<td th:text="${employee.JoinDate}"></td>
 			<td>　作業中　</td>
-			<!-- 
-				<form
-					th:action="@{/employee/checkin/{id}(id=${employee.employeeId})}"
-					method="post">
-					<button type="submit">出勤</button>
-				</form>
-			</td>
-			<td><span th:if="${employee.checkIn != null}"
-				th:text="${#temporals.format(employee.checkIn, 'yyyy/MM/dd hh:mm a')}"></span> 
-				<span th:unless="${employee.checkIn != null}">出勤前</span></td>
-
-			<td>
-				<form th:action="@{/employee/checkout/{id}(id=${employee.employeeId})}" method="post">
-					<button type="submit">退勤</button>
-				</form>
-			</td>
-			<td>
-			<span th:if="${employee.checkOut != null}" th:text="${#temporals.format(employee.checkOut, 'yyyy/MM/dd HH:mm a')}"></span>
-			<span th:unless="${employee.checkOut != null}">退勤前</span></td>
-			<td>  -->
 			<td>
 			<a th:href="@{/employee/delete/{id}(id=${employee.employeeId})}"   class="delete btn btn-sm btn-outline-secondary">❌</a>
 			</td>
@@ -62,7 +42,9 @@
 	</tbody>
 </table>
 </div>
-<!--paging --><div th:if="${!paging.isEmpty()}" >
+<!--paging -->
+
+<div th:if="${!paging.isEmpty()}" >
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
                 <a class="page-link"

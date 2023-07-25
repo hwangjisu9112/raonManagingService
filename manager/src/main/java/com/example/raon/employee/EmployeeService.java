@@ -39,12 +39,11 @@ public class EmployeeService {
 	                      String name, 
 	                      String Ename, 
 	                      String Jname, 
-	                      String Eemail, 
 	                      String Pemail, 
 	                      String tel, 
 	                      String address, 
 	                      String acc, 
-	                      EmployeeBank bank, // New parameter for bank
+	                      EmployeeBank bank,
 	                      LocalDate join,
 	                      LocalDate birth,
 	                      Integer pay) {
@@ -54,7 +53,6 @@ public class EmployeeService {
 	    e.setEmployeeName(name);
 	    e.setNameEng(Ename);
 	    e.setNameJp(Jname);
-	    e.setEmployeeEmail(Eemail);
 	    e.setPersonalEmail(Pemail);
 	    e.setEmployeePhone(tel);
 	    e.setAddress(address);
@@ -79,8 +77,7 @@ public class EmployeeService {
 	public void updateEmp(Long id, 
 						String name, 
 						String Ename, 
-						String Jname, 
-						String Eemail, 
+						String Jname, 	
 						String Pemail, 
 						String tel, 
 						String adress, 
@@ -94,7 +91,6 @@ public class EmployeeService {
 		e.setEmployeeName(name);
 		e.setNameEng(Ename);
 		e.setNameJp(Jname);
-		e.setEmployeeEmail(Eemail);
 		e.setPersonalEmail(Pemail);
 		e.setEmployeePhone(tel);
 		e.setAddress(adress);

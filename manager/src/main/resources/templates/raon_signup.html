@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<meta charset="UTF-8">
+
+<div layout:fragment="content" class="container my-3">
+	<div class="my-3 border-bottom">
+		<div>
+			<h4>SIGN UP</h4>
+		</div>
+	</div>
+	<form th:action="@{/raonuser/signup}" th:object="${raonUser}"
+		method="post">
+		   <div class="mb-3">
+        <label for="role" class="form-label">管理等級</label>
+             <select class="form-control" id="role" th:field="*{role}">
+            <option th:each="role : ${T(com.example.raon.user.RaonUserRole).values()}"
+                    th:value="${role}" th:text="${role.value}"></option>
+        </select>
+    </div>
+		<div class="mb-3">
+			<label for="username" class="form-label">EMAIL</label> <input
+				type="email" th:field="*{username}" class="form-control"
+				placeholder="社員名　＋　@raon.com">
+		</div>
+		<div class="mb-3">
+			<label for="nameEmployee" class="form-label">名前</label> <input
+				type="text" th:field="*{nameEmployee}" class="form-control"
+				placeholder="社員名">
+		</div>
+		<div class="mb-3">
+			<label for="password" class="form-label">PASSWORD</label> <input
+				type="password" th:field="*{password}" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="passwordRe" class="form-label">PASSWORD確認</label> <input
+				type="password" th:field="*{passwordRe}" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="employeeId" class="form-label">Employee ID</label> <input
+				type="text" th:field="*{employee.employeeId}" class="form-control">
+		</div><br><br>
+		<button type="submit" class="btn btn-primary">社員メールを生成</button>
+		<button type="reset" class="btn btn btn-warning">リセット</button>
+		<a href="/" class="btn btn-dark">メインへ</a>
+		
+	</form>
+</div>
+</html>
