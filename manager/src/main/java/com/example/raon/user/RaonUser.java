@@ -35,7 +35,7 @@ public class RaonUser {
     //usernameじゃないとエラーが出る··· スプリングセキュリティ自体の性質
 
     @Email
-    @Column(unique = true)
+//    @Column(unique = true)
     private String username;
 
     private String nameEmployee;

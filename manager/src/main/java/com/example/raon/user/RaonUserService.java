@@ -7,6 +7,8 @@ import com.example.raon.employee.EmployeeRepository;
 
 import jakarta.transaction.Transactional;
 
+import java.util.Optional;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,14 @@ public class RaonUserService {
     private final RaonUserReository raonUserRepository;
     private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
+    
+	//IDで社員メールを検索
+	public RaonUser getRaonUserID(Long id) {
+		Optional<RaonUser> raonUser = this.raonUserRepository.findById(id);
+
+		return raonUser.get();
+
+	}
 
     
     public RaonUser create(RaonUser raonUser) {
@@ -45,6 +55,14 @@ public class RaonUserService {
 
         return raonUserRepository.save(raonUser);
     }
+    
+	//社員メールを削除
+	public void delete(RaonUser raonUser) {
+
+		this.raonUserRepository.delete(raonUser);
+		
+
+	}
     
     
     

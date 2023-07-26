@@ -17,7 +17,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-
 //勤怠DBに保存するfieldを定義
 public class Attendance {
 

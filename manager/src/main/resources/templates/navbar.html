@@ -1,30 +1,41 @@
 <html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <meta charset="UTF-8">
-<nav th:fragment="navbarFragment" class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">RaonManager</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
-                <li class="nav-item">
-				<a class="nav-link" sec:authorize="isAnonymous()" href="/raonuser/signup">SIGNUP</a>
-                </li>
-                <li>
-                    <a class="nav-link"  sec:authorize="isAnonymous()" href="/raonuser/login">LOGIN</a>
-                	<a class="nav-link"  sec:authorize="isAuthenticated()" href="/raonuser/logout">LOGOUT</a>
-                </li>
-                <li>
-                     	<a class="nav-link"  sec:authorize="isAuthenticated()" href="#">UPDATE（未実装）</a>
-                </li>
-         		<li>
-         		    <span class="nav-link" sec:authorize="isAuthenticated()">「<strong><span th:text="${#authentication.principal.username}"></span></strong>」 様</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-    
+<nav th:fragment="navbarFragment"
+	class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="/">RaonManager</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+			data-bs-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+				<li class="nav-item"><a class="nav-link"
+					sec:authorize="isAnonymous()" href="/raonuser/signup">SIGNUP</a></li>
+				<li><a class="nav-link" sec:authorize="isAnonymous()"
+					href="/raonuser/login">LOGIN</a> <a class="nav-link"
+					sec:authorize="isAuthenticated()" href="/raonuser/logout">LOGOUT</a>
+				</li>
+				<li><a class="nav-link" sec:authorize="isAuthenticated()"
+					href="#">UPDATE（未実装）</a></li>
+				<li sec:authorize="hasAuthority('RAON_ADMIN')">		
+    <span class="nav-link">
+        Welcome, 「<strong th:text="${#authentication.principal.username}"></strong>」　様
+         <strong>RAON_ADMIN</strong>
+    </span>
+</li>
+<li sec:authorize="hasAuthority('RAON_EMP')">		
+    <span class="nav-link">
+        Welcome, 「<strong th:text="${#authentication.principal.username}"></strong>」　様
+         <strong>RAON_EMP</strong>
+    </span>
+</li>
+				</li>
+			</ul>
+		</div>
+	</div>
+
 </nav>
 </html>
