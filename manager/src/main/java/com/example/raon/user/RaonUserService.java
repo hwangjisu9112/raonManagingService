@@ -9,6 +9,9 @@ import jakarta.transaction.Transactional;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,15 @@ public class RaonUserService {
     private final RaonUserReository raonUserRepository;
     private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
+    
+    
+  //社員リスト
+  	public Page<RaonUser> getList(Integer page) {
+
+  		Pageable pageable = PageRequest.of(page, 20);
+  		return this.raonUserRepository.findAll(pageable);
+
+  	}
     
 	//IDで社員メールを検索
 	public RaonUser getRaonUserID(Long id) {

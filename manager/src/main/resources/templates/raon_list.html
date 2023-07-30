@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- JavaScript 코드 -->
+<script>
+  // 테이블의 각 <td>를 클릭했을 때, 모달 창에 값을 표시하는 함수
+  function showModal(value) {
+    $("#modalContent").text(value);
+    $("#myModal").modal("show");
+  }
+
+  // 테이블의 각 <td> 요소에 클릭 이벤트를 추가
+  $(document).ready(function () {
+    $("table.table tbody td").on("click", function () {
+      var value = $(this).text().trim();
+      showModal(value);
+    });
+  });
+</script>
+</head>
+<body>
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<div class="container my-3">
+
+<span class="input-group-text" id="addon-wrapping"><strong>社員メール管理</strong></span><br>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>社内 メール</th>
+			<th>管理等級</th>
+			<th>社内情報</th>
+			<th>削除</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="raonuser, loop : ${paging}">
+		
+			<td th:text="${raonuser.raonId}"></td>
+			<td th:text="${raonuser.username}"></td>
+			<td th:text="${raonuser.role}"></td>			
+				<td th:text="${raonuser.employee}"></td>
+				<td><button id="modalButton"></button></td>
+				
+			<td><a
+				th:href="@{/raonuser/delete/{id}(id=${raonuser.raonId})}"
+				class="delete btn btn-sm btn-outline-secondary">❌</a></td>
+	</tbody>
+</table>
+</div>
+<!--paging -->
+
+<div th:if="${!paging.isEmpty()}" >
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                <a class="page-link"
+                    th:href="@{|?page=${paging.number-1}|}">
+                    <span>前に</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                th:classappend="${page == paging.number} ? 'active'" 
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                    <span>次に</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- 모달 창 -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">社員情報</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modalContent">
+        <!-- 값이 표시될 부분 -->
+                <p th:text="${modalValue}"></p>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

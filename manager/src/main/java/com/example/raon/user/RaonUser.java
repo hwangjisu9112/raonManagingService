@@ -5,7 +5,6 @@ import org.springframework.validation.annotation.Validated;
 
 import com.example.raon.employee.Employee;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

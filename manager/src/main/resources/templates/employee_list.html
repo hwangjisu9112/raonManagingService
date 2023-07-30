@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<title>社員一覧</title>
+
 </head>
 <body>
 <nav th:replace="~{navbar :: navbarFragment}"></nav>
@@ -19,7 +21,6 @@
 			<th>社内メル</th>	
 			<th>連絡先</th>
 			<th>入社日</th>
-			<th>所属</th>
 			<th>削除</th>
 			<th>修正</th>
 		</tr>
@@ -32,7 +33,6 @@
 			<td th:text="${employee.EmployeeEmail}"></td>
 			<td th:text="${employee.EmployeePhone}"></td>
 			<td th:text="${employee.JoinDate}"></td>
-			<td>　作業中　</td>
 			<td>
 			<a th:href="@{/employee/delete/{id}(id=${employee.employeeId})}"   class="delete btn btn-sm btn-outline-secondary">❌</a>
 			</td>

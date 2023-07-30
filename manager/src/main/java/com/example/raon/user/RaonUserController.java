@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import java.security.Principal;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
 
 
 @Controller
@@ -22,6 +24,19 @@ import org.springframework.dao.DataIntegrityViolationException;
 public class RaonUserController {
 
     private final RaonUserService raonUserService;
+    
+	// 社員ページに移動
+	@GetMapping("/list")
+	public String UserList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+
+		if (page < 0) {
+			page = 0;
+		}
+
+		Page<RaonUser> paging = this.raonUserService.getList(page);
+		model.addAttribute("paging", paging);
+		return "raon_list";
+	}
 
     @GetMapping("/signup")
     public String signUp(Model model) {
@@ -67,7 +82,7 @@ public class RaonUserController {
 		RaonUser raonUser = this.raonUserService.getRaonUserID(id);
 
 		this.raonUserService.delete(raonUser);
-		return "redirect:/";
+		return "redirect:/raonuser/list";
 	}
 	
 	
