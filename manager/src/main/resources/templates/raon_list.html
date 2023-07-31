@@ -6,21 +6,19 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- JavaScript 코드 -->
+<link rel="stylesheet" th:href="@{/button.css}"> 
 <script>
-  // 테이블의 각 <td>를 클릭했을 때, 모달 창에 값을 표시하는 함수
-  function showModal(value) {
-    $("#modalContent").text(value);
-    $("#myModal").modal("show");
-  }
-
-  // 테이블의 각 <td> 요소에 클릭 이벤트를 추가
-  $(document).ready(function () {
-    $("table.table tbody td").on("click", function () {
-      var value = $(this).text().trim();
-      showModal(value);
+    $(document).ready(function () {
+        $(".employee-info-button").on("click", function () {
+            var value = $(this).text().trim();
+            showModal(value);
+        });
     });
-  });
+
+    function showModal(value) {
+        $("#modalContent").text(value);
+        $("#myModal").modal("show");
+    }
 </script>
 </head>
 <body>
@@ -45,9 +43,10 @@
 			<td th:text="${raonuser.raonId}"></td>
 			<td th:text="${raonuser.username}"></td>
 			<td th:text="${raonuser.role}"></td>			
-				<td th:text="${raonuser.employee}"></td>
-				<td><button id="modalButton"></button></td>
-				
+          <td>
+            <!-- Use a class instead of an ID for the "社内情報" cells -->
+            <button type="button" class="btn btn-link employee-info-button" th:text="${raonuser.employee}"></button>
+        </td>			
 			<td><a
 				th:href="@{/raonuser/delete/{id}(id=${raonuser.raonId})}"
 				class="delete btn btn-sm btn-outline-secondary">❌</a></td>

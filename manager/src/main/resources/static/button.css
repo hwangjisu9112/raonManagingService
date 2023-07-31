@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.employee-info-button {
+    /* Set the button width to fit the desired length */
+    width: 110px; /* Adjust this value to control the width of the button */
+    /* Set white-space to nowrap to prevent text wrapping */
+    white-space: nowrap;
+    /* Add an ellipsis (...) to indicate text overflow */
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
