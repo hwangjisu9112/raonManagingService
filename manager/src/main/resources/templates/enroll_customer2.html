@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+
+<title>取引先登録</title>
+</head>
+<body>
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+
+	<h1>取引先登録</h1>
+
+
+	<form th:action="@{/customer2/enroll}" method="post">
+		<label for="id2">企業 ID:</label> <input type="text" id="id2" name="id2" required><br> 
+		<label for="name2">企業名:</label> <input type="text" id="name2" name="name2" required><br>
+		<label for="name2">Today:</label> <input type="date" id="today" name="today" required><br>
+		<label for="name2">名</label> <input type="text" id="human" name="human" required><br>
+		<label for="name2">Business:</label> <input type="text" id="business" name="business" required><br>
+		<label for="name2">rmsantlrks:</label> <input type="text" id="workingtime" name="workingtime" required><br>
+		<label for="name2">overtime:</label> <input type="text" id="overtime" name="overtime" required><br>
+		<label for="name2">losetime:</label> <input type="text" id="losetime" name="losetime" required><br>
+		<label for="name2">beginning:</label> <input type="date" id="date" name="beginning" required><br>
+		<label for="end1">end</label> <input type="date" id="end1" name="end1" required><br>
+		<br>
+		<button type="submit">保存</button>
+	</form>
+
+
+
+</body>
+</html>

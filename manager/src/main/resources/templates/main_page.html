@@ -38,7 +38,7 @@
 
 		<a class="btn btn-outline-primary btn-lg"
 			 th:href="@{customer/enroll}">取引先登録</a>
-		<a class="btn btn-outline-primary btn-lg"
+		<a sec:authorize="isAuthenticated()" class="btn btn-outline-primary btn-lg"
 			 th:href="@{customer/list}">取引先一覧</a><br>
 	</div>
 	<br>
@@ -61,6 +61,13 @@
 		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{invoice/write}">請求書作成</a>
 		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{invoice/board}">請求書一覧</a>
 	</div>
-	<br><br><br>
+	<br><br>
+	<div class="container">
+			<h2>🔬CUSTOMER2</h2>
+			<a class="btn btn-outline-primary btn-lg" th:href="@{customer2/enroll}">customer2/enroll</a>
+			<a class="btn btn-outline-primary btn-lg" th:href="@{customer2/list}">customer2/list</a>
+			
+	</div>
+	<br>
 </body>
 </html>

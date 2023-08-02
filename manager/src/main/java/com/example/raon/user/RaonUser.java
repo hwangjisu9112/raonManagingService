@@ -42,8 +42,9 @@ public class RaonUser {
     
     //既存に登録した社員IDと一致しないと登録できません
 
+
     @OneToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "userId", unique = true)
     private Employee employee;
 
     @Length(min=4)

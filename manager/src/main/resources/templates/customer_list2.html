@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+
+	<title>Raon</title>
+<style>
+      #topnum {
+       text-align: center;
+        border: 1px solid rgb(0, 0, 0);
+      	float: right;
+      	border-collapse: collapse;
+      	margin-right: 5%;
+      	border-width: 3q;
+      }
+      #청구서{
+		  font-size: 40px;
+		  font-weight: 700;
+		  text-align: center;
+	  }
+	  
+	  #회사명{
+		 font-weight:700;
+		 text-decoration-line: underline;
+	  }
+	  #두줄밑줄{
+		  text-decoration-line: underline; 
+		  text-decoration-style: double;
+		  font-size: 30px;
+		  font-weight: 500;
+	  }
+	  #maintable{
+		 border: 1px solid black;
+		 
+		 width: 90%;
+		 border-collapse : collapse; 
+		 border-width: 3q; 
+	  }
+	  #centernum{
+		  text-align: center;
+	  }
+	  #rightnum{
+		  text-align: right;
+	  }
+	  #bank{
+		  border: 3px solid black;
+		  float: left;
+		  margin-left: 10%;
+		  border-width: 30%;
+		  
+	  }
+    </style>
+</head>
+
+<body onload="loadf()">
+	<nav th:replace="~{navbar :: navbarFragment}"></nav>
+
+	<table id="topnum" style="width: 300px;">
+		<tr th:each="customer2, loop : ${paging}">
+			<td style="border: 1px solid black; border-width: 3q; font-weight: 600;">請求書番号</td>
+			<td style="border: 1px solid black; border-width: 3q; font-weight: 600;" th:text="${customer2.customerId2}">番号</td>
+		</tr>
+		<tr th:each="customer2, loop : ${paging}">
+			<td style="border: 1px solid black; border-width: 3q; font-weight: 600;">発行日</ttd>
+			<td style="border: 1px solid black; border-width: 3q; font-weight: 600;" th:text="${customer2.today}">오늘 날짜</th>
+		</tr>
+		
+	</table><br><br><br>
+	<p id="청구서">請  求  書</p>
+	<table style="margin-left: 10%; font-size: 30px;">
+		<tr style="font-weight:700;" th:each="customer2, loop : ${paging}"><td id="회사명"></td>
+		<td th:text="${customer2.companyName2}+'御中'">御中</td>
+		</tr>
+	</table><br>
+	
+	<table style="float:right; margin-right: 10%;"  >
+		<th>
+		<tr style="font-weight: 700;"><td>Raon株式会社</td></tr>
+		<tr style="font-weight: 600;"><td>〒169-0072</td></tr>
+		<tr style="font-weight: 600;"><td>東京都新宿区大久保2-1-8</td></tr>
+		<tr style="font-weight: 600;"><td>プラザ新大樹ビル本棟6階</td></tr>
+		<tr style="font-weight: 600;"><td>Tel：03-6265-9668</td></tr>
+		</th>
+	</table>
+	
+	<table style="margin-top: 70px; margin-left: 5%;">
+		<tr style="font-weight: 600;"><td >　　　下記の通りご請求申し上げます。</td></tr>
+		<tr id="두줄밑줄" style="font-weight: 700;" th:each="customer2, loop : ${paging}">
+			<td>合計金額</td></tr>
+	</table><br><br>
+	<table id="maintable" align="center" style="font-weight: 700;">
+			<tr style="background-color: darkgrey; text-align: center;" >
+				<td style="border: 3px solid black; border-right: hidden;"></td>
+			 	<td style="border: 3px solid black; border-right: hidden;">商品名</td>
+			 	<td style="border: 3px solid black; border-right: hidden;">単価</td>
+			 	<td style="border: 3px solid black; border-right: hidden;">数量</td>
+			 	<td style="border: 3px solid black; border-right: hidden;">単位</td>
+			 	<td style="border: 3px solid black; border-right: hidden;">課税</td>
+			 	<td style="border: 3px solid black;">金額</td>
+			</tr> 	
+			<tr th:each="customer2, loop : ${paging}">
+				<td id="centernum" style="border: 1px solid white; border-right-color: black;"></td>
+				<td style="border: 1px solid white; border-right-color: black;" th:text="${customer2.business}+'('+${customer2.beginning}+'~'+${customer2.end1}+')'"></td><!--商品名-->
+				<td style="border: 1px solid white; border-right-color: black;"></td><!--単価-->
+				<td id="rightnum" style="border: 1px solid white; border-right-color: black;"></td><!--数量-->
+				<td id="centernum" style="border: 1px solid white; border-right-color: black;"></td><!--単位-->
+				<td style="border: 1px solid white; border-right-color: black;"></td><!--課税-->
+				<td id="rightnum" ></td><!--金額-->
+			</tr>
+			<tr th:each="customer2, loop : ${paging}">
+				<td id="centernum"style="border: 1px solid white; border-right-color: black;">1</td>
+				<td style="border: 1px solid white; border-right-color: black;" th:text="${customer2.human}">이름</td><!--商品名-->
+				<td style="border: 1px solid white; border-right-color: black;"></td><!--単価-->
+				<td id="rightnum" style="border: 1px solid white; border-right-color: black;"></td><!--数量-->
+				<td id="centernum" style="border: 1px solid white; border-right-color: black;"></td><!--単位-->
+				<td style="border: 1px solid white; border-right-color: black;"></td><!--課税-->
+				<td id="rightnum" ></td><!--金額-->
+			</tr>
+			<tr th:each="customer2, loop : ${paging}">
+				<td id="centernum" style="border: 1px solid white; border-right-color: black;" ></td>
+				<td style="border: 1px solid white; border-right-color: black;">   基準単価</td><!--商品名-->
+				<td id="rightnum" style="border: 1px solid white; border-right-color: black;">¥300,000</td><!--単価-->
+				<td id="rightnum" style="border: 1px solid white; border-right-color: black;" th:text="${customer2.workingtime}"></td><!--数量-->
+				<td id="centernum" style="border: 1px solid white; border-right-color: black;">人月</td><!--単位-->
+				<td style="border: 1px solid white; border-right-color: black;"></td><!--課税-->
+				<td id="rightnum"></td><!--金額-->
+			</tr>
+			<tr th:each="customer2, loop : ${paging}">
+				<td id="centernum" style="border: 1px solid white; border-right-color: black;"></td>
+				<td style="border: 1px solid white; border-right-color: black;">   超過分</td><!--商品名-->
+				<td id="rightnum" style="border: 1px solid white; border-right-color: black;">¥4,380</td><!--単価-->
+				<td id="rightnum" style="border: 1px solid white; border-right-color: black;" th:text="${customer2.overtime}"></td><!--数量-->
+				<td id="centernum" style="border: 1px solid white; border-right-color: black;">H</td><!--単位-->
+				<td style="border: 1px solid white; border-right-color: black;"></td><!--課税-->
+				<td id="rightnum" style="border: 1px solid white; border-right-color: black;"></td><!--金額-->
+			</tr>
+			<tr th:each="customer2, loop : ${paging}">
+				<td id="centernum" style="border: 1px solid white; border-right-color: black;"></td>
+				<td style="border: 1px solid white; border-right-color: black;">   控除分</td><!--商品名-->
+				<td id="rightnum" style="border: 1px solid white; border-right-color: black;">¥5,640</td><!--単価-->
+				<td id="rightnum" style="border: 1px solid white; border-right-color: black;" th:text="${customer2.losetime}"></td><!--数量-->
+				<td id="centernum" style="border: 1px solid white; border-right-color: black;">H</td><!--単位-->
+				<td style="border: 1px solid white; border-right-color: black;"></td><!--課税-->
+				<td id="rightnum" style="border: 1px solid white; border-right-color: black;"></td><!--金額-->
+			</tr>
+			<!--見えない単語-->
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: white; text-align: center; color: white;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+			<tr style="background-color: darkgrey; text-align: center; color: darkgrey;"  >
+				<td style="border: 1px solid white; border-right-color: black;">1 </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td style="border: 1px solid white; border-right-color: black;">  </td>
+			 	<td >  </td>
+			</tr> 
+	</table>
+	<table id="topnum" style="width: 25%;">
+		<tr>
+			<td style="border: 1px solid black; font-weight: 600;">小計</td>
+			<td style="border: 1px solid black; font-weight: 600;">---</td>
+		</tr>
+		<tr>
+			<td style="border: 1px solid black; font-weight: 600;">消費税等</td>
+			<td style="border: 1px solid black; font-weight: 600;"></th>
+		</tr>
+		<tr>
+			<td style="border: 1px solid black; font-weight: 600;">合計</td>
+			<td style="border: 1px solid black; font-weight: 600;"></th>
+		</tr>
+	</table>
+	<br>
+	<table id="bank" style="width: 25%; font-weight: 600;">
+		<tr>
+			<td>振込先</td>
+			<td>りそな銀行　新宿支店</td>
+		</tr>
+		<tr> 
+			<td>口座番号</ttd>
+			<td>普通　3864527</th>
+		</tr>
+		<tr>
+			<td>口座名義人</ttd>
+			<td>Raon株式会社</th>
+		</tr>
+	</table>
+
+
+
+	<form name="myform">
+
+		<table class="table">
+			<thead class="table-dark">
+				<tr>
+					<th>企業 ID</th>
+					<th>企業名</th>
+					<th>today</th>
+					<th>名</th>
+					<th>business</th>
+					<th>workingtime</th>
+					<th>overtime</th>
+					<th>losetime</th>
+					<th>beginning</th>
+					<th>end</th>
+					<th>削除</th>
+					<th>修正</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="customer2, loop : ${paging}">
+					<td th:text="${customer2.customerId2}"></td>
+					<td th:text="${customer2.companyName2}"></td>
+					<td th:text="${customer2.today}"></td>
+					<td th:text="${customer2.human}"></td>
+					<td th:text="${customer2.business}"></td>
+					<td th:text="${customer2.workingtime}"></td>
+					<td th:text="${customer2.overtime}"></td>
+					<td th:text="${customer2.losetime}"></td>
+					<td th:text="${customer2.beginning}"></td>
+					<td th:text="${customer2.end1}"></td>
+					
+					<td>
+						<a th:href="@{/customer2/delete/{id2}(id=${customer2.customerId2})}">❌</a>
+					</td>
+					<td>
+						<a th:href="@{/customer2/update/{id2}(id=${customer2.customerId2})}">🪛</a>
+					</td>
+
+			</tbody>
+		</table>
+
+
+		</div>
+	</form>
+	<div th:if="${!paging.isEmpty()}" >
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                <a class="page-link"
+                    th:href="@{|?page=${paging.number-1}|}">
+                    <span>前に</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                th:classappend="${page == paging.number} ? 'active'" 
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                    <span>次に</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
