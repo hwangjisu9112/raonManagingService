@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -20,6 +20,11 @@
         $("#myModal").modal("show");
     }
 </script>
+<script>
+function confirmDelete() {
+    return confirm("本当にこの社員を削除しますか？");
+}
+</script>
 </head>
 <body>
 <nav th:replace="~{navbar :: navbarFragment}"></nav>
@@ -31,25 +36,28 @@
 	<thead>
 		<tr>
 			<th>ID</th>
+			<th>社員</th>
 			<th>社内 メール</th>
 			<th>管理等級</th>
 			<th>社内情報</th>
 			<th>削除</th>
+			<th>暗証番号を忘れた場合</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr th:each="raonuser, loop : ${paging}">
 		
 			<td th:text="${raonuser.raonId}"></td>
+			<td th:text="${raonuser.nameEmployee}"></td>
 			<td th:text="${raonuser.username}"></td>
 			<td th:text="${raonuser.role}"></td>			
           <td>
-            <!-- Use a class instead of an ID for the "社内情報" cells -->
             <button type="button" class="btn btn-link employee-info-button" th:text="${raonuser.employee}"></button>
         </td>			
 			<td><a
 				th:href="@{/raonuser/delete/{id}(id=${raonuser.raonId})}"
-				class="delete btn btn-sm btn-outline-secondary">❌</a></td>
+				class="delete btn btn-sm btn-outline-secondary" onclick="return confirmDelete();">❌</a></td>
+			<td><a class="delete btn btn-sm btn-outline-secondary">未実装</a></td>
 	</tbody>
 </table>
 </div>

@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
-<title>社員一覧</title>
+<script>
+function confirmDelete() {
+    return confirm("本当にこの社員を削除しますか？ 最初に社内メールを削除する必要があります。");
+}
+</script>
 
+<title>社員一覧</title>
 </head>
 <body>
 <nav th:replace="~{navbar :: navbarFragment}"></nav>
@@ -32,7 +37,7 @@
 			<td th:text="${employee.EmployeePhone}"></td>
 			<td th:text="${employee.JoinDate}"></td>
 			<td>
-			<a th:href="@{/employee/delete/{id}(id=${employee.employeeId})}"   class="delete btn btn-sm btn-outline-secondary">❌</a>
+			<a th:href="@{/employee/delete/{id}(id=${employee.employeeId})}"   class="delete btn btn-sm btn-outline-secondary"  onclick="return confirmDelete();">❌</a>
 			</td>
 			<td>
 			<a th:href="@{/employee/update/{id}(id=${employee.employeeId})}"   class="delete btn btn-sm btn-outline-secondary">🔧</a>
