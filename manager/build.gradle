@@ -31,9 +31,12 @@ dependencies {
 	
 	implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
-	    
-	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59' 	
+	
+	implementation 'com.itextpdf:itextpdf:5.5.13'
+	implementation group: 'com.itextpdf', name: 'itext7-core', version: '7.2.0' 
+    implementation group: 'com.itextpdf', name: 'html2pdf', version: '3.0.0'     
     implementation 'commons-io:commons-io:2.11.0'
+	
 	
 }
 
