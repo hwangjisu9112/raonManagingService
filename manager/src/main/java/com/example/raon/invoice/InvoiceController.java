@@ -1,5 +1,6 @@
 package com.example.raon.invoice;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
@@ -19,26 +20,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.raon.customer.Customer;
 import com.example.raon.employee.Employee;
 
+
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import com.itextpdf.layout.Document;
 
-import com.itextpdf.html2pdf.ConverterProperties;
-import com.itextpdf.html2pdf.HtmlConverter;
-import com.itextpdf.io.source.ByteArrayOutputStream;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.text.DocumentException;
 
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 import lombok.RequiredArgsConstructor;
 
@@ -104,42 +98,50 @@ public class InvoiceController {
 
 		this.invoiceService.delete(invoice);
 		return "redirect:/invoice/board";
+		
+	
 	}
 	
-
+	
 	@PostMapping("/generatePdf")
-	public ResponseEntity<ByteArrayResource> generatePdfPost(@ModelAttribute("invoice") Invoice invoice, HttpServletResponse response) throws DocumentException, IOException {
+	public ResponseEntity<ByteArrayResource> generatePdfPost(@ModelAttribute("invoice") Invoice invoice) throws IOException {
+	    Logger logger = Logger.getLogger(getClass().getName());
 
 	    logger.log(Level.INFO, "Generating PDF for invoice: " + invoice);
 
 	    // Create a ByteArrayOutputStream to hold PDF content
 	    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-	    // Create a PDF document
-	    PdfDocument pdfDocument = new PdfDocument(new PdfWriter(outputStream));
-	    Document document = new Document(pdfDocument);
+	    try {
+	        // Create an ITextRenderer instance
+	    	ITextRenderer renderer = new ITextRenderer();
 
-	    String htmlContent = templateEngine.process("invoice_view", new Context(Locale.getDefault(), Collections.singletonMap("invoice", invoice)));
+	    	// Set up the HTML content
+	    	String htmlContent = templateEngine.process("invoice_view", new Context(Locale.getDefault(), Collections.singletonMap("invoice", invoice)));
 
-	    logger.log(Level.INFO, "HTML content: " + htmlContent);
+	    	// Configure the ITextRenderer
+	    	renderer.setDocumentFromString(htmlContent);
+	    	renderer.layout();
 
-	    // Convert HTML to PDF using iText 7's HtmlConverter
-	    ConverterProperties converterProperties = new ConverterProperties();
-	    HtmlConverter.convertToPdf(htmlContent, pdfDocument, converterProperties);
-
-	    // Close the document
-	    document.close();
+	    	// Render the PDF to the output stream
+	    	renderer.createPDF(outputStream);
+	    } catch (Exception e) {
+	        logger.log(Level.SEVERE, "Error generating PDF", e);
+	    } finally {
+	        outputStream.close();
+	    }
 
 	    // Get the PDF bytes from the ByteArrayOutputStream
 	    byte[] pdfBytes = outputStream.toByteArray();
 
-	    // Return the PDF file to the client
+	    // Return the PDF file to the client for download
 	    return ResponseEntity.ok()
 	            .contentType(MediaType.APPLICATION_PDF)
-	            .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=invoice.pdf")
+	            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=invoice.pdf")
 	            .body(new ByteArrayResource(pdfBytes));
 	}
 	
 	
 }
+	
 

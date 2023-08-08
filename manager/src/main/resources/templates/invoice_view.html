@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
 <meta charset="UTF-8">
-
 <title>請求書</title>
-
+</meta>
 </head>
 <h3>----------------------------------------------------</h3>
 
@@ -73,8 +71,8 @@
 	Unit Price : <span th:text="${invoice.unitPrice}"></span>
 </p>
 <p>
-	Total WorkHour : <span
-		th:text="${invoice.workhour + invoice.extraWorkhour - invoice.deductionWorkhour}"></span>
+    Total WorkHour : <span th:if="${invoice.workhour != null and invoice.extraWorkhour != null and invoice.deductionWorkhour != null}"
+                          th:text="${invoice.workhour + invoice.extraWorkhour - invoice.deductionWorkhour}"></span>
 </p>
 <p>
 	Tax rate : <span th:text="${invoice.tax}  + '%'"></span>
@@ -102,9 +100,12 @@
 </table>
 
 <h3>----------------------------------------------------</h3>
-       <form action="/invoice/generatePdf" method="POST">
-        <button type="submit">screen</button>
-    </form>
-</body>
 
+</body>
+ 
 </html>
+
+
+  <form action="/invoice/generatePdf" method="POST">
+        <button type="submit">PDF</button>
+    </form>
