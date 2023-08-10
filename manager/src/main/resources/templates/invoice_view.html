@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 
-
 </head>
 <h3>----------------------------------------------------</h3>
 
@@ -101,9 +100,9 @@
 </table>
 
 <h3>----------------------------------------------------</h3>
-       <form action="/invoice/pageScreenshot" method="GET">
-        <button type="submit">screen</button>
-    </form>
+<form th:if="${invoice != null}" th:action="@{/invoice/pdf/{id}(id=${invoice.invoiceId})}" method="get">
+    <button type="submit">Generate PDF</button>
+</form>
 </body>
 
 </html>

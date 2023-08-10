@@ -12,7 +12,7 @@
 
 
 	<div class="container">
-		<h2>📜使用説明 🎯Todo</h2>
+		<h2>📜使用説明</h2>
 
 		<a class="btn btn-outline-dark btn-lg">使用説明（未実装）</a>
 		<a class="btn btn-outline-dark btn-lg" href="/todo">ToDo</a>
@@ -26,6 +26,9 @@
 	<a class="btn btn-outline-primary btn-lg" th:href="@{employee/enroll}">社員登録</a>
 	<a class="btn btn-outline-primary btn-lg"
 		 th:href="@{employee/list}">社員一覧</a>
+	<a class="btn btn-outline-primary btn-lg"
+		 th:href="@{raonuser/list}">社員メール一覧</a>
+	
 	<br>
 	</div>
 	<br>
@@ -59,5 +62,10 @@
 		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{invoice/board}">請求書一覧</a>
 	</div>
 	<br><br><br>
+	<div class="container">
+	
+		<a class="btn btn-outline-success btn-lg" href="https://github.com/hwangjisu9112/raonManagingService">Git</a>
+	</div>	
+	<br><br>
 </body>
 </html>
