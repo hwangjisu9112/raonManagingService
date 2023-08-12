@@ -10,6 +10,8 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.RequiredArgsConstructor;
@@ -19,9 +21,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RaonUserService {
 
-    private final RaonUserReository raonUserRepository;
+    private final RaonUserRepository raonUserRepository;
     private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
+	private final JavaMailSender javaMailSender;
+
     
     
     //社員リスト
@@ -51,4 +55,32 @@ public class RaonUserService {
         raonUserRepository.save(raonUser);
         return raonUser;
     }
+    
+    public void sendResetPasswordEmail(String toEmail, String authCode) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject("RaonManagerパスワードリセットのご案内");
+
+        String emailContent = loadEmailTemplate(authCode);
+        message.setText(emailContent);
+
+        javaMailSender.send(message);
+    }
+    
+    private String loadEmailTemplate(String authCode) {
+        String template = "<!DOCTYPE html>"
+                        + "<html>"
+                        + "<head>"
+                        + "<title>RaonManagerパスワードリセット</title>"
+                        + "</head>"
+                        + "<body>"
+                        + "<p>RaonManagerパスワードリセットのご案内</p>"
+                        + "<p>以下のリンクをクリックして、パスワードのリセットを行ってください。</p>"
+                        + "<a href=\"http://localhost:8080/raonuser/reset-password?authCode=${authCode}\">パスワードリセット</a>"
+                        + "</body>"
+                        + "</html>";
+        
+        return template.replace("${authCode}", authCode);
+    }
+
 }

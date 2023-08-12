@@ -15,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+
+//請求書のビジネスロジク
+
 public class InvoiceService {
 
 	private final CustomerRepository customerRepository;
@@ -45,7 +48,7 @@ public class InvoiceService {
 
 	}
 
-	// touroku
+	// 登録
 	public void write(String cpn, String add, String tel, String emp, String title, LocalDate date, Integer w,
 			Integer ew, Integer dw, Integer price, Integer tax) {
 
@@ -61,7 +64,7 @@ public class InvoiceService {
 		i.setDeductionWorkhour(dw);
 		i.setUnitPrice(price);
 		i.setTax(tax);
-
+		//総請求金額
 		Integer crg = (w + ew - dw) * price * (100 - tax) / 100;
 
 		i.setCharges(crg);

@@ -41,7 +41,6 @@ function confirmDelete() {
 			<th>管理等級</th>
 			<th>社内情報</th>
 			<th>削除</th>
-			<th>暗証番号を忘れた場合</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -57,7 +56,6 @@ function confirmDelete() {
 			<td><a
 				th:href="@{/raonuser/delete/{id}(id=${raonuser.raonId})}"
 				class="delete btn btn-sm btn-outline-secondary" onclick="return confirmDelete();">❌</a></td>
-			<td><a class="delete btn btn-sm btn-outline-secondary" href="/raonuser/reset">🔑</a></td>
 	</tbody>
 </table>
 </div>
