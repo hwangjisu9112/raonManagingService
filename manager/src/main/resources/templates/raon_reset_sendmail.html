@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>RaonManagerパスワードリセット</title>
+</head>
+<body>
+      <h2>１．メールに印証コード伝送</h2>
+    <form action="/raonuser/reset-sendmail" method="post">
+        <label for="username">社内メール:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="email">印証コードメール:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <input type="submit" value="コード伝送">
+    </form>
+</body>
+</html>

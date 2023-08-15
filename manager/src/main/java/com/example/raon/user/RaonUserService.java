@@ -1,11 +1,20 @@
 package com.example.raon.user;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 
 import com.example.raon.employee.Employee;
 import com.example.raon.employee.EmployeeRepository;
 
+import jakarta.transaction.Transactional;
+
 import java.util.Optional;
+
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +26,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
 
 
+
+//ユーザーのビジネスロジク
+
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class RaonUserService {
@@ -25,14 +38,13 @@ public class RaonUserService {
     private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
 	private final JavaMailSender javaMailSender;
+	private final ResourceLoader resourceLoader;
 
-    
-    
     //社員リスト
-    	public Page<RaonUser> getList(Integer page) {
+	public Page<RaonUser> getList(Integer page) {
 
-    		Pageable pageable = PageRequest.of(page, 20);
-    		return this.raonUserRepository.findAll(pageable);
+		Pageable pageable = PageRequest.of(page, 20);
+    	return this.raonUserRepository.findAll(pageable);
 
     	}
       
@@ -61,26 +73,31 @@ public class RaonUserService {
         message.setTo(toEmail);
         message.setSubject("RaonManagerパスワードリセットのご案内");
 
-        String emailContent = loadEmailTemplate(authCode);
+        String emailContent = loadEmailTemplate(authCode); // 이 부분을 수정
         message.setText(emailContent);
 
         javaMailSender.send(message);
     }
     
     private String loadEmailTemplate(String authCode) {
-        String template = "<!DOCTYPE html>"
-                        + "<html>"
-                        + "<head>"
-                        + "<title>RaonManagerパスワードリセット</title>"
-                        + "</head>"
-                        + "<body>"
-                        + "<p>RaonManagerパスワードリセットのご案内</p>"
-                        + "<p>以下のリンクをクリックして、パスワードのリセットを行ってください。</p>"
-                        + "<a href=\"http://localhost:8080/raonuser/reset-password?authCode=${authCode}\">パスワードリセット</a>"
-                        + "</body>"
-                        + "</html>";
-        
-        return template.replace("${authCode}", authCode);
+        try {
+            Resource resource = resourceLoader.getResource("classpath:templates/email-templates/send_authcode_mail.html");
+            byte[] templateBytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
+            String template = new String(templateBytes, StandardCharsets.UTF_8);
+            return template.replace("${authCode}", authCode);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load email template", e);
+        }
     }
+    
+//    private void saveAuthCodeToDatabase(String email, String authCode) {
+//        Optional<RaonUser> optionalRaonUser = raonUserRepository.findByUsername(email);
+//        if (optionalRaonUser.isPresent()) {
+//            RaonUser raonUser = optionalRaonUser.get();
+//            raonUser.setAuthCode(authCode);
+//            raonUserRepository.save(raonUser);
+//        }
+//    }
+    
 
 }

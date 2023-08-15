@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +23,7 @@ import org.springframework.http.ResponseEntity;
 @RequestMapping("/raonuser")
 @RequiredArgsConstructor
 
-//社内メールをDBに保存するfieldを定義
+//社内ユーザーメールのコントローラー
 
 public class RaonUserController {
 
@@ -81,54 +82,69 @@ public class RaonUserController {
 	}
 
 
-	@GetMapping("/reset-password")
-	public String ResetPassword() {
+	private String generateRandomAuthCode() {
+		
+		return UUID.randomUUID().toString();
+	}
 
-		return "raon_reset_password";
+	@GetMapping("/reset-sendmail")
+	public String sendMailpage() {
+
+		return "raon_reset_sendmail";
 	}
 	
-	
-
-	@PostMapping("/reset-password")
-	public ResponseEntity<String> resetPassword(@RequestParam("username") String username,
-	        @RequestParam("email") String email) {
-
+	@PostMapping("/reset-sendmail")
+	public ResponseEntity<String> sendMailpage(@RequestParam("username") String username,
+	                                           @RequestParam("email") String email) {
 	    Optional<RaonUser> optionalRaonUser = raonUserRepository.findByUsername(username);
 	    if (optionalRaonUser.isPresent()) {
-	        
-	        // 생성한 난수로 인증 코드를 대체
-	        String authCode = generateRandomAuthCode(); 
-	        
-	        // 이메일 발송
+	        String authCode = generateRandomAuthCode();
+	        RaonUser raonUser = optionalRaonUser.get();
+	        raonUser.setAuthCode(authCode); // 인증 코드 저장
+	        raonUserRepository.save(raonUser); // 데이터베이스에 엔티티 저장
 	        raonUserService.sendResetPasswordEmail(email, authCode);
-
 	        return ResponseEntity.ok("認証メールが正常に送信されました。 メールを確認してください。");
 	    } else {
 	        return ResponseEntity.badRequest().body("存在しない会員です");
 	    }
-	}
-
-	private String generateRandomAuthCode() {
-	
-		return UUID.randomUUID().toString();
-	}
-	
-
-    @GetMapping("/reset-password")
-    public String resetPasswordPage(@RequestParam("authCode") String authCode, Model model) {
-        // TODO: Verify authCode with saved authCode
-        // If authCode is valid, return the reset password page
-        return "reset-password";
     }
+        
+	    
+	@GetMapping("/reset-authcode")
+	public String checkAuthCodePage() {
 
-    @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPasswordWithNewPassword(@RequestParam("authCode") String authCode,
-                                                               @RequestParam("newPassword") String newPassword) {
-        // TODO: Verify authCode with saved authCode
-        // If authCode is valid, update user's password
-        // Example: raonUserRepository.updatePasswordByUsername(newPassword, username);
+		return "raon_reset_authcode";
+	}
+	
+	  @PostMapping("/reset-authcode")
+	    public String checkAuthCodePage(@RequestParam("authCode") String authCode) {
+	        Optional<RaonUser> oru = raonUserRepository.findByAuthCode(authCode);
+	        if (oru.isPresent()) {
+	            return "redirect:/raonuser/reset-password?authCode=" + authCode;
+	        } else {
+	            return "redirect:/raonuser/reset-authcode?error=invalid";
+	        }
+	    }
 
-        return ResponseEntity.ok("Password reset successful.");
-    }
+	    @GetMapping("/reset-password")
+	    public String resetPasswordPage(@RequestParam("authCode") String authCode, Model model) {
+	        model.addAttribute("authCode", authCode);
+	        return "raon_reset_password";
+	    }
+	    
+	    @Transactional
+	    @PostMapping("/reset-password")
+	    public ResponseEntity<String> resetPasswordChecked(@RequestParam("authCode") String authCode,
+	                                                       @RequestParam("newPassword") String newPassword) {
+	        Optional<RaonUser> oru = raonUserRepository.findByAuthCode(authCode);
+	        if (oru.isPresent()) {
+	            RaonUser raonUser = oru.get();
+	            raonUserRepository.updatePasswordByUsername(raonUser.getUsername(), newPassword);
+	            return ResponseEntity.ok("パスワードのリセットが完了しました。");
+	        } else {
+	            return ResponseEntity.badRequest().body("AutoCodeが違います。");
+	        }
+	    }
+	
 
 }
