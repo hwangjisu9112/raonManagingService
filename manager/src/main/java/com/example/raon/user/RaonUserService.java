@@ -9,8 +9,7 @@ import com.example.raon.employee.EmployeeRepository;
 import jakarta.transaction.Transactional;
 
 import java.util.Optional;
-
-
+import java.util.UUID;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.springframework.core.io.Resource;
@@ -19,8 +18,10 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.RequiredArgsConstructor;
@@ -68,6 +69,28 @@ public class RaonUserService {
         return raonUser;
     }
     
+	//AuthCode
+	private String generateRandomAuthCode() {
+		
+		return UUID.randomUUID().toString();
+	}
+
+    
+    @Transactional
+    public ResponseEntity<String> sendMailAndGenerateAuthCode(String username, String email) {
+        Optional<RaonUser> optionalRaonUser = raonUserRepository.findByUsername(username);
+        if (optionalRaonUser.isPresent()) {
+            String authCode = generateRandomAuthCode();
+            RaonUser raonUser = optionalRaonUser.get();
+            raonUser.setAuthCode(authCode);
+            raonUserRepository.save(raonUser); 
+            sendResetPasswordEmail(email, authCode);
+            return ResponseEntity.ok("認証メールが正常に送信されました。 メールを確認してください。");
+        } else {
+            return ResponseEntity.badRequest().body("存在しない会員です");
+        }
+    }
+    
     public void sendResetPasswordEmail(String toEmail, String authCode) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
@@ -90,14 +113,26 @@ public class RaonUserService {
         }
     }
     
-//    private void saveAuthCodeToDatabase(String email, String authCode) {
-//        Optional<RaonUser> optionalRaonUser = raonUserRepository.findByUsername(email);
-//        if (optionalRaonUser.isPresent()) {
-//            RaonUser raonUser = optionalRaonUser.get();
-//            raonUser.setAuthCode(authCode);
-//            raonUserRepository.save(raonUser);
-//        }
-//    }
+
+    public boolean isAuthCodeValid(String authCode) {
+        Optional<RaonUser> optionalRaonUser = raonUserRepository.findByAuthCode(authCode);
+        return optionalRaonUser.isPresent();
+    }
+
+    public boolean resetPassword(String authCode, String newPassword) {
+        Optional<RaonUser> optionalRaonUser = raonUserRepository.findByAuthCode(authCode);
+        if (optionalRaonUser.isPresent()) {
+            RaonUser raonUser = optionalRaonUser.get();
+
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String encodedPassword = passwordEncoder.encode(newPassword);
+
+            raonUserRepository.updatePasswordByUsername(raonUser.getUsername(), encodedPassword);
+            return true;
+        }
+        return false;
+    }
+
     
 
 }

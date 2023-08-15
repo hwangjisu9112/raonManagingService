@@ -9,10 +9,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 //ユーザーのリポジトリ
-
 @Repository
 public interface RaonUserRepository extends JpaRepository<RaonUser, Long>{
 
+	
     Optional<RaonUser> findByUsername(String username);
     
     @Modifying

@@ -39,10 +39,7 @@ public class RaonUser {
 
     private String nameEmployee;
 
-    
     //既存に登録した社員IDと一致しないと登録できません
-
-
     @OneToOne
     @JoinColumn(name = "userId", unique = true)
     private Employee employee;
@@ -58,6 +55,6 @@ public class RaonUser {
     @Enumerated(EnumType.STRING)
     private RaonUserRole role;
     
-    //
+    //パスワード修正の為に伝送する
     private String authCode;
 }
