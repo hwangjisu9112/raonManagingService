@@ -2,6 +2,7 @@ package com.example.raon.user;
 
 import lombok.Getter;
 
+//ユーザーの権限を設定
 @Getter
 public enum RaonUserRole {
 	

@@ -15,13 +15,14 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
 
-
+//
 @RequiredArgsConstructor
 @Service
 public class RaonUserSecurityService implements UserDetailsService  {
 
-    private final RaonUserReository raonUserReository;
+    private final RaonUserRepository raonUserReository;
 
+    //
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<RaonUser> _siteUser = this.raonUserReository.findByUsername(username);

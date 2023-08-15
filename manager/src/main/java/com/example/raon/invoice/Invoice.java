@@ -10,9 +10,12 @@ import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Setter
 @Getter
 @Entity
+
+//請求書をDBに保存するfieldを定義
 public class Invoice {
 
 	@Id

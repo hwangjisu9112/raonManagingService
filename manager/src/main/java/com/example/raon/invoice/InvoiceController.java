@@ -1,10 +1,6 @@
 package com.example.raon.invoice;
 
-import java.io.IOException;
 
-
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,8 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
+
 
 import com.example.raon.customer.Customer;
 import com.example.raon.employee.Employee;
@@ -25,21 +20,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-
-
 @Controller
 @RequestMapping("/invoice")
 @RequiredArgsConstructor
-public class InvoiceController {
 
+//請求書ページのコントローラー
+
+public class InvoiceController {
+	
+	//生成子
 	private final InvoiceService invoiceService;
 	private final InvoiceRepository invoiceRepository ;
-    private final TemplateEngine templateEngine;
 
 
-
+	//請求書閲覧ページに移動
 	@GetMapping("/board")
 	public String BoardInvoice(Model model) {
 	
@@ -48,6 +42,7 @@ public class InvoiceController {
 		return "invoice_board";
 	}
 
+	//請求書作成ページに移動
 	@GetMapping("/write")
 	public String writeInvoice(Model model) {
 	    List<Customer> customers = invoiceService.getAllCustomers();
@@ -60,6 +55,7 @@ public class InvoiceController {
 	    return "invoice_write";
 	}
 
+	//請求書作成
 	@PostMapping("/write")
 	public String writeInvoice(@RequestParam String cpn,
 							   @RequestParam String add,
@@ -78,6 +74,7 @@ public class InvoiceController {
 	    return "redirect:/";
 	}
 
+	//請求書閲覧
 	@GetMapping("/view/{id}")
 	public String viewInvoice(@PathVariable Long id, Model model) {
 	    List<Invoice> invoices = invoiceService.getInvoicebyId(id);
@@ -87,7 +84,7 @@ public class InvoiceController {
 	}
 	
 	
-	//削除
+	//請求書削除
 	@GetMapping("/delete/{id}")
 	public String DeleteInvoice(Principal principal, @PathVariable("id") Long id) {
 		
@@ -96,10 +93,6 @@ public class InvoiceController {
 		this.invoiceService.delete(invoice);
 		return "redirect:/invoice/board";
 	}
-	
 
-	
-
-	
 
 }

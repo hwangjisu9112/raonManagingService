@@ -57,4 +57,7 @@ public class RaonUser {
     //社員の権限等級を設定
     @Enumerated(EnumType.STRING)
     private RaonUserRole role;
+    
+    //
+    private String authCode;
 }
