@@ -68,8 +68,10 @@ public class RaonUserService {
         raonUserRepository.save(raonUser);
         return raonUser;
     }
+ 
     
-	//AuthCode
+    
+	//AuthCodeを生成
 	private String generateRandomAuthCode() {
 		
 		return UUID.randomUUID().toString();
@@ -78,10 +80,10 @@ public class RaonUserService {
     
     @Transactional
     public ResponseEntity<String> sendMailAndGenerateAuthCode(String username, String email) {
-        Optional<RaonUser> optionalRaonUser = raonUserRepository.findByUsername(username);
-        if (optionalRaonUser.isPresent()) {
+        Optional<RaonUser> oru = raonUserRepository.findByUsername(username);
+        if (oru.isPresent()) {
             String authCode = generateRandomAuthCode();
-            RaonUser raonUser = optionalRaonUser.get();
+            RaonUser raonUser = oru.get();
             raonUser.setAuthCode(authCode);
             raonUserRepository.save(raonUser); 
             sendResetPasswordEmail(email, authCode);
@@ -90,19 +92,20 @@ public class RaonUserService {
             return ResponseEntity.badRequest().body("存在しない会員です");
         }
     }
-    
+    //送信するメールの形を定義
     public void sendResetPasswordEmail(String toEmail, String authCode) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject("RaonManagerパスワードリセットのご案内");
 
-        String emailContent = loadEmailTemplate(authCode); // 이 부분을 수정
+        String emailContent = loadEmailTemplate(authCode); 
         message.setText(emailContent);
 
         javaMailSender.send(message);
     }
-    
+    //送信するメールの形を定義
     private String loadEmailTemplate(String authCode) {
+    	
         try {
             Resource resource = resourceLoader.getResource("classpath:templates/email-templates/send_authcode_mail.html");
             byte[] templateBytes = FileCopyUtils.copyToByteArray(resource.getInputStream());
@@ -113,24 +116,25 @@ public class RaonUserService {
         }
     }
     
-
+    //入力するAuthCodeが正しいにかを判別
     public boolean isAuthCodeValid(String authCode) {
-        Optional<RaonUser> optionalRaonUser = raonUserRepository.findByAuthCode(authCode);
-        return optionalRaonUser.isPresent();
+        Optional<RaonUser> oru = raonUserRepository.findByAuthCode(authCode);
+        return oru.isPresent();
     }
-
+    
+    //パスワード修正するメソッド
     public boolean resetPassword(String authCode, String newPassword) {
-        Optional<RaonUser> optionalRaonUser = raonUserRepository.findByAuthCode(authCode);
-        if (optionalRaonUser.isPresent()) {
-            RaonUser raonUser = optionalRaonUser.get();
-
+        Optional<RaonUser> oru = raonUserRepository.findByAuthCode(authCode);
+        if (oru.isPresent()) {
+            RaonUser raonUser = oru.get();
+            //新しいパスワードもBCryptPasswordEncoderで登録するべき
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             String encodedPassword = passwordEncoder.encode(newPassword);
 
             raonUserRepository.updatePasswordByUsername(raonUser.getUsername(), encodedPassword);
             return true;
         }
-        return false;
+        	return false;
     }
 
     

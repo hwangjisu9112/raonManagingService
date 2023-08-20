@@ -41,15 +41,17 @@ public class RaonUserController {
 		return "raon_list";
 	}
 
-	// 社
+	// 社内メールを登録するページに移動
 	@GetMapping("/signup")
 	public String signUp(Model model) {
 		model.addAttribute("raonUser", new RaonUser());
 		return "raon_signup";
 	}
 
+	// 社内メールを登録
 	@PostMapping("/signup")
 	public String signUp(@Valid RaonUser raonUser, BindingResult bindingResult) {
+		
 		if (bindingResult.hasErrors()) {
 			return "raon_signup";
 		}
@@ -74,30 +76,37 @@ public class RaonUserController {
 		return "redirect:/";
 	}
 
+	// ログイン、　ビジネスロジクはSPRING securityで実装
 	@GetMapping("/login")
 	public String login() {
 		return "raon_login";
 	}
 	
+	// パスワード修正するページに移動
 	@GetMapping("/reset-sendmail")
 	public String sendMailpage() {
 
 		return "raon_reset_sendmail";
 	}
 	
-	 @PostMapping("/reset-sendmail")
-	    public ResponseEntity<String> sendMailpage(@RequestParam("username") String username,
-	                                               @RequestParam("email") String email) {
-	        return raonUserService.sendMailAndGenerateAuthCode(username, email);
-	    }
 
-	    
+	// パスワード修正する為にAuthCodeをメールで発送
+	@PostMapping("/reset-sendmail")
+	public ResponseEntity<String> sendMailpage(@RequestParam("username") String username,
+	                                               @RequestParam("email") String email) {
+	        
+		 return raonUserService.sendMailAndGenerateAuthCode(username, email);
+	}
+
+	// AuthCodeを確認するページ    
 	@GetMapping("/reset-authcode")
 	public String checkAuthCodePage() {
 
 		return "raon_reset_authcode";
 	}
 	
+	// AuthCodeを確認する
+
 	 @PostMapping("/reset-authcode")
 	 public String checkAuthCodePage(@RequestParam("authCode") String authCode) {
 	        Optional<RaonUser> oru = raonUserRepository.findByAuthCode(authCode);
