@@ -57,6 +57,7 @@ public class RaonUserService {
 
   	}
 
+
     public RaonUser create(RaonUser raonUser) {
         raonUser.setPassword(passwordEncoder.encode(raonUser.getPassword()));
 
@@ -64,12 +65,33 @@ public class RaonUserService {
                 .orElseThrow(() -> new IllegalArgumentException("社員番号（EmployeeID）を確認してください　： " + raonUser.getEmployee().getEmployeeId()));
 
         raonUser.setEmployee(e);
+        raonUser.setAttendCode(raonUser.getAttendCode());
 
         raonUserRepository.save(raonUser);
         return raonUser;
     }
- 
     
+    @Transactional
+    public RaonUser createUserWithRole(RaonUser raonUser, RaonUserRole role) {
+        raonUser.setPassword(passwordEncoder.encode(raonUser.getPassword()));
+
+        Employee e = employeeRepository.findById(raonUser.getEmployee().getEmployeeId())
+                .orElseThrow(() -> new IllegalArgumentException("社員番号（EmployeeID）を確認してください　： " + raonUser.getEmployee().getEmployeeId()));
+
+        raonUser.setEmployee(e);
+        raonUser.setRole(role);
+
+        return raonUserRepository.save(raonUser);
+    }
+    
+    
+    //社員メールを削除
+  	public void delete(RaonUser raonUser) {
+
+  		this.raonUserRepository.delete(raonUser);
+  		
+  	}
+ 
     
 	//AuthCodeを生成
 	private String generateRandomAuthCode() {

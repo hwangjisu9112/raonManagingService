@@ -11,6 +11,13 @@
 	</div>
 	<form th:action="@{/raonuser/signup}" th:object="${raonUser}"
 		method="post">
+				   <div class="mb-3">
+        <label for="role" class="form-label">管理等級</label>
+             <select class="form-control" id="role" th:field="*{role}">
+            <option th:each="role : ${T(com.example.raon.user.RaonUserRole).values()}"
+                    th:value="${role}" th:text="${role.value}"></option>
+        </select>
+    </div>
 		<div class="mb-3">
 			<label for="username" class="form-label">EMAIL</label> <input
 				type="email" th:field="*{username}" class="form-control"
@@ -30,7 +37,11 @@
 				type="password" th:field="*{passwordRe}" class="form-control">
 		</div>
 		<div class="mb-3">
-			<label for="employeeId" class="form-label">Employee ID</label> <input
+    <label for="attendCode" class="form-label">Employee ID</label>
+    <input type="text" th:field="*{attendCode}" class="form-control" placeholder="Employee ID">
+</div>
+		<div class="mb-3">
+			<label for="employeeId" class="form-label">Employee ID 確認</label> <input
 				type="text" th:field="*{employee.employeeId}" class="form-control">
 		</div>
 		<button type="submit" class="btn btn-primary">社員メールを生成</button>

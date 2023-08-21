@@ -24,8 +24,8 @@ public class Attendance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long attendanceId;
-
-	private String nameofEmployee;
+	
+	private Long employeeCode;
 
 	private LocalDateTime attCheckIn;
 

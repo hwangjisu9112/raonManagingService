@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
-
 <title>勤怠</title>
 </head>
 <body>
@@ -13,22 +12,18 @@
 			勤怠一覧</span><br>
 		<div>
 			<form th:action="@{/attendance/attend/checkin}" method="post">
-				<input type="hidden" name="name"
-					th:value="${#strings.substringBefore(#authentication.principal.username, '@')}">
+		<input type="hidden" name="code" th:value="${#authentication.principal.raonUser.attendCode}">
 				<button type="submit" class="btn btn-success btn-lg">
-					🕘出社🕘</button>
+					🌅出社🌅</button>
 			</form>
-		</div>
-		<br><br>
-		<div>
-			<form th:action="@{/attendance/attend/checkout}" method="post">
-				<input type="hidden" name="name"
-					th:value="${#strings.substringBefore(#authentication.principal.username, '@')}">
-				<button type="submit" class="btn btn-dark btn-lg">
-					👋退社👋</button>
-			</form>
-		</div>
 
+			<br>
+			<br>
+			<form th:action="@{/attendance/attend/checkout}" method="post">
+		<input type="hidden" name="code" th:value="${#authentication.principal.raonUser.attendCode}">
+				<button type="submit" class="btn btn-dark btn-lg">🌉退社🌉</button>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

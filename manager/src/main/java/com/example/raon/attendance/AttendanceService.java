@@ -28,25 +28,30 @@ public class AttendanceService {
 	}
 
 	// 勤怠記録を残った社員
-	public List<Attendance> getAttendanceByEmployeeName(String name) {
-		return attendanceRepository.findBynameofEmployee(name);
+	public List<Attendance> getAttendanceByemployeeCode(Long code) {
+		return attendanceRepository.findByemployeeCode(code);
+	}
+	
+	// 勤怠記録を残った社員
+	public List<Attendance> getAttendanceByEmployeeName(Long code) {
+		return attendanceRepository.findByemployeeCode(code);
 	}
 
 	// 勤務開始時間を記録
-	public void checkIn(String employeeName) {
-		Employee employee = employeeRepository.findByEmployeeName(employeeName);
+	public void checkIn(Long code) {
+		Employee employee = employeeRepository.findByEmployeeId(code);
 
 		if (employee != null) {
 			Attendance a = new Attendance();
-			a.setNameofEmployee(employeeName);
+			a.setEmployeeCode(code);
 			a.setAttCheckIn(LocalDateTime.now());
 			attendanceRepository.save(a);
 		}
 	}
 
 	//勤務終了時間を記録
-	public void checkOut(String employeeName) {
-		List<Attendance> attendanceList = attendanceRepository.findBynameofEmployeeOrderByAttCheckInDesc(employeeName);
+	public void checkOut(Long code) {
+		List<Attendance> attendanceList = attendanceRepository.findByemployeeCodeOrderByAttCheckInDesc(code);
 
 		if (!attendanceList.isEmpty()) {
 			Attendance latestAttendance = attendanceList.get(0);

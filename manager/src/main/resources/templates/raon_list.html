@@ -36,6 +36,7 @@ function confirmDelete() {
 	<thead>
 		<tr>
 			<th>ID</th>
+			<th>社員ID</th>
 			<th>社員</th>
 			<th>社内 メール</th>
 			<th>管理等級</th>
@@ -47,6 +48,7 @@ function confirmDelete() {
 		<tr th:each="raonuser, loop : ${paging}">
 		
 			<td th:text="${raonuser.raonId}"></td>
+			<td th:text="${raonuser.attendCode}"></td>
 			<td th:text="${raonuser.nameEmployee}"></td>
 			<td th:text="${raonuser.username}"></td>
 			<td th:text="${raonuser.role}"></td>			

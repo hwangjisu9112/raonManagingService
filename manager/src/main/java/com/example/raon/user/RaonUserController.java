@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import java.security.Principal;
 import java.util.Optional;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -49,31 +51,58 @@ public class RaonUserController {
 	}
 
 	// 社内メールを登録
+//	@PostMapping("/signup")
+//	public String signUp(@Valid RaonUser raonUser, BindingResult bindingResult) {
+//		
+//		if (bindingResult.hasErrors()) {
+//			return "raon_signup";
+//		}
+//
+//		if (!raonUser.getPassword().equals(raonUser.getPasswordRe())) {
+//			bindingResult.rejectValue("passwordRe", "passwordIncorrect", "パスワードが違います");
+//			return "raon_signup";
+//		}
+//
+//		try {
+//			raonUserService.create(raonUser);
+//		} catch (DataIntegrityViolationException e) {
+//			e.printStackTrace();
+//			bindingResult.reject("signupFailed", "もう登録されているユーザーです。");
+//			return "raon_signup";
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			bindingResult.reject("signupFailed", e.getMessage());
+//			return "raon_signup";
+//		}
+//
+//		return "redirect:/";
+//	}
+	
 	@PostMapping("/signup")
 	public String signUp(@Valid RaonUser raonUser, BindingResult bindingResult) {
-		
-		if (bindingResult.hasErrors()) {
-			return "raon_signup";
-		}
 
-		if (!raonUser.getPassword().equals(raonUser.getPasswordRe())) {
-			bindingResult.rejectValue("passwordRe", "passwordIncorrect", "パスワードが違います");
-			return "raon_signup";
-		}
+	    if (bindingResult.hasErrors()) {
+	        return "raon_signup";
+	    }
 
-		try {
-			raonUserService.create(raonUser);
-		} catch (DataIntegrityViolationException e) {
-			e.printStackTrace();
-			bindingResult.reject("signupFailed", "もう登録されているユーザーです。");
-			return "raon_signup";
-		} catch (Exception e) {
-			e.printStackTrace();
-			bindingResult.reject("signupFailed", e.getMessage());
-			return "raon_signup";
-		}
+	    if (!raonUser.getPassword().equals(raonUser.getPasswordRe())) {
+	        bindingResult.rejectValue("passwordRe", "passwordIncorrect", "パスワードが違います");
+	        return "raon_signup";
+	    }
 
-		return "redirect:/";
+	    try {
+	        raonUserService.create(raonUser);
+	    } catch (DataIntegrityViolationException e) {
+	        e.printStackTrace();
+	        bindingResult.reject("signupFailed", "もう登録されているユーザーです。");
+	        return "raon_signup";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        bindingResult.reject("signupFailed", e.getMessage());
+	        return "raon_signup";
+	    }
+
+	    return "redirect:/";
 	}
 
 	// ログイン、　ビジネスロジクはSPRING securityで実装
@@ -81,6 +110,16 @@ public class RaonUserController {
 	public String login() {
 		return "raon_login";
 	}
+	
+	   
+		//社員メール削除
+		@GetMapping("/delete/{id}")
+		public String DeleteEmployee(Principal principal, @PathVariable("id") Long id) {
+			RaonUser raonUser = this.raonUserService.getRaonUserID(id);
+
+			this.raonUserService.delete(raonUser);
+			return "redirect:/raonuser/list";
+		}
 	
 	// パスワード修正するページに移動
 	@GetMapping("/reset-sendmail")
@@ -106,7 +145,6 @@ public class RaonUserController {
 	}
 	
 	// AuthCodeを確認する
-
 	 @PostMapping("/reset-authcode")
 	 public String checkAuthCodePage(@RequestParam("authCode") String authCode) {
 	        Optional<RaonUser> oru = raonUserRepository.findByAuthCode(authCode);
