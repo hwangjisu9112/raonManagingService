@@ -3,7 +3,6 @@
 <meta charset="UTF-8">
 <head>
 <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
-
 <title>Raon</title>
 </head>
 <body>
@@ -14,58 +13,60 @@
 	<div class="container">
 		<h2>📜使用説明</h2>
 
-		<a class="btn btn-outline-dark btn-lg">使用説明（未実装）</a>
-		<a class="btn btn-outline-dark btn-lg" href="/todo">ToDo</a>
-	
+		<a class="btn btn-outline-dark btn-lg">使用説明（未実装）</a> <a
+			class="btn btn-outline-dark btn-lg" href="/todo">ToDo</a>
+
 	</div>
 	<br>
 	<br>
 	<div class="container">
-	<h2>🗣社員管理</h2>
+		<h2>🪪社員管理</h2>
 
-	<a class="btn btn-outline-primary btn-lg" th:href="@{employee/enroll}">社員登録</a>
-	<a class="btn btn-outline-primary btn-lg"
-		 th:href="@{employee/list}">社員一覧</a>
-	<a class="btn btn-outline-primary btn-lg"
-		 th:href="@{raonuser/list}">社員メール一覧</a>
-	
-	<br>
+		<a class="btn btn-outline-primary btn-lg" th:href="@{employee/enroll}">社員登録</a>
+		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{employee/list}">社員一覧</a>
+		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{raonuser/list}">社員メール一覧</a>
+
+		<br>
 	</div>
 	<br>
 	<br>
 	<div class="container">
 		<h2>🤝取引先管理</h2>
 
-		<a class="btn btn-outline-primary btn-lg"
-			 th:href="@{customer/enroll}">取引先登録</a>
-		<a class="btn btn-outline-primary btn-lg"
-			 th:href="@{customer/list}">取引先一覧</a><br>
+		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{customer/enroll}">取引先登録</a>
+		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{customer/list}">取引先一覧</a><br>
 	</div>
 	<br>
 	<br>
 	<div class="container">
 		<h2>🕰勤怠管理</h2>
 		<a class="btn btn-outline-primary btn-lg"
-			sec:authorize="isAuthenticated()"
-			 th:href="@{attendance/attend}">勤怠管理</a>
+			sec:authorize="isAuthenticated()" th:href="@{attendance/attend}">勤怠管理</a>
 		<a class="btn btn-outline-primary btn-lg"
 			sec:authorize="isAuthenticated()"
-			th:href="@{'attendance/list/' + ${#strings.substringBefore(#authentication.principal.username, '@')}}">
-			勤怠記録 </a>
+			th:href="@{/attendance/list/{attendCode}(attendCode=${#authentication.principal.raonUser.attendCode})}"
+> 勤怠記録 </a>
 	</div>
 	<br>
 	<br>
 	<div class="container">
 		<h2>📠請求書</h2>
 
-		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{invoice/write}">請求書作成</a>
-		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{invoice/board}">請求書一覧</a>
+		<a class="btn btn-outline-primary btn-lg"
+			sec:authorize="isAuthenticated()" th:href="@{invoice/write}">請求書作成</a>
+		<a class="btn btn-outline-primary btn-lg"
+			sec:authorize="isAuthenticated()" th:href="@{invoice/board}">請求書一覧</a>
 	</div>
-	<br><br><br>
+	<br>
+	<br>
+	<br>
 	<div class="container">
-	
-		<a class="btn btn-outline-success btn-lg" href="https://github.com/hwangjisu9112/raonManagingService">Git</a>
-	</div>	
-	<br><br>
+
+		<a class="btn btn-outline-success btn-lg"
+			href="https://github.com/hwangjisu9112/raonManagingService">Git</a>
+	</div>
+	<br>
+	<br>
 </body>
+
 </html>

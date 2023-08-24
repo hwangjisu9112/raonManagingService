@@ -30,9 +30,10 @@ public class Employee {
 
 	@Id
 	@Positive
-	private Long EmployeeId;
+	private Long employeeId;
 
 	private String employeeName;
+	
 	@Pattern(regexp = "[a-zA-Z]*", message = "英語で作成してください。")
 	private String NameEng;
 
@@ -61,6 +62,7 @@ public class Employee {
 	private LocalDate BirthDate;
 
 	private Integer PayDate;
+	
 
 	@OneToOne
 	@JoinColumn(name = "user_id")

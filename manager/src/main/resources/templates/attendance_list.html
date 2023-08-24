@@ -5,13 +5,14 @@
 <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
 
 <title>勤怠表</title>
+
 </head>
 <body>
 	<nav th:replace="~{navbar :: navbarFragment}"></nav>
 	<div class="container my-3">
 		<span class="input-group-text" id="addon-wrapping">勤怠表</span><br>
 		<div class="alert alert-warning alert-dismissible fade show">
-			名前: <strong><span th:text="${attendanceList[0].NameofEmployee}"></span></strong>
+			名前: <strong><span th:text="${attendanceList[0].EmployeeCode}"></span></strong>
 		</div>
 		<div class="alert alert-info">
 			総勤務日数: <strong><span th:text="${#lists.size(attendanceList)}"></span></strong>日
@@ -41,6 +42,7 @@
 			</tbody>
 		</table>
 	</div>
+
 </body>
 
 </html>

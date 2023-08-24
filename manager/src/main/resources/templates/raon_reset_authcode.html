@@ -2,15 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+  
     <title>RaonManagerパスワードリセット</title>
 </head>
 <body>
+	<nav th:replace="~{navbar :: navbarFragment}"></nav><br>
+
     <h2>２．印証コード入力</h2>
     <form action="/raonuser/reset-authcode" method="post">
-        <label for="authCode">印証コード:</label>
-        <input type="text" id="authCode" name="authCode" required>
+        <label for="authCode">印証コード</label>
+        <input type="text" class="input-group-text" id="authCode" name="authCode" required>
         <br>
-        <input type="submit" value="確認">
+        <input type="submit"  class="btn btn-lg btn-primary" value="印証コード確認">
     </form>
 </body>
 </html>

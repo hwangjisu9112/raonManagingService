@@ -3,32 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
-
 <title>勤怠</title>
 </head>
 <body>
 	<nav th:replace="~{navbar :: navbarFragment}"></nav>
 	<div class="container my-3">
 		<span class="input-group-text" id="addon-wrapping">出社 / 退社 /
-			勤怠一覧</span><br>
-		<div>
+	
+		勤怠一覧</span><br>
+		<div class="d-grid gap-2 col-6 mx-auto">
 			<form th:action="@{/attendance/attend/checkin}" method="post">
-				<input type="hidden" name="name"
-					th:value="${#strings.substringBefore(#authentication.principal.username, '@')}">
-				<button type="submit" class="btn btn-success btn-lg">
-					🕘出社🕘</button>
+		<input type="hidden" name="code" th:value="${#authentication.principal.raonUser.attendCode}">
+				<button type="submit" class="btn btn-warning btn-lg">
+					🌅出社🌅</button>
 			</form>
-		</div>
-		<br><br>
-		<div>
+			<br>
 			<form th:action="@{/attendance/attend/checkout}" method="post">
-				<input type="hidden" name="name"
-					th:value="${#strings.substringBefore(#authentication.principal.username, '@')}">
-				<button type="submit" class="btn btn-dark btn-lg">
-					👋退社👋</button>
+		<input type="hidden" name="code" th:value="${#authentication.principal.raonUser.attendCode}">
+				<button type="submit" class="btn btn-dark btn-lg">🌉退社🌉</button>
 			</form>
 		</div>
-
 	</div>
 </body>
 </html>

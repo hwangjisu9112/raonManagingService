@@ -5,6 +5,7 @@ import org.springframework.validation.annotation.Validated;
 
 import com.example.raon.employee.Employee;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -34,15 +35,14 @@ public class RaonUser {
     //usernameじゃないとエラーが出る··· スプリングセキュリティ自体の性質
 
     @Email
-//  @Column(unique = true)
+    @Column(unique = true)
     private String username;
 
     private String nameEmployee;
-
+    
+    private Long attendCode;
     
     //既存に登録した社員IDと一致しないと登録できません
-
-
     @OneToOne
     @JoinColumn(name = "userId", unique = true)
     private Employee employee;
@@ -58,6 +58,7 @@ public class RaonUser {
     @Enumerated(EnumType.STRING)
     private RaonUserRole role;
     
-    //
+    //パスワード修正の為に伝送する
     private String authCode;
+    
 }

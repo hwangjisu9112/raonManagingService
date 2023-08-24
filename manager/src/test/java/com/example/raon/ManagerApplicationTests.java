@@ -8,12 +8,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ManagerApplicationTests {
 	
-    @Autowired
-
+    @Autowired    
     @Test
     void testJpa() {        
    
-        // test employee 2
+       
     }
 
 }
