@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+
+<title>Error</title>
+</head>
+<body>
+	<div class="container my-3">
+		<H1>😭 ERROR </H1>
+		<ul>
+			<li>
+			<strong><mark>あなたの勤怠表が見つかりません。</mark></strong> 
+			: まだ出勤したことがないかもしれません
+			</li>
+		<li>
+		<a href="/attendance/attend">出勤記録をしに行く</a>
+		</li>
+		</ul>
+	</div><br>
+	<a href="/" class="btn btn-dark">🏠︎メインへ</a>
+</body>
+</html>

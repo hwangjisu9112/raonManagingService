@@ -85,6 +85,11 @@ public class AttendanceContoller {
 	@GetMapping("/list/{code}")
 	public String getAttendanceList(@PathVariable Long code, Model model) {
 		List<Attendance> attendanceList = attendanceService.getAttendanceByEmployeeName(code);
+
+		if (attendanceList.isEmpty()) {
+			return "_errorhandler_TPE"; 
+		}
+
 		model.addAttribute("attendanceList", attendanceList);
 		return "attendance_list";
 	}

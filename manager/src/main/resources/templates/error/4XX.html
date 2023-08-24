@@ -8,12 +8,15 @@
 </head>
 <body>
 	<div class="container my-3">
-		<H1>🐛 ERROR </H1>
+		<H1>😭 ERROR - 404</H1>
 		<ul>
-			<li><strong>社員が削除されない場合</strong> : まず社員のEメールから削除してみてください
+			<li>Error Code: <span th:text="${error}"></span>
 			</li>
+			<li>Error Message: <span th:text="${message}"></span>
+			</li>
+
 		</ul>
-		<a href="/">メイン画面へ戻る</a>
+		<br> <a href="/" class="btn btn-dark">🏠︎メインへ</a>
 	</div>
 </body>
 </html>
