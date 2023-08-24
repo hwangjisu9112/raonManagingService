@@ -7,35 +7,37 @@
 <title>取引先登録</title>
 </head>
 <body>
-<nav th:replace="~{navbar :: navbarFragment}"></nav>
-	<div class="container my-3">
+	<nav th:replace="~{navbar :: navbarFragment}"></nav>
+	<br>
+	<div layout:fragment="content" class="container my-3">
 		<span class="input-group-text" id="addon-wrapping">取引先登録</span>
-</div>
-<div class="input-group mb-3">
+
+
+	<br>
+	<br>
 	<form th:action="@{/customer/enroll}" method="post">
-	<div class="input-group mb-3">
-		<label for="id" class="input-group-text">企業 ID</label> 
-		<input class="input-group-text" type="text" id="id" name="id" required><br> 
-	</div>	
-	<div class="input-group mb-3">
-		<label for="name" class="input-group-text">企業名 </label> 
-		<input type="text" class="input-group-text" id="name" name="name" required><br>
-	</div>	
-	<div class="input-group mb-3">
-		<label for="name"  class="input-group-text">アドレス </label> <input type="text"  class="input-group-text" id="address" name="address" required><br>
-	</div>
-	<div class="input-group mb-3">	
-		<label for="name" class="input-group-text">電話番号 </label> <input type="text"  class="input-group-text" id="phone" name="phone" required><br>
-	</div>	
-		
+		<div class="mb-3">
+			<label for="id" class="form-label">企業 ID</label> <input
+				class="form-control" type="text" id="id" name="id" required><br>
+
+			<label for="name" class="form-label">企業名 </label> <input type="text"
+				class="form-control" id="name" name="name" required><br>
+
+			<label for="name" class="form-label">アドレス </label> <input type="text"
+				class="form-control" id="address" name="address" required><br>
+			<label for="name" class="form-label">電話番号 </label> <input type="text"
+				class="form-control" id="phone" name="phone" required><br>
+
+
+		</div>
 		<br>
-		<button type="submit" class="btn btn-lg btn-primary">保存</button>
-				<button type="reset" class="btn btn-lg btn-warning">リセット
-</button>	
-<a href="/" class="btn btn-dark btn-lg">メインへ</a>
+		<div class="container">
+			<button type="submit" class="btn btn-lg btn-primary">保存</button>
+			<button type="reset" class="btn btn-lg btn-warning">リセット</button>
+			<a href="/" class="btn btn-dark btn-lg">メインへ</a>
+		</div>
+
 	</form>
-</div>
-
-
+	</div>
 </body>
 </html>
