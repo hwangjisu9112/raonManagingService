@@ -4,44 +4,58 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
 
-<title>勤怠表</title>
-
 </head>
 <body>
-	<nav th:replace="~{navbar :: navbarFragment}"></nav>
-	<div class="container my-3">
-		<span class="input-group-text" id="addon-wrapping">勤怠表</span><br>
-		<div class="alert alert-warning alert-dismissible fade show">
-			名前: <strong><span th:text="${attendanceList[0].EmployeeCode}"></span></strong>
-		</div>
-		<div class="alert alert-info">
-			総勤務日数: <strong><span th:text="${#lists.size(attendanceList)}"></span></strong>日
-		</div>
+    <nav th:replace="~{navbar :: navbarFragment}"></nav>
+    <div class="container my-3">
+        <span class="input-group-text" id="addon-wrapping">勤怠表</span><br>
+        <div class="alert alert-warning alert-dismissible fade show">
+            社員ID: <strong><span th:text="${attendancePage.content[0].EmployeeCode}"></span></strong>
+        </div>
+        <div class="alert alert-info">
+            総勤務日数: <strong><span th:text="${attendancePage.totalElements}"></span></strong>日
+        </div>
+        <div class="row my-3">
+        </div>
 
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>年月</th>
-					<th>日</th>
-					<th>出勤時刻</th>
-					<th>退社時刻</th>
-					<th>区分</th>
-					<th>作業時間</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="attendance, rowStat : ${attendanceList}">
-					<td><span th:text="${#temporals.format(attendance.AttCheckIn, 'yy/MM')}"></span></td>
-					<td><span th:text="${#temporals.format(attendance.AttCheckIn, 'dd')}"></span></td>
-					<td><span th:text="${#temporals.format(attendance.AttCheckIn, 'HH:mm')}"></span></td>
-					<td><span th:text="${#temporals.format(attendance.AttCheckOut, 'HH:mm')}"></span></td>
-					<td th:text="${attendance.status}"></td>
-					<td><span th:text="${attendance.getFormattedWorkDuration()}"></span></td>
-		
-				</tr>
-			</tbody>
-		</table>
-	</div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>年月</th>
+                    <th>日</th>
+                    <th>出勤時刻</th>
+                    <th>退社時刻</th>
+                    <th>区分</th>
+                    <th>作業時間</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="attendance, rowStat : ${attendancePage.content}">
+                    <td><span th:text="${#temporals.format(attendance.AttCheckIn, 'yy/MM')}"></span></td>
+                    <td><span th:text="${#temporals.format(attendance.AttCheckIn, 'dd')}"></span></td>
+                    <td><span th:text="${#temporals.format(attendance.AttCheckIn, 'HH:mm')}"></span></td>
+                    <td><span th:text="${#temporals.format(attendance.AttCheckOut, 'HH:mm')}"></span></td>
+                    <td th:text="${attendance.status}"></td>
+                    <td><span th:text="${attendance.getFormattedWorkDuration()}"></span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 페이징 링크 표시 -->
+    <div th:fragment="pagination(attendancePage)">
+        <ul class="pagination justify-content-center">
+            <li th:if="${attendancePage.hasPrevious()}">
+                <a th:href="@{/list/{code}(code=${attendancePage.content[0].EmployeeCode}, page=${attendancePage.number - 1})}">前に</a>
+            </li>
+            <li th:each="page : ${#numbers.sequence(0, attendancePage.totalPages - 1)}">
+                <a th:href="@{/list/{code}(code=${attendancePage.content[0].EmployeeCode}, page=${page})}" th:class="${page == attendancePage.number ? 'active' : ''}">[[${page + 1}]]</a>
+            </li>
+            <li th:if="${attendancePage.hasNext()}">
+                <a th:href="@{/list/{code}(code=${attendancePage.content[0].EmployeeCode}, page=${attendancePage.number + 1})}">次に</a>
+            </li>
+        </ul>
+    </div>
 
 </body>
 

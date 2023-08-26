@@ -1,15 +1,21 @@
 package com.example.raon.attendance;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.raon.employee.Employee;
 import com.example.raon.employee.EmployeeRepository;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -23,9 +29,10 @@ public class AttendanceService {
 	private final EmployeeRepository employeeRepository;
 
 	// 勤務開始時間を記録
-	public List<Attendance> getList() {
-		return this.attendanceRepository.findAll();
-	}
+	public Page<Attendance> getList(int page) {
+        Pageable pageable = PageRequest.of(page, 25);
+        return this.attendanceRepository.findAll(pageable);
+    }
 
 	// 勤怠記録を残った社員
 	public List<Attendance> getAttendanceByemployeeCode(Long code) {
@@ -72,5 +79,7 @@ public class AttendanceService {
 			attendanceRepository.save(attendance);
 		}
 	}
+  
+    
 
 }

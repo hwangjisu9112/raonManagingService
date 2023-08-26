@@ -3,6 +3,7 @@ package com.example.raon.attendance;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,6 @@ public class AttendanceContoller {
 
 	private final AttendanceService attendanceService;
 	private final EmployeeRepository employeeRepository;
-	private final RaonUserRepository raonUserRepository;
 
 	// 勤怠記録する画面に移動
 	@GetMapping("/attend")
@@ -83,15 +83,17 @@ public class AttendanceContoller {
 
 	// 勤怠表に移動
 	@GetMapping("/list/{code}")
-	public String getAttendanceList(@PathVariable Long code, Model model) {
-		List<Attendance> attendanceList = attendanceService.getAttendanceByEmployeeName(code);
+	public String getAttendanceList(@PathVariable Long code,
+	                                @RequestParam(defaultValue = "0") int page,
+	                                Model model) {
+	    Page<Attendance> attendancePage = attendanceService.getList(page);
 
-		if (attendanceList.isEmpty()) {
-			return "_errorhandler_TPE"; 
-		}
+	    if (attendancePage.isEmpty()) {
+	        return "_errorhandler_TPE"; 
+	    }
 
-		model.addAttribute("attendanceList", attendanceList);
-		return "attendance_list";
+	    model.addAttribute("attendancePage", attendancePage);
+	    return "attendance_list";
 	}
 
 }

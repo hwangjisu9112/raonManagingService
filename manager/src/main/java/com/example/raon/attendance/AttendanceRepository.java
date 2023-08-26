@@ -3,12 +3,14 @@ package com.example.raon.attendance;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 //勤怠管理のレポジトリ
 public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
-//	// 社員を名前で検索
-//	List<Attendance> findBynameofEmployee(String nameofEmployee);
+
+	 Page<Attendance> findAll(Pageable pageable);
 	
 	// 社員をIDで検索
 	List<Attendance> findByemployeeCode(Long employeeCode);
