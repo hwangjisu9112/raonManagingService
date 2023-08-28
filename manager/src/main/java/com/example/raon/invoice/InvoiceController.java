@@ -4,6 +4,8 @@ package com.example.raon.invoice;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,18 +32,19 @@ public class InvoiceController {
 	
 	//生成子
 	private final InvoiceService invoiceService;
-	private final InvoiceRepository invoiceRepository ;
 
 
 	//請求書閲覧ページに移動
 	@GetMapping("/board")
-	public String BoardInvoice(Model model) {
-	
-		List<Invoice> invoices = this.invoiceRepository.findAll();
-	  	model.addAttribute("invoices", invoices);
+	public String boardInvoice(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+		
+		if (page < 0) {page = 0;}
+		
+		Page<Invoice> invoices = this.invoiceService.getList(page);
+		model.addAttribute("paging", invoices);
 		return "invoice_board";
 	}
-
+	
 	//請求書作成ページに移動
 	@GetMapping("/write")
 	public String writeInvoice(Model model) {

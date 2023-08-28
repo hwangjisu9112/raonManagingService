@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -74,26 +76,26 @@ public class AttendanceContoller {
 		return "redirect:/attendance/list/" + code;
 	}
 
-	@PostMapping("/list/{code}")
-	public String updateRest(@RequestParam Long attendanceId, @RequestParam(required = false) Boolean isRest,
-			@PathVariable Long code) {
-		attendanceService.updateRestStatus(attendanceId, isRest);
-		return "redirect:/attendance/list/" + code;
-	}
-
-	// 勤怠表に移動
-	@GetMapping("/list/{code}")
+//	@PostMapping("/list/{code}")
+//	public String updateRest(@RequestParam Long attendanceId, @RequestParam(required = false) Boolean isRest,
+//			@PathVariable Long code) {
+//		attendanceService.updateRestStatus(attendanceId, isRest);
+//		return "redirect:/attendance/list/" + code;
+//	}
+	@GetMapping("/list/{code}/{page}")
 	public String getAttendanceList(@PathVariable Long code,
-	                                @RequestParam(defaultValue = "0") int page,
+	                                @PathVariable int page,
 	                                Model model) {
-	    Page<Attendance> attendancePage = attendanceService.getList(page);
+	    if (page < 0) {page = 0;}
 
-	    if (attendancePage.isEmpty()) {
+	    boolean employeeExists = attendanceService.existsByCode(code);
+
+	    if (!employeeExists) {
 	        return "_errorhandler_TPE"; 
 	    }
 
+	    Page<Attendance> attendancePage = attendanceService.getList(code, page);
 	    model.addAttribute("attendancePage", attendancePage);
 	    return "attendance_list";
 	}
-
 }

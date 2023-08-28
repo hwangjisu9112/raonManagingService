@@ -49,9 +49,9 @@ public class EmployeeContoller {
 	// 社員登録
 	@PostMapping("/enroll")
 	public String EnrollEmployee(@RequestParam Long id, @RequestParam String name, @RequestParam String Ename,
-			@RequestParam String Jname, @RequestParam String Pemail,
-			@RequestParam String tel, @RequestParam String address, @RequestParam String acc,
-			@RequestParam EmployeeBank bank, // New parameter for bank
+			@RequestParam String Jname, @RequestParam String Pemail, @RequestParam String tel,
+			@RequestParam String address, @RequestParam String acc, @RequestParam EmployeeBank bank, // New parameter
+																										// for bank
 			@RequestParam LocalDate join, @RequestParam LocalDate birth, @RequestParam Integer pay) {
 
 		employeeService.enrollEmp(id, name, Ename, Jname, Pemail, tel, address, acc, bank, join, birth, pay);
@@ -71,10 +71,9 @@ public class EmployeeContoller {
 	// 社員情報更新
 	@PostMapping("/update/{id}")
 	public String UpdateEmployee(@PathVariable("id") Long id, @RequestParam String name, @RequestParam String Ename,
-			@RequestParam String Jname, @RequestParam String Pemail,
-			@RequestParam String tel, @RequestParam String address, @RequestParam String acc,
-			@RequestParam EmployeeBank bank, @RequestParam LocalDate join, @RequestParam LocalDate birth,
-			@RequestParam Integer pay,
+			@RequestParam String Jname, @RequestParam String Pemail, @RequestParam String tel,
+			@RequestParam String address, @RequestParam String acc, @RequestParam EmployeeBank bank,
+			@RequestParam LocalDate join, @RequestParam LocalDate birth, @RequestParam Integer pay,
 
 			@ModelAttribute("employee") Employee employee) {
 
@@ -83,7 +82,7 @@ public class EmployeeContoller {
 		return "redirect:/employee/list";
 	}
 
-	//社員削除
+	// 社員削除
 	@GetMapping("/delete/{id}")
 	public String DeleteEmployee(Principal principal, @PathVariable("id") Long id) {
 		Employee employee = this.employeeService.getEmployeeID(id);

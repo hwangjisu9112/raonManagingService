@@ -29,7 +29,7 @@ public class AttendanceService {
 	private final EmployeeRepository employeeRepository;
 
 	// 勤務開始時間を記録
-	public Page<Attendance> getList(int page) {
+	public Page<Attendance> getList(Long code, int page) {
         Pageable pageable = PageRequest.of(page, 25);
         return this.attendanceRepository.findAll(pageable);
     }
@@ -38,6 +38,10 @@ public class AttendanceService {
 	public List<Attendance> getAttendanceByemployeeCode(Long code) {
 		return attendanceRepository.findByemployeeCode(code);
 	}
+	
+    public boolean existsByCode(Long code) {
+        return attendanceRepository.existsByemployeeCode(code);
+    }
 	
 	// 勤怠記録を残った社員
 	public List<Attendance> getAttendanceByEmployeeName(Long code) {

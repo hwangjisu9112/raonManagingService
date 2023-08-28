@@ -3,8 +3,11 @@ package com.example.raon.invoice;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import com.example.raon.customer.Customer;
 import com.example.raon.customer.CustomerRepository;
@@ -23,7 +26,7 @@ public class InvoiceService {
 	private final CustomerRepository customerRepository;
 	private final EmployeeRepository employeeRepository;
 	private final InvoiceRepository invoiceRepository;
-	
+
 	public List<Customer> getAllCustomers() {
 		return customerRepository.findAll();
 	}
@@ -32,12 +35,16 @@ public class InvoiceService {
 		return employeeRepository.findAll();
 	}
 
-	public List<Invoice> getList() {
-		return this.invoiceRepository.findAll();
-	}
-
 	public List<Invoice> getInvoicebyId(Long id) {
 		return invoiceRepository.findByinvoiceId(id);
+	}
+
+	// Invoice　ｐａｇｅリスト
+	public Page<Invoice> getList(Integer page) {
+
+		Pageable pageable = PageRequest.of(page, 10);
+		return this.invoiceRepository.findAll(pageable);
+
 	}
 
 	// IDでinvoiceを検索
@@ -64,7 +71,7 @@ public class InvoiceService {
 		i.setDeductionWorkhour(dw);
 		i.setUnitPrice(price);
 		i.setTax(tax);
-		//総請求金額
+		// 総請求金額
 		Integer crg = (w + ew - dw) * price * (100 - tax) / 100;
 
 		i.setCharges(crg);
@@ -79,6 +86,5 @@ public class InvoiceService {
 		this.invoiceRepository.delete(invoice);
 
 	}
-
 
 }
