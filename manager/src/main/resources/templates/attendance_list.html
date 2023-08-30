@@ -48,15 +48,7 @@
 	</div>
 	<!--paging -->
 	<ul class="pagination justify-content-center">
-    <li class="page-item"
-        th:classappend="${attendancePage.first ? 'disabled' : ''}">
-        <a class="page-link"
-           th:if="${!attendancePage.first}"
-           th:href="@{/attendance/list/{code}/{page}(code=${sortParam}, page=${attendancePage.number - 1})}"
-           aria-label="Previous">
-            <span aria-hidden="true">前に</span>
-        </a>
-    </li>
+    
     <li class="page-item"
         th:each="i : ${#numbers.sequence(0, attendancePage.totalPages - 1)}">
         <th:block th:with="sortParam=${attendancePage.pageable.sort.unsorted ? code : attendancePage.pageable.sort.sorted ? code + ',asc' : code + ',desc'}">
@@ -65,15 +57,7 @@
                 th:text="${i}"></a>
         </th:block>
     </li>
-    <li class="page-item"
-        th:classappend="${attendancePage.last ? 'disabled' : ''}">
-        <a class="page-link"
-           th:if="${!attendancePage.last}"
-           th:href="@{/attendance/list/{code}/{page}(code=${sortParam}, page=${attendancePage.number + 1})}"
-           aria-label="Next">
-            <span aria-hidden="true">次に</span>
-        </a>
-    </li>
+    
 </ul>
 </body>
 

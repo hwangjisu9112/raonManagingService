@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.example.raon.employee.Employee;
@@ -33,6 +34,7 @@ public class AttendanceService {
         Pageable pageable = PageRequest.of(page, 25);
         return this.attendanceRepository.findAll(pageable);
     }
+	
 
 	// 勤怠記録を残った社員
 	public List<Attendance> getAttendanceByemployeeCode(Long code) {

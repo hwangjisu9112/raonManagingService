@@ -3,11 +3,17 @@ package com.example.raon.employee;
 import java.time.LocalDate;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 @RequiredArgsConstructor
 @Service
@@ -19,10 +25,20 @@ public class EmployeeService {
 	private final EmployeeRepository employeeRepository;
 
 	//社員リスト
-	public Page<Employee> getList(Integer page) {
+//	public Page<Employee> getList(Integer page) {
+//
+//		Pageable pageable = PageRequest.of(page, 20);
+//
+//		return this.employeeRepository.findAll(pageable);
+//
+//	}
+	
+	//社員リスト-
+	public Page<Employee> getList(Integer page, String kw) {
 
 		Pageable pageable = PageRequest.of(page, 20);
-		return this.employeeRepository.findAll(pageable);
+		 Specification<Employee> spec = searchByEmployee(kw);
+		return this.employeeRepository.findAll(spec, pageable);
 
 	}
 
@@ -108,6 +124,29 @@ public class EmployeeService {
 		Pageable pageable = PageRequest.of(page, 20);
 		return employeeRepository.findAll(pageable);
 	}
+	
+	//社員検索
+	public Specification<Employee> searchByEmployee(String keyword) {
+	    return new Specification<>() {
+	        private static final long serialVersionUID = 1L;
+	        @Override
+	        public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+	            query.distinct(true);
 
+	            try {
+	                Long employeeId = Long.parseLong(keyword);
+	                return cb.equal(root.get("employeeId"), employeeId);
+	            } catch (NumberFormatException e) {
+	                // 
+	                Predicate namePredicate = cb.like(cb.lower(root.get("employeeName")), "%" + keyword.toLowerCase() + "%");
+	                Predicate nameEngPredicate = cb.like(cb.lower(root.get("NameEng")), "%" + keyword.toLowerCase() + "%");
+	                Predicate nameJpPredicate = cb.like(cb.lower(root.get("NameJp")), "%" + keyword.toLowerCase() + "%");
 
+	                return cb.or(namePredicate, nameEngPredicate, nameJpPredicate);
+	            }
+	        }
+	    };
+}
+
+	
 }
