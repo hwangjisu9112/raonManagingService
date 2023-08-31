@@ -20,7 +20,7 @@ function confirmDelete() {
      
         <div class="col-6">
             <div class="input-group">
-                <input type="text" id="search_kw" class="form-control" th:value="${kw}">
+                <input type="text"  placeholder="ID / 名前 / フリガナ" id="search_kw" class="form-control" th:value="${kw}">
                 <button class="btn btn-outline-secondary" type="button" id="btn_search">検索</button>
             </div>
         </div>
@@ -80,20 +80,7 @@ function confirmDelete() {
         <input type="hidden" id="page" name="page" th:value="${paging.number}">
     </form>
     
-<script layout:fragment="script" type='text/javascript'>
-const page_elements = document.getElementsByClassName("page-link");
-Array.from(page_elements).forEach(function(element) {
-    element.addEventListener('click', function() {
-        document.getElementById('page').value = this.dataset.page;
-        document.getElementById('searchForm').submit();
-    });
-});
-const btn_search = document.getElementById("btn_search");
-btn_search.addEventListener('click', function() {
-    document.getElementById('kw').value = document.getElementById('search_kw').value;
-    document.getElementById('page').value = 0;  
-    document.getElementById('searchForm').submit();
-});
-</script>
+    <script src="/search_function.js" type="text/javascript"></script>
+
 </body>
 </html>

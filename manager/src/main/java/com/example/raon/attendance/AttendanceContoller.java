@@ -76,12 +76,6 @@ public class AttendanceContoller {
 		return "redirect:/attendance/list/" + code;
 	}
 
-//	@PostMapping("/list/{code}")
-//	public String updateRest(@RequestParam Long attendanceId, @RequestParam(required = false) Boolean isRest,
-//			@PathVariable Long code) {
-//		attendanceService.updateRestStatus(attendanceId, isRest);
-//		return "redirect:/attendance/list/" + code;
-//	}
 	@GetMapping("/list/{code}/{page}")
 	public String getAttendanceList(@PathVariable Long code,
 	                                @PathVariable int page,

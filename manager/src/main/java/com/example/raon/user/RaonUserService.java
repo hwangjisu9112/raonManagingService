@@ -6,6 +6,10 @@ import org.springframework.util.FileCopyUtils;
 import com.example.raon.employee.Employee;
 import com.example.raon.employee.EmployeeRepository;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 
 import java.util.Optional;
@@ -18,6 +22,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -42,10 +47,11 @@ public class RaonUserService {
 	private final ResourceLoader resourceLoader;
 
     //社員リスト
-	public Page<RaonUser> getList(Integer page) {
+	public Page<RaonUser> getList(Integer page, String kw) {
 
 		Pageable pageable = PageRequest.of(page, 20);
-    	return this.raonUserRepository.findAll(pageable);
+		Specification<RaonUser> spec = searchByRaonUser(kw);
+    	return this.raonUserRepository.findAll(spec, pageable);
 
     	}
       
@@ -158,6 +164,23 @@ public class RaonUserService {
         }
         	return false;
     }
+    
+
+	// 検索
+	public Specification<RaonUser> searchByRaonUser(String kw) {
+	    return new Specification<>() {
+	        private static final long serialVersionUID = 1L;
+
+	        @Override
+	        public Predicate toPredicate(Root<RaonUser> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+	            query.distinct(true);
+
+	            Predicate idPredicate = cb.like(cb.lower(root.get("raonId").as(String.class)), "%" + kw.toLowerCase() + "%");
+	     
+	            return cb.or(idPredicate);
+	        }
+	    };
+	}
 
     
 

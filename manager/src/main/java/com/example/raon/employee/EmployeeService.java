@@ -21,10 +21,10 @@ import org.springframework.data.jpa.domain.Specification;
 //社員のビジネスロジク
 public class EmployeeService {
 
-	//生成子
+	// 生成子
 	private final EmployeeRepository employeeRepository;
 
-	//社員リスト
+	// 社員リスト
 //	public Page<Employee> getList(Integer page) {
 //
 //		Pageable pageable = PageRequest.of(page, 20);
@@ -32,17 +32,17 @@ public class EmployeeService {
 //		return this.employeeRepository.findAll(pageable);
 //
 //	}
-	
-	//社員リスト-
+
+	// 社員リスト-
 	public Page<Employee> getList(Integer page, String kw) {
 
 		Pageable pageable = PageRequest.of(page, 20);
-		 Specification<Employee> spec = searchByEmployee(kw);
+		Specification<Employee> spec = searchByEmployee(kw);
 		return this.employeeRepository.findAll(spec, pageable);
 
 	}
 
-	//IDで社員を検索
+	// IDで社員を検索
 	public Employee getEmployeeID(Long id) {
 		Optional<Employee> employee = this.employeeRepository.findById(id);
 
@@ -50,58 +50,38 @@ public class EmployeeService {
 
 	}
 
-	//社員を登録
-	public void enrollEmp(Long id, 
-	                      String name, 
-	                      String Ename, 
-	                      String Jname, 
-	                      String Pemail, 
-	                      String tel, 
-	                      String address, 
-	                      String acc, 
-	                      EmployeeBank bank,
-	                      LocalDate join,
-	                      LocalDate birth,
-	                      Integer pay) {
-	    
-	    Employee e = new Employee();
-	    e.setEmployeeId(id);
-	    e.setEmployeeName(name);
-	    e.setNameEng(Ename);
-	    e.setNameJp(Jname);
-	    e.setPersonalEmail(Pemail);
-	    e.setEmployeePhone(tel);
-	    e.setAddress(address);
-	    e.setBankAccount(acc);
-	    e.setBank(bank);
-	    
-	    e.setJoinDate(join);
-	    e.setBirthDate(birth);
-	    e.setPayDate(pay);
-	    
-	    this.employeeRepository.save(e);
+	// 社員を登録
+	public void enrollEmp(Long id, String name, String Ename, String Jname, String Pemail, String tel, String address,
+			String acc, EmployeeBank bank, LocalDate join, LocalDate birth, Integer pay) {
+
+		Employee e = new Employee();
+		e.setEmployeeId(id);
+		e.setEmployeeName(name);
+		e.setNameEng(Ename);
+		e.setNameJp(Jname);
+		e.setPersonalEmail(Pemail);
+		e.setEmployeePhone(tel);
+		e.setAddress(address);
+		e.setBankAccount(acc);
+		e.setBank(bank);
+
+		e.setJoinDate(join);
+		e.setBirthDate(birth);
+		e.setPayDate(pay);
+
+		this.employeeRepository.save(e);
 	}
 
-	//社員を削除
+	// 社員を削除
 	public void delete(Employee employee) {
 
 		this.employeeRepository.delete(employee);
 
 	}
 
-	//社員情報を更新
-	public void updateEmp(Long id, 
-						String name, 
-						String Ename, 
-						String Jname, 	
-						String Pemail, 
-						String tel, 
-						String adress, 
-						String acc, 
-						EmployeeBank bank,
-						LocalDate join,
-						LocalDate birth,
-						Integer pay) {
+	// 社員情報を更新
+	public void updateEmp(Long id, String name, String Ename, String Jname, String Pemail, String tel, String adress,
+			String acc, EmployeeBank bank, LocalDate join, LocalDate birth, Integer pay) {
 		Employee e = new Employee();
 		e.setEmployeeId(id);
 		e.setEmployeeName(name);
@@ -115,38 +95,35 @@ public class EmployeeService {
 		e.setJoinDate(join);
 		e.setBirthDate(birth);
 		e.setPayDate(pay);
-		
+
 		this.employeeRepository.save(e);
 	}
 
-	//Paging処理
+	// Paging処理
 	public Page<Employee> getListPage(Integer page) {
 		Pageable pageable = PageRequest.of(page, 20);
 		return employeeRepository.findAll(pageable);
 	}
 	
-	//社員検索
-	public Specification<Employee> searchByEmployee(String keyword) {
+	
+	// 検索
+	public Specification<Employee> searchByEmployee(String kw) {
 	    return new Specification<>() {
 	        private static final long serialVersionUID = 1L;
+
 	        @Override
 	        public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 	            query.distinct(true);
 
-	            try {
-	                Long employeeId = Long.parseLong(keyword);
-	                return cb.equal(root.get("employeeId"), employeeId);
-	            } catch (NumberFormatException e) {
-	                // 
-	                Predicate namePredicate = cb.like(cb.lower(root.get("employeeName")), "%" + keyword.toLowerCase() + "%");
-	                Predicate nameEngPredicate = cb.like(cb.lower(root.get("NameEng")), "%" + keyword.toLowerCase() + "%");
-	                Predicate nameJpPredicate = cb.like(cb.lower(root.get("NameJp")), "%" + keyword.toLowerCase() + "%");
+	            Predicate idPredicate = cb.like(cb.lower(root.get("employeeId").as(String.class)), "%" + kw.toLowerCase() + "%");
+	            Predicate namePredicate = cb.like(cb.lower(root.get("employeeName")), "%" + kw.toLowerCase() + "%");
+	            Predicate nameEngPredicate = cb.like(cb.lower(root.get("NameEng")), "%" + kw.toLowerCase() + "%");
+	            Predicate nameJpPredicate = cb.like(cb.lower(root.get("NameJp")), "%" + kw.toLowerCase() + "%");
 
-	                return cb.or(namePredicate, nameEngPredicate, nameJpPredicate);
-	            }
+	            return cb.or(idPredicate, namePredicate, nameEngPredicate, nameJpPredicate);
 	        }
 	    };
-}
+	}
 
-	
+
 }
