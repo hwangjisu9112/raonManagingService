@@ -32,7 +32,8 @@ public class RaonUserController {
 
 	// ページに移動
 	@GetMapping("/list")
-	public String userList(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+	public String userList(Model model, 
+							@RequestParam(value = "page", defaultValue = "0") int page,
 							@RequestParam(value = "kw", defaultValue = "") String kw) {
 
 		if (page < 0) {

@@ -36,14 +36,18 @@ public class InvoiceController {
 
 	//請求書閲覧ページに移動
 	@GetMapping("/board")
-	public String boardInvoice(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+	public String boardInvoice(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+								@RequestParam(value = "kw", defaultValue = "") String kw) {
 		
 		if (page < 0) {page = 0;}
 		
-		Page<Invoice> invoices = this.invoiceService.getList(page);
+		Page<Invoice> invoices = this.invoiceService.getList(page, kw);
+		
 		model.addAttribute("paging", invoices);
+		model.addAttribute("kw", kw);
 		return "invoice_board";
 	}
+
 	
 	//請求書作成ページに移動
 	@GetMapping("/write")

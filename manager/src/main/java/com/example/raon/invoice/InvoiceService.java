@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.example.raon.customer.Customer;
@@ -14,6 +15,10 @@ import com.example.raon.customer.CustomerRepository;
 import com.example.raon.employee.Employee;
 import com.example.raon.employee.EmployeeRepository;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -40,10 +45,12 @@ public class InvoiceService {
 	}
 
 	// Invoice　ｐａｇｅリスト
-	public Page<Invoice> getList(Integer page) {
+	public Page<Invoice> getList(Integer page, String kw) {
 
 		Pageable pageable = PageRequest.of(page, 10);
-		return this.invoiceRepository.findAll(pageable);
+		Specification<Invoice> spec = searchByEmployee(kw);
+
+		return this.invoiceRepository.findAll(spec, pageable);
 
 	}
 
@@ -86,5 +93,23 @@ public class InvoiceService {
 		this.invoiceRepository.delete(invoice);
 
 	}
+	
+
+	// 検索
+	public Specification<Invoice> searchByEmployee(String kw) {
+	    return new Specification<>() {
+	        private static final long serialVersionUID = 1L;
+
+	        @Override
+	        public Predicate toPredicate(Root<Invoice> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+	            query.distinct(true);
+
+	            Predicate comPredicate = cb.like(cb.lower(root.get("companyName").as(String.class)), "%" + kw.toLowerCase() + "%");
+	     
+	            return cb.or(comPredicate);
+	        }
+	    };
+	}
+
 
 }

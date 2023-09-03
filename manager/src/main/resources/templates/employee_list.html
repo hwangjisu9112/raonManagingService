@@ -17,7 +17,6 @@ function confirmDelete() {
 
 <span class="input-group-text" id="addon-wrapping"><strong>社員管理</strong></span><br>
     <div class="row my-3">
-     
         <div class="col-6">
             <div class="input-group">
                 <input type="text"  placeholder="ID / 名前 / フリガナ" id="search_kw" class="form-control" th:value="${kw}">
@@ -68,7 +67,7 @@ function confirmDelete() {
                 class="page-item">
                 <a th:text="${page}" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
             </li>
-            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+            <li class="pa4ge-item" th:classappend="${!paging.hasNext} ? 'disabled'">
                 <a class="page-link" href="javascript:void(0)" th:data-page="${paging.number+1}">
                     <span>次に</span>
                 </a>

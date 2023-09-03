@@ -16,7 +16,7 @@ public class Customer {
 	private Long CustomerId;
 	private String companyName;
 	//address... It is fault
-	private String Adress; 
+	private String Address; 
 	private String PhoneNo;
 	
 	

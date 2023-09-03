@@ -24,15 +24,6 @@ public class EmployeeService {
 	// 生成子
 	private final EmployeeRepository employeeRepository;
 
-	// 社員リスト
-//	public Page<Employee> getList(Integer page) {
-//
-//		Pageable pageable = PageRequest.of(page, 20);
-//
-//		return this.employeeRepository.findAll(pageable);
-//
-//	}
-
 	// 社員リスト-
 	public Page<Employee> getList(Integer page, String kw) {
 

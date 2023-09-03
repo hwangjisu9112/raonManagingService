@@ -13,9 +13,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>{
 
 	// 社員を全て検索
     Page<Employee> findAll(Specification<Employee> spec, Pageable pageable);
-
-	//Page<Employee> findAll(Pageable pageable);
-
     
 	//名前で社員を検索
 	Employee findByEmployeeName(String employeeName);

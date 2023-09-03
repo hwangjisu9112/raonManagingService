@@ -29,12 +29,14 @@ public class CustomerController {
 	
 	//取引先のリストの移動
 	@GetMapping("/list")
-	public String CustomerList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+	public String CustomerList(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+											@RequestParam(value = "kw", defaultValue = "") String kw) {
 
 		if (page < 0) {page = 0;}
 
-		Page<Customer> paging = this.customerService.getList(page);
+		Page<Customer> paging = this.customerService.getList(page, kw);
 		model.addAttribute("paging", paging);
+		model.addAttribute("kw", kw);
 		return "customer_list";
 	}
 
@@ -84,7 +86,7 @@ public class CustomerController {
 		
 		customer.setCustomerId(id);
 		customer.setCompanyName(name);
-		customer.setAdress(address);
+		customer.setAddress(address);
 		customer.setPhoneNo(phone);
 
 		customerService.update(customer, id, name, address, phone);

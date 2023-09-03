@@ -175,13 +175,13 @@ public class RaonUserService {
 	        public Predicate toPredicate(Root<RaonUser> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 	            query.distinct(true);
 
-	            Predicate idPredicate = cb.like(cb.lower(root.get("raonId").as(String.class)), "%" + kw.toLowerCase() + "%");
-	     
-	            return cb.or(idPredicate);
+	            Predicate idPredicate = cb.like(cb.lower(root.get("attendCode").as(String.class)), "%" + kw.toLowerCase() + "%");
+	            Predicate emplooyeeNamePredicate = cb.like(cb.lower(root.get("nameEmployee")), "%" + kw.toLowerCase() + "%");
+	            Predicate usernamePredicate = cb.like(cb.lower(root.get("username")), "%" + kw.toLowerCase() + "%");
+
+	            return cb.or(idPredicate, emplooyeeNamePredicate, usernamePredicate);
 	        }
 	    };
 	}
-
-    
-
+	
 }

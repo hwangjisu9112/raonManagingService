@@ -42,23 +42,13 @@ public class AttendanceContoller {
 	}
 
 	// 勤怠開始時間を記録
-//	@PostMapping("/attend/checkin")
-//	public String checkIn(@RequestParam String name) {
-//		Employee employee = employeeRepository.findByEmployeeName(name);
-//		if (employee != null) {
-//			attendanceService.checkIn(null);
-//			return "redirect:/attendance/list/" + name;
-//		} else {
-//			return "redirect:/error";
-//		}
-//	}
 
 	@PostMapping("/attend/checkin")
 	public String checkIn(@RequestParam Long code) {
 		Employee employee = employeeRepository.findByEmployeeId(code);
 		if (employee != null) {
 			attendanceService.checkIn(code);
-			return "redirect:/attendance/list/" + code;
+			return "redirect:/attendance/attend";
 		} else {
 			return "redirect:/error";
 		}
@@ -73,7 +63,7 @@ public class AttendanceContoller {
 			attendanceService.checkOut(code);
 		}
 
-		return "redirect:/attendance/list/" + code;
+		return "redirect:/attendance/attend";
 	}
 
 	@GetMapping("/list/{code}/{page}")
