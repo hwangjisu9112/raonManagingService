@@ -77,7 +77,7 @@ public class AttendanceContoller {
 	    if (!employeeExists) {
 	        return "_errorhandler_TPE"; 
 	    }
-
+	    
 	    Page<Attendance> attendancePage = attendanceService.getList(code, page);
 	    model.addAttribute("attendancePage", attendancePage);
 	    return "attendance_list";
