@@ -13,18 +13,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
 	Page<Attendance> findAll(Specification<Attendance> spec, Pageable pageable);
-	
 
-    default List<Attendance> searchAttendanceByAttCheckIn(LocalDateTime attCheckIn, Pageable pageable) {
-        Specification<Attendance> spec = (root, query, criteriaBuilder) -> {
-            if (attCheckIn == null) {
-                return criteriaBuilder.conjunction();
-            }
-            return criteriaBuilder.equal(root.get("attCheckIn"), attCheckIn);
-        };
-        return findAll(spec, pageable).getContent();
-    }
-	
+	default List<Attendance> searchAttendanceByAttCheckIn(LocalDateTime attCheckIn, Pageable pageable) {
+		Specification<Attendance> spec = (root, query, criteriaBuilder) -> {
+			if (attCheckIn == null) {
+				return criteriaBuilder.conjunction();
+			}
+			return criteriaBuilder.equal(root.get("attCheckIn"), attCheckIn);
+		};
+		return findAll(spec, pageable).getContent();
+	}
+
 	boolean existsByemployeeCode(Long employeeCode);
 
 	// 社員をIDで検索
@@ -35,4 +34,6 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
 	// 勤怠管理記録をIDで検索
 	Optional<Attendance> findById(Long attendanceId);
+
+	
 }

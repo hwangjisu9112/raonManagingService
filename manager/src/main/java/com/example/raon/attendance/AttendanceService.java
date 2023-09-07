@@ -2,8 +2,10 @@ package com.example.raon.attendance;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+import java.util.ArrayList;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Page;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,8 +14,6 @@ import com.example.raon.employee.Employee;
 import com.example.raon.employee.EmployeeRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-
-
 
 @Service
 @RequiredArgsConstructor
@@ -28,20 +28,38 @@ public class AttendanceService {
 
 	// 勤務開始時間を記録
 	public Page<Attendance> getList(Long code, int page) {
-        Pageable pageable = PageRequest.of(page, 25);
-        return this.attendanceRepository.findAll(pageable);
-    }
-	
+		List<Sort.Order> sorts = new ArrayList<>();
+		sorts.add(Sort.Order.desc("attCheckIn"));
+		Pageable pageable = PageRequest.of(page, 25, Sort.by(sorts));
+		return this.attendanceRepository.findAll(pageable);
+	}
+
+	public List<Attendance> searchByDate(Long employeeCode, int year, int month, int day) {
+		List<Attendance> searchResults = new ArrayList<>();
+
+		for (Attendance attendance : getList(employeeCode, 0).getContent()) {
+			LocalDateTime attCheckIn = attendance.getAttCheckIn();
+			int checkInYear = attCheckIn.getYear();
+			int checkInMonth = attCheckIn.getMonthValue();
+			int checkInDay = attCheckIn.getDayOfMonth();
+
+			if (checkInYear == year && checkInMonth == month && checkInDay == day) {
+				searchResults.add(attendance);
+			}
+		}
+
+		return searchResults;
+	}
 
 	// 勤怠記録を残った社員
 	public List<Attendance> getAttendanceByemployeeCode(Long code) {
 		return attendanceRepository.findByemployeeCode(code);
 	}
-	
-    public boolean existsByCode(Long code) {
-        return attendanceRepository.existsByemployeeCode(code);
-    }
-	
+
+	public boolean existsByCode(Long code) {
+		return attendanceRepository.existsByemployeeCode(code);
+	}
+
 	// 勤怠記録を残った社員
 	public List<Attendance> getAttendanceByEmployeeName(Long code) {
 		return attendanceRepository.findByemployeeCode(code);
@@ -59,7 +77,7 @@ public class AttendanceService {
 		}
 	}
 
-	//勤務終了時間を記録
+	// 勤務終了時間を記録
 	public void checkOut(Long code) {
 		List<Attendance> attendanceList = attendanceRepository.findByemployeeCodeOrderByAttCheckInDesc(code);
 
@@ -69,12 +87,12 @@ public class AttendanceService {
 			attendanceRepository.save(latestAttendance);
 		}
 	}
-	
+
 	public void save(Attendance attendance) {
 		attendanceRepository.save(attendance);
 	}
 
-	//まだ未実装。。。社員の休み時間可否
+	// まだ未実装。。。社員の休み時間可否
 	public void updateRestStatus(Long attendanceId, Boolean isRest) {
 		Attendance attendance = attendanceRepository.findById(attendanceId).orElse(null);
 		if (attendance != null) {
@@ -82,7 +100,5 @@ public class AttendanceService {
 			attendanceRepository.save(attendance);
 		}
 	}
-  
-    
 
 }

@@ -32,6 +32,8 @@ public class Attendance {
 	private LocalDateTime attCheckOut;
 
 	private Boolean isRest;
+	
+	private String LateReason;
 
 	// 社員の勤怠状態を表示する列挙Class
 	@Enumerated(EnumType.STRING)
