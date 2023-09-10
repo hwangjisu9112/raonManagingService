@@ -8,23 +8,39 @@
 <body>
 	<nav th:replace="~{navbar :: navbarFragment}"></nav>
 	<div class="container my-3">
-		<span class="input-group-text" id="addon-wrapping">出社 / 退社 /
-
-			勤怠一覧</span><br>
+		<span class="input-group-text" id="addon-wrapping">出社 / 退社 / 勤怠一覧</span><br>
 		<div class="d-grid gap-3 mx-auto">
-			<form th:action="@{/attendance/attend/checkin}" method="post">
+			<form th:action="@{/attendance/attend/checkin}" method="post" id="checkin-form">
+
 				<input type="hidden" name="code"
 					th:value="${#authentication.principal.raonUser.attendCode}">
-				<button type="submit" class="btn btn-warning btn-lg">🌅 出社
-					🌅</button>
+				<button  type="submit" class="btn btn-warning btn-lg" onclick="onCheckinButtonClick()">🌅 出社 🌅</button>
+
 			</form>
 
 			<form th:action="@{/attendance/attend/checkout}" method="post">
 				<input type="hidden" name="code"
 					th:value="${#authentication.principal.raonUser.attendCode}">
-				<button type="submit" class="btn btn-dark btn-lg">🌉 退社 🌉</button>
+				<button type="submit" class="btn btn-dark btn-lg"
+					onclick="alert('退社しました。')">🌉 退社 🌉</button>
 			</form>
 		</div>
 	</div>
+	
+	<script>
+  // 出勤ボタンをクリックすると実行される関数です
+
+  function onCheckinButtonClick() {
+    const currentTime = new Date().getHours();
+    if (currentTime >= 10) { // AM 10~
+      // 경고 메시지 표시
+      alert('遅刻です.遅刻事由を入力してください.');
+    } else {
+      // 
+      alert('出勤しました.');
+      document.getElementById('checkin-form').submit();
+    }
+  }
+</script>
 </body>
 </html>

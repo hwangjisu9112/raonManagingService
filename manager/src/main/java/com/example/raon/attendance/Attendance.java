@@ -33,7 +33,7 @@ public class Attendance {
 
 	private Boolean isRest;
 	
-	private String LateReason;
+	private String lateReason;
 
 	// 社員の勤怠状態を表示する列挙Class
 	@Enumerated(EnumType.STRING)

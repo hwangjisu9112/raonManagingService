@@ -39,10 +39,7 @@
 					<td th:text="${attendance.status}"></td>
 					<td> <div th:if="${attendance.status != 'ONTIME'}">
         <!-- 추가 정보 입력 폼 -->
-       <select id="lateReason" name="lateReason" class="btn btn-outline btn-lg dropdown-toggle">
-</select>  
-        <button type="button" class="btn btn-outline" onclick="submitLateReason()">저장</button>
-    </div></td>
+     </div></td>
 					<td><span th:text="${attendance.getFormattedWorkDuration()}"></span></td>
 				</tr>
 			</tbody>
