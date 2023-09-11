@@ -12,7 +12,6 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>atcd</th>
 					<th>年月</th>
 					<th>日</th>
 					<th>出勤時刻</th>
@@ -23,10 +22,8 @@
 				</tr>
 			</thead>
 			<tbody>
-
 				<tr th:each="attendance, rowStat : ${attendancePage.content}"
 					th:if="${attendance.employeeCode == #authentication.principal.raonUser.attendCode}">
-					<td><span th:text="${attendance.employeeCode}"></span></td>
 
 					<td><span
 						th:text="${#temporals.format(attendance.AttCheckIn, 'yy/MM')}"></span></td>
@@ -39,15 +36,29 @@
 					<td th:text="${attendance.status}"></td>
 					<td>
 						<div th:if="${attendance.status != 'ONTIME'}">
-							<select id="lateReasonInput" name="lateReasonInput">
-								<option value="" disabled selected>지각 사유를 선택하세요</option>
-								<option
-									th:each="lateReason : ${T(com.example.raon.attendance.AttendanceStatusIfLate).values()}"
-									th:value="${lateReason}" th:text="${lateReason}"></option>
-							</select>
-							<button type="button" onclick="submitLateReason()">확인</button>
+							<form method="post"
+								th:action="@{'/attendance/list/' + ${#authentication.principal.raonUser.attendCode} + '/0'}">
+								<input type="hidden" name="attendanceId"
+									th:value="${attendance.attendanceId}">
+
+								<div th:if="${attendance.lateReason == null}">
+									<select name="lateReason">
+										<option value="" disabled selected>遅刻事由</option>
+										<option
+											th:each="lateReason : ${T(com.example.raon.attendance.AttendanceStatusIfLate).values()}"
+											th:value="${lateReason}" th:text="${lateReason}"></option>
+									</select>
+									<button type="submit">登録</button>
+								</div>
+
+								<!-- Display the stored lateReason if it's not null -->
+								<div th:if="${attendance.lateReason != null}">
+									<span th:text="${attendance.lateReason}"></span>
+								</div>
+							</form>
 						</div>
 					</td>
+
 					<td><span th:text="${attendance.getFormattedWorkDuration()}"></span></td>
 				</tr>
 			</tbody>
@@ -64,7 +75,6 @@
 			</th:block>
 		</li>
 	</ul>
-	<script src="/updateLateReason.js" type="text/javascript"></script>
 
 </body>
 

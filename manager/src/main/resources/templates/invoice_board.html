@@ -11,6 +11,16 @@
 	  <div class="container my-3">
         <span class="input-group-text" id="69on-wrapping">請求書一覧</span> <br>
         <div class="row my-3">
+        <div class="row my-3">
+    <div class="col-6">
+        <form id="searchForm" action="/invoice/board" method="get">
+            <div class="input-group">
+                <input type="text" name="kw" placeholder="社名" class="form-control" th:value="${kw}">
+                <button class="btn btn-outline-secondary" type="submit">検索</button>
+            </div>
+        </form>
+    </div>
+    </div>
             <table class="table">
                 <thead class="table-dark">
                     <tr>

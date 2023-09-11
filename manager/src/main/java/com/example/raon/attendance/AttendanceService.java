@@ -2,6 +2,8 @@ package com.example.raon.attendance;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.Optional;
 import java.util.ArrayList;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Page;
@@ -90,6 +92,19 @@ public class AttendanceService {
 
 	public void save(Attendance attendance) {
 		attendanceRepository.save(attendance);
+	}
+	
+	
+	public void updateLateReason(Long attendanceId, String lateReason) {
+	    // Retrieve the attendance record by ID
+	    Optional<Attendance> optionalAttendance = attendanceRepository.findById(attendanceId);
+
+	    if (optionalAttendance.isPresent()) {
+	        Attendance attendance = optionalAttendance.get();
+	        attendance.setLateReason(lateReason);
+	        // Save the updated attendance record
+	        attendanceRepository.save(attendance);
+	    }
 	}
 
 	// まだ未実装。。。社員の休み時間可否

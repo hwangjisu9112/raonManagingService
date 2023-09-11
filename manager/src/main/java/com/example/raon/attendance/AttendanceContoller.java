@@ -84,17 +84,18 @@ public class AttendanceContoller {
 	    return "attendance_list";
 	}
 	
-//	
-//	@PostMapping("/attendance/updateLateReason")
-//	public ResponseEntity<String> updateLateReason(@RequestBody  request) {
-//	   
-//	    String message = "OK.";
-//	    
-//	    // 자바스크립트 alert를 사용하여 메시지를 표시
-//	    String script = "<script>alert('" + message + "');</script>";
-//	    
-//	    return ResponseEntity.ok(script);
-//	}
+	//	
+	@PostMapping("/list/{code}/{page}")
+	public String updateLateReason(
+	    @PathVariable Long code,
+	    @PathVariable int page,
+	    @RequestParam("attendanceId") Long attendanceId,
+	    @RequestParam("lateReason") String lateReason
+	) {
+	    attendanceService.updateLateReason(attendanceId, lateReason);
+	    
+	    return "redirect:/attendance/list/" + code + "/" + page;
+	}
 
 
 
