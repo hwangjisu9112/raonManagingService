@@ -54,8 +54,6 @@ public class Employee {
 	private EmployeeBank bank;
 
 	private String BankAccount;
-	@Positive
-	private Integer WorkRate;
 
 	private LocalDate JoinDate;
 	@Past
@@ -63,7 +61,6 @@ public class Employee {
 
 	private Integer PayDate;
 	
-
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private RaonUser user;

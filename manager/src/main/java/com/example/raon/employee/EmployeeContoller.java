@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 @Controller
@@ -26,6 +27,7 @@ public class EmployeeContoller {
 
 	// 社員ページに移動
 	@GetMapping("/list")
+	@PreAuthorize("isAuthenticated()")
 	public String EmployeeList(Model model, 
 							@RequestParam(value = "page", defaultValue = "0") int page,
 							@RequestParam(value = "kw", defaultValue = "") String kw) {
@@ -64,6 +66,7 @@ public class EmployeeContoller {
 
 	// 社員情報更新ページに移動
 	@GetMapping("/update/{id}")
+	@PreAuthorize("isAuthenticated()")
 	public String UpdateEmployee(Model model, @PathVariable("id") Long id) {
 		Employee employee = employeeService.getEmployeeID(id);
 		model.addAttribute("employee", employee);

@@ -50,7 +50,8 @@ public class InvoiceService {
 		Pageable pageable = PageRequest.of(page, 10);
 		Specification<Invoice> spec = searchByEmployee(kw);
 
-		return this.invoiceRepository.findAll(spec, pageable);
+		return this.invoiceRepository.findAll(spec, 
+				pageable);
 
 	}
 

@@ -3,6 +3,8 @@ package com.example.raon.customer;
 import java.security.Principal;
 
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +31,7 @@ public class CustomerController {
 	
 	//取引先のリストの移動
 	@GetMapping("/list")
+	@PreAuthorize("hasAuthority('ROLE_RAON_ADMIN')")
 	public String CustomerList(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
 											@RequestParam(value = "kw", defaultValue = "") String kw) {
 
@@ -42,6 +45,7 @@ public class CustomerController {
 
 	//取引先登録ページに移動
 	@GetMapping("/enroll")
+	@PreAuthorize("hasAuthority('ROLE_RAON_ADMIN')")
 	public String EnrollCustomer() {
 
 		return "customer_enroll";
@@ -70,6 +74,7 @@ public class CustomerController {
 	
 	//取引先を更新ページに移動
 	@GetMapping("/update/{id}")
+	@PreAuthorize("hasAuthority('ROLE_RAON_ADMIN')")
 	public String UpdateCustomer(Model model, @PathVariable("id") Long id) {
 		Customer customer = customerService.getCustomer(id);
 		model.addAttribute("customer", customer);
@@ -79,7 +84,7 @@ public class CustomerController {
 	}
 	
 	//取引先を更新
-	@PostMapping("/update/{id}") 
+	@PostMapping("/update/{id}")
 	public String UpdateCustomer(@PathVariable("id") Long id, String name, String address,
 								String phone, 
 								@ModelAttribute("customer") Customer customer) {

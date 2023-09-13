@@ -5,14 +5,17 @@ import lombok.Getter;
 //ユーザーの権限を設定
 @Getter
 public enum RaonUserRole {
-	
-    ADMIN("RAON_ADMIN"),
-    EMPLOYEE("RAON_EMP");
+
+	ADMIN("ROLE_RAON_ADMIN"), 
+	EMPLOYEE("ROLE_RAON_EMP");
+
+	private String value;
 
 	RaonUserRole(String value) {
-        this.value = value;
-    }
+		this.value = value;
+	}
 
-    private String value;
-
+	public String getValue() {
+		return value;
+	}
 }

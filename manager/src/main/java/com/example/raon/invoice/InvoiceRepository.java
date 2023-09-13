@@ -7,8 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.raon.employee.Employee;
-
 //請求書のレポジトリ
 public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
 
