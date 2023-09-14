@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,7 @@ public class InvoiceController {
 
 	//請求書閲覧ページに移動
 	@GetMapping("/board")
+	@PreAuthorize("hasAuthority('ROLE_RAON_ADMIN')")
 	public String boardInvoice(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
 								@RequestParam(value = "kw", defaultValue = "") String kw) {
 		
@@ -51,6 +53,7 @@ public class InvoiceController {
 	
 	//請求書作成ページに移動
 	@GetMapping("/write")
+	@PreAuthorize("hasAuthority('ROLE_RAON_ADMIN')")
 	public String writeInvoice(Model model) {
 	    List<Customer> customers = invoiceService.getAllCustomers();
 	    List<Employee> employees = invoiceService.getAllEmployees();
@@ -83,6 +86,7 @@ public class InvoiceController {
 
 	//請求書閲覧
 	@GetMapping("/view/{id}")
+	@PreAuthorize("hasAuthority('ROLE_RAON_ADMIN')")
 	public String viewInvoice(@PathVariable Long id, Model model) {
 	    List<Invoice> invoices = invoiceService.getInvoicebyId(id);
 	    Invoice invoice = invoices.isEmpty() ? null : invoices.get(0);
@@ -93,6 +97,7 @@ public class InvoiceController {
 	
 	//請求書削除
 	@GetMapping("/delete/{id}")
+	@PreAuthorize("hasAuthority('ROLE_RAON_ADMIN')")
 	public String DeleteInvoice(Principal principal, @PathVariable("id") Long id) {
 		
 		Invoice invoice = this.invoiceService.getInvoice(id);

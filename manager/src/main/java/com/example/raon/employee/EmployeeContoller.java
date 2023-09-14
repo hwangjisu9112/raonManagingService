@@ -27,7 +27,7 @@ public class EmployeeContoller {
 
 	// 社員ページに移動
 	@GetMapping("/list")
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasAuthority('ROLE_RAON_ADMIN')")
 	public String EmployeeList(Model model, 
 							@RequestParam(value = "page", defaultValue = "0") int page,
 							@RequestParam(value = "kw", defaultValue = "") String kw) {
@@ -66,7 +66,7 @@ public class EmployeeContoller {
 
 	// 社員情報更新ページに移動
 	@GetMapping("/update/{id}")
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasAuthority('ROLE_RAON_ADMIN')")
 	public String UpdateEmployee(Model model, @PathVariable("id") Long id) {
 		Employee employee = employeeService.getEmployeeID(id);
 		model.addAttribute("employee", employee);
@@ -90,6 +90,7 @@ public class EmployeeContoller {
 
 	// 社員削除
 	@GetMapping("/delete/{id}")
+	@PreAuthorize("hasAuthority('ROLE_RAON_ADMIN')")
 	public String DeleteEmployee(Principal principal, @PathVariable("id") Long id) {
 		Employee employee = this.employeeService.getEmployeeID(id);
 
