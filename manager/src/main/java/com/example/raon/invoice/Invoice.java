@@ -10,7 +10,6 @@ import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Setter
 @Getter
 @Entity
@@ -36,8 +35,8 @@ public class Invoice {
 	private String address;
 	private String telephoneNumber;
 	private String employeeName;
-	
-	private Integer tax ;
-	private Integer charges ; 
+
+	private Integer tax;
+	private Integer charges;
 
 }

@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 
 //請求書のビジネスロジク
-
 public class InvoiceService {
 
 	private final CustomerRepository customerRepository;
@@ -44,14 +43,16 @@ public class InvoiceService {
 		return invoiceRepository.findByinvoiceId(id);
 	}
 
-	// Invoice　ｐａｇｅリスト
+	// Invoice ｐａｇｅリスト
 	public Page<Invoice> getList(Integer page, String kw) {
 
+		// pageableオブジェクトを生成, 1ページにつき10個のアイテム
 		Pageable pageable = PageRequest.of(page, 10);
+
+		//Specificationを作成
 		Specification<Invoice> spec = searchByEmployee(kw);
 
-		return this.invoiceRepository.findAll(spec, 
-				pageable);
+		return this.invoiceRepository.findAll(spec, pageable);
 
 	}
 
@@ -94,23 +95,22 @@ public class InvoiceService {
 		this.invoiceRepository.delete(invoice);
 
 	}
-	
 
 	// 検索
 	public Specification<Invoice> searchByEmployee(String kw) {
-	    return new Specification<>() {
-	        private static final long serialVersionUID = 1L;
+		return new Specification<>() {
+			private static final long serialVersionUID = 1L;
 
-	        @Override
-	        public Predicate toPredicate(Root<Invoice> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-	            query.distinct(true);
+			@Override
+			public Predicate toPredicate(Root<Invoice> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				query.distinct(true);
 
-	            Predicate comPredicate = cb.like(cb.lower(root.get("companyName").as(String.class)), "%" + kw.toLowerCase() + "%");
-	     
-	            return cb.or(comPredicate);
-	        }
-	    };
+				Predicate comPredicate = cb.like(cb.lower(root.get("companyName").as(String.class)),
+						"%" + kw.toLowerCase() + "%");
+
+				return cb.or(comPredicate);
+			}
+		};
 	}
-
 
 }

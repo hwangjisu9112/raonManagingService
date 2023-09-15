@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-//請求書のレポジトリ
+//請求書のJpaRepository
 public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
 
 	//請求書を全て検索

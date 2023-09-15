@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 
 
-//取引先のリポジトリ
+//取引先のJpaRepository
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
@@ -21,6 +21,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	Customer findByCompanyName(String companyName);
 	
 	//取引先を全て検索　請求書ページ用
+	//JPQLクエリを使用してすべてのデータを検索。 結果として、すべてのデータが含まれているリストをreturn。
     @Query("SELECT c FROM Customer c")
     List<Customer> getAllCustomers();
 
