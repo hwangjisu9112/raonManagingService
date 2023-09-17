@@ -28,6 +28,22 @@ import lombok.Setter;
 //社員DBに保存するfieldを定義
 public class Employee {
 
+	/*
+	 *employeeId : 社員ID
+	 *employeeName :社員名前(英文)
+	 *NameEng : 社員名前(日本語)
+	 *NameJp : 社員名前
+	 *PersonalEmail : 個人メール
+	 *EmployeePhone : 個人の電話番号
+	 *Address : 社員の住所
+	 *bank : 給与を支払う銀行
+	 *BankAccount : 銀行口座番号
+	 *JoinDate : 入社日
+	 *BirthDate :生年月日
+	 *PayDate :給与日
+	 *user : 1対1の関係でRaonUserと接続
+	 */
+	
 	@Id
 	@Positive
 	private Long employeeId;
@@ -40,8 +56,6 @@ public class Employee {
 	@Pattern(regexp = "[\\p{IsHiragana}\\p{IsKatakana}\\p{IsHan}ー]*", message = "日本語で作成してください.")
 	private String NameJp;
 
-	@Email
-	private String EmployeeEmail;
 	@Email
 	private String PersonalEmail;
 

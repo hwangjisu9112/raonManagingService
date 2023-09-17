@@ -20,8 +20,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>{
     // IDで社員を検索
     Employee findByEmployeeId(Long employeeId);
 	
-
-
 	// 社員を全て検索...請求書ページ用
     @Query("SELECT c FROM Employee c")
     List<Employee> getAllEmployees();

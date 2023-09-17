@@ -16,6 +16,22 @@ import lombok.Setter;
 
 //請求書をDBに保存するfieldを定義
 public class Invoice {
+	
+	/*
+	 *invoiceId : 請求書のID
+	 *invoiceTitle : 請求書のタイトル
+	 *issuedDate : 発行日
+	 *workhour :　基本勤務時間
+	 *extraWorkhour :　時間
+	 *deductionWorkhour :　時間
+	 *unitPrice :　社員の時給単価
+	 *companyName :　取引先
+	 *address :　取引先の住所
+	 *telephoneNumber : 取引先の住所
+	 *employeeName :勤怠者
+	 *tax : 税金
+	 *charges : 総請求額
+	 */
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

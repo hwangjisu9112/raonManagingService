@@ -1,6 +1,6 @@
 package com.example.raon.attendance;
 
-//社員
+//遅刻の事由の列挙
 public enum AttendanceStatusIfLate {
 	
 	TrafficJam,

@@ -22,7 +22,7 @@ public interface RaonUserRepository extends JpaRepository<RaonUser, Long>{
 	
     Optional<RaonUser> findByUsername(String username);
     
-//	// IDで検索
+	// IDで検索
 //	List<RaonUser> findByAttendCode(Long attendCode);
     
     @Modifying

@@ -36,7 +36,7 @@ public class CustomerController {
 		//ページングが0以下にならないように制限
 		if (page < 0) {page = 0;}
 
-		//リストタイプで顧客情報を出力します
+		//リストタイプで顧客情報を出力
 		//page -> ページ処理 , kw -> 検索
 		Page<Customer> paging = this.customerService.getList(page, kw);
 		

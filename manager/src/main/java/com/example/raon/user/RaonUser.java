@@ -27,6 +27,18 @@ import lombok.Setter;
 //社内イントラネットを利用するためのDBに保存するfieldを定義
 
 public class RaonUser {
+	
+	/*
+	 *raonId : 
+	 *username :
+	 *nameEmployee :
+	 *attendCode :
+	 *employee :
+	 *password :
+	 *passwordRe :
+	 *role :
+	 *authCode :
+	 */
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
