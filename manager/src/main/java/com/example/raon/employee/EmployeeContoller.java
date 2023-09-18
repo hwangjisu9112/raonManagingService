@@ -37,7 +37,9 @@ public class EmployeeContoller {
 			page = 0;
 		}
 
-		//顧客と全職員を連れてきて、それぞれcustomersとemployeesリストに保存
+		
+	    //コードとページに該当する出席データを取得。 このデータはattendancePage変数に割り当てます
+
 		Page<Employee> paging = this.employeeService.getList(page , kw);
 		
 		//paging, kwオブジェクトをmodelに追加

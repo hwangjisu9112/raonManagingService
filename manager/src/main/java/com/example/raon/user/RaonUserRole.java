@@ -9,6 +9,7 @@ public enum RaonUserRole {
 	ADMIN("ROLE_RAON_ADMIN"), 
 	EMPLOYEE("ROLE_RAON_EMP");
 
+	//(Raon User Role(String value))は役割の文字列値を受け取り、その役割のvalue変数に割り当て
 	private String value;
 
 	RaonUserRole(String value) {

@@ -29,15 +29,15 @@ import lombok.Setter;
 public class RaonUser {
 	
 	/*
-	 *raonId : 
-	 *username :
-	 *nameEmployee :
-	 *attendCode :
-	 *employee :
-	 *password :
-	 *passwordRe :
-	 *role :
-	 *authCode :
+	 *raonId : ラオンユーザーの自動的に付与されるID
+	 *username : メールアドレス形式のID
+	 *nameEmployee : 名
+	 *attendCode : 出退勤時に使われる社員番号と同額
+	 *employee : 
+	 *password : パスワード
+	 *passwordRe : 会員登録時のパスワード確認
+	 *role : 社員の管理権限
+	 *authCode : パスワードを再発行するためのコード
 	 */
     
     @Id

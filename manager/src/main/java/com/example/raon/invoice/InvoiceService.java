@@ -129,7 +129,6 @@ public class InvoiceService {
 						"%" + kw.toLowerCase() + "%");
 
 	            // "comPredicate" のいずれかが一致する場合を返す
-
 				return cb.or(comPredicate);
 			}
 		};

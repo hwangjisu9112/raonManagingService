@@ -90,7 +90,7 @@ public class Attendance {
 		//遅刻を基準とする時間設定, 午前10
 		LocalTime lateTime = LocalTime.of(10, 0); 
 		
-		//チェックインをした時間が10時前なら定時、10時後なら遅刻
+		//チェックインをした時間が10時前なら定時(ONTIME)、10時後なら遅刻(LATE)
 		if (checkInTime.toLocalTime().isAfter(lateTime)) {
 			return AttendanceStatus.LATE;
 

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-title>Error</title>
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+
+<title>Error</title>
 </head>
 <body>
 	<div class="container my-3">
-		<H1>😭 ERROR - 500</H1>
+		<H1>😭 ERROR - 50</H1>
 		<ul>
 			<li>Error Code: <span th:text="${error}"></span>
 			</li>

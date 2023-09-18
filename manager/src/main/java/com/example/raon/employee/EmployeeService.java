@@ -30,7 +30,7 @@ public class EmployeeService {
 		//pageableオブジェクトを作成、1ページあたりのアイテム数を20に設定
 		Pageable pageable = PageRequest.of(page, 20);
 		
-		//
+		//検索キーワード(kw)を使ってSpecificationを生成
 		Specification<Employee> spec = searchByEmployee(kw);
 		
 		//Employeeリストを取得
