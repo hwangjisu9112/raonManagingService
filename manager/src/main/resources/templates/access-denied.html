@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -8,20 +9,21 @@
 </head>
 <body>
 	<div class="container my-3">
-		<H1>😭 ERROR - 404</H1>
+		<H1>😞 ページ閲覧権限なし </H1>
 		<ul>
-			<li>Error Code: <span th:text="${error}"></span>
-			</li>
-			<li>Error Message: <span th:text="${message}"></span>
-			</li>
-
+			<li><strong><mark>あなたには権限がありません</mark></strong> :
+				管理者権限のアカウントにログインしなさい</li>
+		
 		</ul>
-		</div>
-		<br> 
-		<div class="d-grid gap-2 col-6 mx-auto">
+	</div>	
 	<br>
+	<div class="d-grid gap-2 col-6 mx-auto">
+	<br>
+		<a href="/raonuser/login" class="btn btn-dark">LOGIN</a>
+	
 	<br>
 	<a href="/" class="btn btn-dark">🏠︎メインへ</a>
+	
 	</div>
 </body>
 </html>

@@ -18,13 +18,13 @@
 					href="/raonuser/login">LOGIN</a> <a class="nav-link"
 					sec:authorize="isAuthenticated()" href="/raonuser/logout">LOGOUT</a>
 				</li>
-				<li sec:authorize="hasAuthority('RAON_ADMIN')">		
+				<li sec:authorize="hasAuthority('ROLE_RAON_ADMIN')">		
     <span class="nav-link">
 	Welcome, 「 <strong th:text="${#strings.substringBefore(#authentication.principal.username, '@')}"></strong>」
         「<strong>RAON_ADMIN</strong>」        
     </span>
 </li>
-<li sec:authorize="hasAuthority('RAON_EMP')">		
+<li sec:authorize="hasAuthority('ROLE_RAON_EMP')">		
     <span class="nav-link">
 	Welcome, 「<strong th:text="${#strings.substringBefore(#authentication.principal.username, '@')}"></strong>」
          「<strong>RAON_EMP</strong>」

@@ -4,20 +4,11 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
 
-<title>勤怠表</title>
-
 </head>
 <body>
 	<nav th:replace="~{navbar :: navbarFragment}"></nav>
 	<div class="container my-3">
 		<span class="input-group-text" id="addon-wrapping">勤怠表</span><br>
-		<div class="alert alert-warning alert-dismissible fade show">
-			名前: <strong><span th:text="${attendanceList[0].EmployeeCode}"></span></strong>
-		</div>
-		<div class="alert alert-info">
-			総勤務日数: <strong><span th:text="${#lists.size(attendanceList)}"></span></strong>日
-		</div>
-
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -25,23 +16,65 @@
 					<th>日</th>
 					<th>出勤時刻</th>
 					<th>退社時刻</th>
-					<th>区分</th>
+					<th>勤怠区分</th>
+					<th>勤怠状態</th>
 					<th>作業時間</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="attendance, rowStat : ${attendanceList}">
-					<td><span th:text="${#temporals.format(attendance.AttCheckIn, 'yy/MM')}"></span></td>
-					<td><span th:text="${#temporals.format(attendance.AttCheckIn, 'dd')}"></span></td>
-					<td><span th:text="${#temporals.format(attendance.AttCheckIn, 'HH:mm')}"></span></td>
-					<td><span th:text="${#temporals.format(attendance.AttCheckOut, 'HH:mm')}"></span></td>
+				<tr th:each="attendance, rowStat : ${attendancePage.content}"
+					th:if="${attendance.employeeCode == #authentication.principal.raonUser.attendCode}">
+
+					<td><span
+						th:text="${#temporals.format(attendance.AttCheckIn, 'yy/MM')}"></span></td>
+					<td><span
+						th:text="${#temporals.format(attendance.AttCheckIn, 'dd')}"></span></td>
+					<td><span
+						th:text="${#temporals.format(attendance.AttCheckIn, 'HH:mm')}"></span></td>
+					<td><span
+						th:text="${#temporals.format(attendance.AttCheckOut, 'HH:mm')}"></span></td>
 					<td th:text="${attendance.status}"></td>
+					<td>
+						<div th:if="${attendance.status != 'ONTIME'}">
+							<form method="post"
+								th:action="@{'/attendance/list/' + ${#authentication.principal.raonUser.attendCode} + '/0'}">
+								<input type="hidden" name="attendanceId"
+									th:value="${attendance.attendanceId}">
+
+								<div th:if="${attendance.lateReason == null}">
+									<select name="lateReason">
+										<option value="" disabled selected>遅刻事由</option>
+										<option
+											th:each="lateReason : ${T(com.example.raon.attendance.AttendanceStatusIfLate).values()}"
+											th:value="${lateReason}" th:text="${lateReason}"></option>
+									</select>
+									<button type="submit">登録</button>
+								</div>
+
+								<!-- Display the stored lateReason if it's not null -->
+								<div th:if="${attendance.lateReason != null}">
+									<span th:text="${attendance.lateReason}"></span>
+								</div>
+							</form>
+						</div>
+					</td>
+
 					<td><span th:text="${attendance.getFormattedWorkDuration()}"></span></td>
-		
 				</tr>
 			</tbody>
 		</table>
 	</div>
+	<!--paging -->
+	<ul class="pagination justify-content-center">
+		<li class="page-item"
+			th:each="i : ${#numbers.sequence(0, attendancePage.totalPages - 1)}">
+			<th:block th:with="codeOrDefault=${code} ?: 0">
+				<a class="page-link"
+					th:href="@{/attendance/list/{code}/{page}(code=${codeOrDefault}, page=${i})}"
+					th:text="${i}"></a>
+			</th:block>
+		</li>
+	</ul>
 
 </body>
 

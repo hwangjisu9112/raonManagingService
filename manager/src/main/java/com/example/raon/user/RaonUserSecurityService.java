@@ -19,24 +19,22 @@ public class RaonUserSecurityService implements UserDetailsService {
 
 	private final RaonUserRepository raonUserRepository;
 
-	//
+	//Spring Securityがユーザー情報をロードするのに使用
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	    
+		
 		Optional<RaonUser> _siteUser = this.raonUserRepository.findByUsername(username);
-		if (_siteUser.isEmpty()) {
-			throw new UsernameNotFoundException("社員が見つかりません。");
-		}
-		RaonUser siteUser = _siteUser.get();
-		List<GrantedAuthority> authorities = new ArrayList<>();
-		if ("admin".equals(username)) {
-			authorities.add(new SimpleGrantedAuthority(RaonUserRole.ADMIN.getValue()));
-		} else {
-			authorities.add(new SimpleGrantedAuthority(RaonUserRole.EMPLOYEE.getValue()));
-		}
+	    if (_siteUser.isEmpty()) {
+	        throw new UsernameNotFoundException("使用者がいないです");
+	    }
+	    RaonUser siteUser = _siteUser.get();
+	    List<GrantedAuthority> authorities = new ArrayList<>();
+	    authorities.add(new SimpleGrantedAuthority(siteUser.getRole().getValue()));
 
-		RaonUserCustomDetails userDetails = new RaonUserCustomDetails(siteUser, authorities);
+	    RaonUserCustomDetails userDetails = new RaonUserCustomDetails(siteUser, authorities);
 
-		return userDetails;
+	    return userDetails;
 	}
 
 }

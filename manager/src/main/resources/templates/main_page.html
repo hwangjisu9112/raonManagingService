@@ -23,8 +23,10 @@
 		<h2>🪪社員管理</h2>
 
 		<a class="btn btn-outline-primary btn-lg" th:href="@{employee/enroll}">社員登録</a>
-		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{employee/list}">社員一覧</a>
-		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{raonuser/list}">社員メール一覧</a>
+		<a class="btn btn-outline-primary btn-lg"
+			sec:authorize="isAuthenticated()" th:href="@{employee/list}">社員一覧</a>
+		<a class="btn btn-outline-primary btn-lg"
+			sec:authorize="isAuthenticated()" th:href="@{raonuser/list}">社員メール一覧</a>
 
 		<br>
 	</div>
@@ -33,19 +35,22 @@
 	<div class="container">
 		<h2>🤝取引先管理</h2>
 
-		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{customer/enroll}">取引先登録</a>
-		<a class="btn btn-outline-primary btn-lg" sec:authorize="isAuthenticated()" th:href="@{customer/list}">取引先一覧</a><br>
+		<a class="btn btn-outline-primary btn-lg"
+			sec:authorize="isAuthenticated()" th:href="@{customer/enroll}">取引先登録</a>
+		<a class="btn btn-outline-primary btn-lg"
+			sec:authorize="isAuthenticated()" th:href="@{customer/list}">取引先一覧</a><br>
 	</div>
 	<br>
 	<br>
 	<div class="container">
 		<h2>🕰勤怠管理</h2>
-		<a class="btn btn-outline-primary btn-lg"
+		<a class="btn btn-outline-primary  btn-lg"
 			sec:authorize="isAuthenticated()" th:href="@{attendance/attend}">勤怠管理</a>
-		<a class="btn btn-outline-primary btn-lg"
-			sec:authorize="isAuthenticated()"
-			th:href="@{/attendance/list/{attendCode}(attendCode=${#authentication.principal.raonUser.attendCode})}"
-> 勤怠記録 </a>
+	<a class="btn btn-outline-primary btn-lg"
+   sec:authorize="isAuthenticated()"
+   th:href="@{/attendance/list/{attendCode}/{page}(attendCode=${#authentication.principal.raonUser.attendCode}, page=0)}">
+   勤怠記録
+</a>
 	</div>
 	<br>
 	<br>

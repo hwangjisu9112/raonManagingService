@@ -1,10 +1,10 @@
 package com.example.raon.attendance;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.data.domain.Page;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.raon.employee.Employee;
 import com.example.raon.employee.EmployeeRepository;
-import com.example.raon.user.RaonUser;
-import com.example.raon.user.RaonUserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,35 +27,39 @@ public class AttendanceContoller {
 
 	private final AttendanceService attendanceService;
 	private final EmployeeRepository employeeRepository;
-	private final RaonUserRepository raonUserRepository;
 
-	// 勤怠記録する画面に移動
+	// 勤怠記録する画面に移動, ログインしたユーザーのみ入場
 	@GetMapping("/attend")
+	@PreAuthorize("isAuthenticated()")
 	public String Attend(Model model) {
+		
+		//全職員情報をemployee Repositoryから取得
 		List<Employee> employees = employeeRepository.findAll();
+		
+		//employeesオブジェクトをmodelに追加
 		model.addAttribute("employees", employees);
+		
+		//attendance_attend.htmlでレンダリング
 		return "attendance_attend";
 	}
 
 	// 勤怠開始時間を記録
-//	@PostMapping("/attend/checkin")
-//	public String checkIn(@RequestParam String name) {
-//		Employee employee = employeeRepository.findByEmployeeName(name);
-//		if (employee != null) {
-//			attendanceService.checkIn(null);
-//			return "redirect:/attendance/list/" + name;
-//		} else {
-//			return "redirect:/error";
-//		}
-//	}
-
 	@PostMapping("/attend/checkin")
 	public String checkIn(@RequestParam Long code) {
+		
+		//与えられたコードに該当する職員IDを探します
 		Employee employee = employeeRepository.findByEmployeeId(code);
+		
+		//employeeがnullでない場合は、以下のコードブロックを実行
 		if (employee != null) {
+			
+			//checkInメソッドを実行
 			attendanceService.checkIn(code);
-			return "redirect:/attendance/list/" + code;
+			
+			//リダイレクト -> /attendance/attend
+			return "redirect:/attendance/attend";
 		} else {
+			//リダイレクト -> error 
 			return "redirect:/error";
 		}
 	}
@@ -65,33 +67,69 @@ public class AttendanceContoller {
 	// 勤怠終了時間を記録
 	@PostMapping("/attend/checkout")
 	public String checkOut(@RequestParam Long code) {
+		
+		//与えられたコードに該当する職員IDを探します
 		Employee employee = employeeRepository.findByEmployeeId(code);
 
+		//employeeがnullでない場合は、以下のコードブロックを実行
 		if (employee != null) {
+			
+			//checkOutメソッドを実行
 			attendanceService.checkOut(code);
 		}
 
-		return "redirect:/attendance/list/" + code;
+		// リダイレクト ->  attendance/attend
+		return "redirect:/attendance/attend";
 	}
 
-	@PostMapping("/list/{code}")
-	public String updateRest(@RequestParam Long attendanceId, @RequestParam(required = false) Boolean isRest,
-			@PathVariable Long code) {
-		attendanceService.updateRestStatus(attendanceId, isRest);
-		return "redirect:/attendance/list/" + code;
+	
+	//ログインしたユーザー自身の勤怠記録を閲覧
+	@GetMapping("/list/{code}/{page}")
+	@PreAuthorize("isAuthenticated()")
+	public String getAttendanceList(@PathVariable Long code,
+	                                @PathVariable int page,
+	                                Model model) {
+		
+		//ページングが0以下にならないように制限
+	    if (page < 0) {page = 0;}
+
+	    //入力した社員番号が存在するかどうかを確認
+	    boolean employeeExists = attendanceService.existsByCode(code);
+
+	    //出席データが存在しない場合、"_errorhandler_TPE"ビュー(エラーページ)へのリダイレクト
+	    if (!employeeExists) {
+	        return "_errorhandler_TPE"; 
+	    }
+	    
+	    //コードとページに該当する出席データを取得。 このデータはattendancePage変数に割り当てます
+	    Page<Attendance> attendancePage = attendanceService.getList(code, page);
+	    
+	    //attendancePageオブジェクトをmodelに追加
+	    model.addAttribute("attendancePage", attendancePage);
+	    
+		//attendance_list.htmlでレンダリング
+	    return "attendance_list";
+	}
+	
+	//遅刻した出勤記録に遅刻事由を更新
+	@PostMapping("/list/{code}/{page}")
+	public String updateLateReason(
+	    @PathVariable Long code,
+	    @PathVariable int page,
+	    @RequestParam("attendanceId") Long attendanceId,
+	    @RequestParam("lateReason") String lateReason
+	) {
+		
+		//updateLateReasonを使用してattendanceIdとlateReasonを使用して出席情報を更新
+	    attendanceService.updateLateReason(attendanceId, lateReason);
+	    
+	    //リダイレクト -> /list/{code}/{page}
+	    return "redirect:/attendance/list/" + code + "/" + page;
 	}
 
-	// 勤怠表に移動
-	@GetMapping("/list/{code}")
-	public String getAttendanceList(@PathVariable Long code, Model model) {
-		List<Attendance> attendanceList = attendanceService.getAttendanceByEmployeeName(code);
 
-		if (attendanceList.isEmpty()) {
-			return "_errorhandler_TPE"; 
-		}
 
-		model.addAttribute("attendanceList", attendanceList);
-		return "attendance_list";
-	}
+
+
 
 }

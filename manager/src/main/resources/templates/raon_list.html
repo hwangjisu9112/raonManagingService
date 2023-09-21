@@ -31,7 +31,18 @@ function confirmDelete() {
 <div class="container my-3">
 
 <span class="input-group-text" id="addon-wrapping"><strong>社員メール管理</strong></span><br>
-
+  <div class="row my-3">
+   <div class="row my-3">
+    <div class="col-6">
+        <form id="searchForm" action="/raonuser/list" method="get">
+            <div class="input-group">
+                <input type="text" name="kw" placeholder="社員ID＆社員名＆社内 メール" class="form-control" th:value="${kw}">
+                <button class="btn btn-outline-secondary" type="submit">検索</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
 <table class="table">
 	<thead>
 		<tr>

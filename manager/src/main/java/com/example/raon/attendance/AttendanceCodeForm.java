@@ -1,5 +1,7 @@
 package com.example.raon.attendance;
 
+
+
 public class AttendanceCodeForm {
 
 	private Long attendCode;
