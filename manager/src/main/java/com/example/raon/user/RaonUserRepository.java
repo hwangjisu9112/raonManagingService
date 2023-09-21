@@ -19,11 +19,9 @@ public interface RaonUserRepository extends JpaRepository<RaonUser, Long>{
 	// 社員を全て検索
     Page<RaonUser> findAll(Specification<RaonUser> spec, Pageable pageable);
 
-	
+	//
     Optional<RaonUser> findByUsername(String username);
     
-	// IDで検索
-//	List<RaonUser> findByAttendCode(Long attendCode);
     
     @Modifying
     @Query("UPDATE RaonUser u SET u.password = :newPassword WHERE u.username = :username")

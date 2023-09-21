@@ -19,10 +19,12 @@ public class RaonUserSecurityService implements UserDetailsService {
 
 	private final RaonUserRepository raonUserRepository;
 
-	//
+	//Spring Securityがユーザー情報をロードするのに使用
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-	    Optional<RaonUser> _siteUser = this.raonUserRepository.findByUsername(username);
+	    
+		
+		Optional<RaonUser> _siteUser = this.raonUserRepository.findByUsername(username);
 	    if (_siteUser.isEmpty()) {
 	        throw new UsernameNotFoundException("使用者がいないです");
 	    }
