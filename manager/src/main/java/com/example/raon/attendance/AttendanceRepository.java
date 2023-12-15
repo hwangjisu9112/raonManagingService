@@ -5,24 +5,23 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.domain.Specification;
 
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 //勤怠管理のレポジトリ
 public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
-	List<Attendance> findAll(Specification<Attendance> spec);
+	Page<Attendance> findAll(Specification<Attendance> spec, Pageable pageable);
 
-	default List<Attendance> searchAttendanceByAttCheckIn(LocalDateTime attCheckIn) {
+	default List<Attendance> searchAttendanceByAttCheckIn(LocalDateTime attCheckIn, Pageable pageable) {
 		Specification<Attendance> spec = (root, query, criteriaBuilder) -> {
 			if (attCheckIn == null) {
 				return criteriaBuilder.conjunction();
 			}
 			return criteriaBuilder.equal(root.get("attCheckIn"), attCheckIn);
 		};
-		return findAll(spec);
+		return findAll(spec, pageable).getContent();
 	}
 
 	boolean existsByemployeeCode(Long employeeCode);
@@ -35,11 +34,6 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
 	// 勤怠管理記録をIDで検索
 	Optional<Attendance> findById(Long attendanceId);
-	
-	
-
-    @Query("SELECT a FROM Attendance a WHERE YEAR(a.attCheckIn) = :year AND MONTH(a.attCheckIn) = :month")
-    List<Attendance> findByYearAndMonth(Long employeeCode, int year, int month);
 
 	
 }

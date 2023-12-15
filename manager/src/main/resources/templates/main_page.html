@@ -48,7 +48,7 @@
 			sec:authorize="isAuthenticated()" th:href="@{attendance/attend}">勤怠管理</a>
 	<a class="btn btn-outline-primary btn-lg"
    sec:authorize="isAuthenticated()"
-   th:href="@{/attendance/list/{attendCode}(attendCode=${#authentication.principal.raonUser.attendCode})}">
+   th:href="@{/attendance/list/{attendCode}/{page}(attendCode=${#authentication.principal.raonUser.attendCode}, page=0)}">
    勤怠記録
 </a>
 	</div>

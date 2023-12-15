@@ -99,8 +99,5 @@ public class Attendance {
 			return AttendanceStatus.ONTIME;
 		}
 	}
-	
-
-	
 
 }

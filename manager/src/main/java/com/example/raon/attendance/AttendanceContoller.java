@@ -1,9 +1,8 @@
 package com.example.raon.attendance;
 
-import java.time.MonthDay;
-import java.time.Year;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -85,16 +84,14 @@ public class AttendanceContoller {
 
 	
 	//ログインしたユーザー自身の勤怠記録を閲覧
-	@GetMapping("/list/{code}")
+	@GetMapping("/list/{code}/{page}")
 	@PreAuthorize("isAuthenticated()")
 	public String getAttendanceList(@PathVariable Long code,
-	                             
-	                                @RequestParam(required = false) Integer year,
-	                                @RequestParam(required = false) Integer month,
+	                                @PathVariable int page,
 	                                Model model) {
 		
 		//ページングが0以下にならないように制限
-	 
+	    if (page < 0) {page = 0;}
 
 	    //入力した社員番号が存在するかどうかを確認
 	    boolean employeeExists = attendanceService.existsByCode(code);
@@ -105,22 +102,20 @@ public class AttendanceContoller {
 	    }
 	    
 	    //コードとページに該当する出席データを取得。 このデータはattendancePage変数に割り当てます
-	    List<Attendance> attendancePage = attendanceService.getList(code);
+	    Page<Attendance> attendancePage = attendanceService.getList(code, page);
 	    
 	    //attendancePageオブジェクトをmodelに追加
 	    model.addAttribute("attendancePage", attendancePage);
-	    
-	    model.addAttribute("year", year);
-	    model.addAttribute("month", month);
 	    
 		//attendance_list.htmlでレンダリング
 	    return "attendance_list";
 	}
 	
 	//遅刻した出勤記録に遅刻事由を更新
-	@PostMapping("/list/{code}")
+	@PostMapping("/list/{code}/{page}")
 	public String updateLateReason(
 	    @PathVariable Long code,
+	    @PathVariable int page,
 	    @RequestParam("attendanceId") Long attendanceId,
 	    @RequestParam("lateReason") String lateReason
 	) {
@@ -128,8 +123,8 @@ public class AttendanceContoller {
 		//updateLateReasonを使用してattendanceIdとlateReasonを使用して出席情報を更新
 	    attendanceService.updateLateReason(attendanceId, lateReason);
 	    
-	    //リダイレクト -> /list/{code}/
-	    return "redirect:/attendance/list/" + code ;
+	    //リダイレクト -> /list/{code}/{page}
+	    return "redirect:/attendance/list/" + code + "/" + page;
 	}
 
 
